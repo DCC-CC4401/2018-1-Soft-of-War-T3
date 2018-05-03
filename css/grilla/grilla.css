@@ -1,0 +1,15 @@
+
+.titulo_grilla text {
+	font-size: 20px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	text-anchor: middle;
+	alignment-baseline: middle;
+}
+
+.reserva_grilla text {
+	font-size: 12px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	text-anchor: start;
+	alignment-baseline: hanging;
+	color: #000;
+}

@@ -1,6 +1,8 @@
+{% load staticfiles %}
 <ul>
+  <img src="{% static "photos/12.png" %}"/>
   {% for product in products%}
-    <li>{{product.title}}:{{product.description}} {{product.image}}></li>
+    <li>{{product.title}}:{{product.description}} {{product.image.url}} <img src="{% static "{{product.image}}" %}"/></li>
   {% endfor %}
 
 </ul>

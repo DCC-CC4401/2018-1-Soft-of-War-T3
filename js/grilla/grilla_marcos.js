@@ -1,4 +1,21 @@
 var grupo_lineas_base = canvas.append("g");
+var grupo_botones = canvas.append("g");
+
+//Botones
+
+var y_botones = (height*(1 + 7*14/6)/20 + height*19/20)/2;
+
+var boton_semana_siguiente = grupo_botones.append("g").attr("class", "boton boton_semana_siguiente_grilla");
+var boton_semana_anterior = grupo_botones.append("g").attr("class", "boton boton_semana_anterior_grilla");
+
+triangulo_derecha(boton_semana_siguiente, width*7/12, y_botones, "#333", height/40)
+triangulo_izquierda(boton_semana_anterior, width*5/12, y_botones, "#333", height/40)
+
+var boton_mes_siguiente = grupo_botones.append("g").attr("class", "boton boton_mes_siguiente_grilla");
+var boton_mes_anterior = grupo_botones.append("g").attr("class", "boton boton_mes_anterior_grilla");
+
+doble_triangulo_derecha(boton_mes_siguiente, width*9/12, y_botones, "#333", height/40)
+doble_triangulo_izquierda(boton_mes_anterior, width*3/12, y_botones, "#333", height/40)
 
 //Lineas Horizontales Marco
 grupo_lineas_base.append("line")
@@ -41,5 +58,6 @@ grupo_lineas_base.append("line")
 					.attr("y2", height*19/20)
 					.attr("stroke", "black")
 					.attr("stroke-width", 2);
+
 
 					

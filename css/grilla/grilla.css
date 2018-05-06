@@ -29,3 +29,7 @@
 	alignment-baseline: hanging;
 	fill: #000;
 }
+
+.boton:hover {
+	cursor:pointer;
+}

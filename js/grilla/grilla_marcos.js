@@ -1,5 +1,4 @@
 var grupo_lineas_base = canvas.append("g");
-var grupo_texto_dias = canvas.append("g").attr("class", "titulo_grilla");
 
 //Lineas Horizontales Marco
 grupo_lineas_base.append("line")

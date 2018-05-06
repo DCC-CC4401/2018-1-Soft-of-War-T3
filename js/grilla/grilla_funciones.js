@@ -29,6 +29,46 @@ function agregar_reserva(nombre_sala, estado, dia, horario_inicio, horario_termi
 				.text(estado);
 }
 
+function agregar_linea_hora()
+{
+	var d = new Date();
+	var minutos = d.getHours()*60 + d.getMinutes();
+	minutos = minutos - 600;
+	
+	if(minutos<8*60 || minutos > 20*60)
+	{
+		return;
+	}
+	
+	var var_x = 15*width/192;
+	var var_y = (minutos)/7200*7*height + height*(1 + 14/3)/20;
+	
+	var grupo_linea_hora_actual = canvas.append("g").attr("class", "linea_hora_actual")
+	
+	var alto_rect = 22;
+	var ancho_rect = 55;
+	
+	grupo_linea_hora_actual.append("rect")
+							.attr("x", var_x - ancho_rect + width/192)
+							.attr("width", ancho_rect)
+							.attr("y", var_y - alto_rect/2)
+							.attr("height", alto_rect)
+							.attr("fill","#dd0");
+	
+	grupo_linea_hora_actual.append("text")
+			.attr("x",var_x)
+			.attr("y",var_y)
+			.text(entero2string(d.getHours(),2) + ":" + entero2string(d.getMinutes(),2));
+			
+	grupo_linea_hora_actual.append("line")
+							.attr("y1", var_y)
+							.attr("y2", var_y)
+							.attr("x1", width/12)
+							.attr("x2", width*11/12)
+							.attr("stroke", "#dd0")
+							.attr("stroke-width", 2);
+}
+
 function hora2minutos(hora)
 {
 	return hora.hora*60 + hora.minuto;

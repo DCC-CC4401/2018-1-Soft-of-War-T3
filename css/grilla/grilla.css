@@ -1,9 +1,25 @@
 
-.titulo_grilla text {
+.dias_grilla text {
 	font-size: 20px;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	text-anchor: middle;
 	alignment-baseline: middle;
+}
+
+.horas_grilla text {
+	font-size: 14px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	text-anchor: end;
+	alignment-baseline: middle;
+	fill: #aaa;
+}
+
+.linea_hora_actual text {
+	font-size: 16px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	text-anchor: end;
+	alignment-baseline: middle;
+	fill: #fff;
 }
 
 .reserva_grilla text {
@@ -11,5 +27,5 @@
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	text-anchor: start;
 	alignment-baseline: hanging;
-	color: #000;
+	fill: #000;
 }

@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 {% load static %}
 {% load staticfiles %}
-<html>
 
 <head>
-	<title>Just Header</title>
 	<meta charset="UTF-8">
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
-	<link rel="stylesheet" type="text/css" href="media/img/css/header.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -19,7 +17,7 @@
 <body>
 	<header id = "#header">
 		<ul id="left-nav">
-			<li> <a href="http://www.cei.cl/"> <img src="media/img/photos/logo-CEI.png" style="height:65px"> </a> </li>
+			<li> <a href="http://www.cei.cl/"> <img src="{% static 'photos/logo-CEI.png' %}" style="height:65px"> </a> </li>
 		</ul>
 
 		<ul id="end-nav">
@@ -36,13 +34,13 @@
         </ul>
 
 		<ul id="right-nav">
-			<li> <img id="foto_perfil" src="media/img/photos/chiko-icon.png" alt="Avatar" style="width:60px"> </li>
+			<li> <img id="foto_perfil" src="{% static 'photos/chiko-icon.png' %}" alt="Avatar" style="width:60px"> </li>
 		</ul>
 
 		<ul id="right-nav" style="-webkit-margin-before: 0.5em;">
-			<li id="nombre_usuario" style="text-align: right; font-size:1.5rem"> <i class="material-icons" id = "circulo_disponibilidad" style="color:#bbb; font-size:1rem;">fiber_manual_record</i> Barquito </li>
-			<li id="rut_usuario" style="text-align: right; font-size:0.75rem"> 21.420.133-si </li>
-			<li id="email_usuario" style="text-align: right; font-size:0.75rem"> barqui3@mimail.com </li>
+			<li id="nombre_usuario" style="text-align: right; font-size:1.5rem"> <i class="material-icons" id = "circulo_disponibilidad" style="color:#bbb; font-size:1rem;">fiber_manual_record</i>{{nombre}} </li>
+			<li id="rut_usuario" style="text-align: right; font-size:0.75rem">{{rut}} </li>
+			<li id="email_usuario" style="text-align: right; font-size:0.75rem"> {{mail}}</li>
 		</ul>
 
 		<ul id="right-nav">
@@ -55,5 +53,3 @@
 
 
 </body>
-
-</html>

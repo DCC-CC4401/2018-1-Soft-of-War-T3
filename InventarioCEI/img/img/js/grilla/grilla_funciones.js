@@ -2,29 +2,32 @@
 //-----------------------------------------------------------------------------------------------------------------//
 //Funciones
 
-function agregar_reserva(nombre_sala, estado, dia, horario_inicio, horario_termino, color_sala)
+function agregar_reserva(nombre_sala, estado, dia, horario_inicio, horario_termino, color_sala, espacio)
 {
-	var reserva = canvas.append("g").attr("class", "reserva_grilla");
+	var reserva = canvas.append("g").attr("class", "reserva_grilla")
+										.attr("id", nombre_sala.replace(/ /g,"_"));
 	
 	var alto = (hora2minutos(horario_termino) - hora2minutos(horario_inicio))/7200*7*height;
 	var inicio = (hora2minutos(horario_inicio) - 600)/7200*7*height + height*(1 + 14/3)/20;
 	
+	var arreglo_aux = [3,5,7,9,11];
+	
 	reserva.append("rect")
 				.attr("fill", color_sala)
 				.attr("height", alto)
-				.attr("width", width/7)
-				.attr("x", (2*dia - 0.95) * width/12)
+				.attr("width", Math.min(width/7,width*arreglo_aux[dia - 1]/12 - (2*dia - 0.95) * width/12 - espacio*width/147))
+				.attr("x", (2*dia - 0.95) * width/12 + espacio*width/147)
 				.attr("y", inicio);
 	
 	var texto_titulo = nombre_sala + " " + entero2string(horario_inicio.hora,2) + ":" + entero2string(horario_inicio.minuto,2) + " - " + entero2string(horario_termino.hora,2) + ":" + entero2string(horario_termino.minuto,2);
 	
 	reserva.append("text")
-				.attr("x", (2*dia - 0.92) * width/12)
+				.attr("x", (2*dia - 0.92) * width/12 + espacio*width/147)
 				.attr("y", inicio+height/80)
 				.text(texto_titulo);
 				
 	reserva.append("text")
-				.attr("x", (2*dia - 0.92) * width/12)
+				.attr("x", (2*dia - 0.92) * width/12 + espacio*width/147)
 				.attr("y", inicio+height*5/80)
 				.text(estado);
 }
@@ -36,9 +39,7 @@ function agregar_linea_hora()
 	minutos = minutos - 600;
 	
 	if(minutos<-2*60 || minutos > 10*60)
-	{
 		return;
-	}
 	
 	var var_x = 15*width/192;
 	var var_y = (minutos)/7200*7*height + height*(1 + 14/3)/20;
@@ -69,6 +70,12 @@ function agregar_linea_hora()
 							.attr("stroke-width", 2);
 }
 
+function eliminar_reservas_sala(id)
+{
+	
+	canvas.selectAll("#" + id.replace(/ /g,"_")).remove();
+}
+	
 function hora2minutos(hora)
 {
 	return hora.hora*60 + hora.minuto;

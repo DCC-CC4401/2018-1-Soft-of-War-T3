@@ -35,7 +35,7 @@ function agregar_linea_hora()
 	var minutos = d.getHours()*60 + d.getMinutes();
 	minutos = minutos - 600;
 	
-	if(minutos<8*60 || minutos > 20*60)
+	if(minutos<-2*60 || minutos > 10*60)
 	{
 		return;
 	}

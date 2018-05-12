@@ -1,0 +1,39 @@
+
+#left-nav {
+	float : left;
+	-webkit-margin-after: 1em;
+	-webkit-margin-before: 1em;
+    -webkit-padding-start: 5px;
+	-webkit-padding-end: 5px;
+}
+
+#right-nav {
+	float : right;
+	-webkit-margin-after: 1em;
+	-webkit-margin-before: 1em;
+    -webkit-padding-start: 10px;
+	-webkit-padding-end: 5px;
+}
+
+#end-nav {
+	
+	float : right;
+    -webkit-padding-start: 5px;
+	-webkit-padding-end: 5px;
+	-webkit-padding-start: 10px;
+	-webkit-padding-end: 15px;
+}
+
+#header li {
+	list-style-type : none;
+}
+
+#right-nav li {
+	display: block;
+}
+
+header {
+	background:#ddd;
+	height : 85px;
+}
+

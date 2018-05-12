@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 {% load static %}
 {% load staticfiles %}
+<html>
 
 <head>
 	<meta charset="UTF-8">
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+	<link rel="stylesheet" type="text/css" href="media/img/css/header.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -17,7 +18,7 @@
 <body>
 	<header id = "#header">
 		<ul id="left-nav">
-			<li> <a href="http://www.cei.cl/"> <img src="{% static 'photos/logo-CEI.png' %}" style="height:65px"> </a> </li>
+			<li> <a href="http://www.cei.cl/"> <img src="media/img/photos/logo-CEI.png" style="height:65px"> </a> </li>
 		</ul>
 
 		<ul id="end-nav">
@@ -34,7 +35,7 @@
         </ul>
 
 		<ul id="right-nav">
-			<li> <img id="foto_perfil" src="{% static 'photos/chiko-icon.png' %}" alt="Avatar" style="width:60px"> </li>
+			<li> <img id="foto_perfil" src="media/img/photos/chiko-icon.png" alt="Avatar" style="width:60px"> </li>
 		</ul>
 
 		<ul id="right-nav" style="-webkit-margin-before: 0.5em;">
@@ -53,3 +54,5 @@
 
 
 </body>
+
+</html>

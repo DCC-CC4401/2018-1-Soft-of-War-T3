@@ -25,3 +25,13 @@ function doble_triangulo_izquierda(d3_component, cx, cy, color, triangle_radious
 	triangulo_izquierda(d3_component, cx-triangle_radious/4, cy, color, triangle_radious);
 	triangulo_izquierda(d3_component, cx+triangle_radious/4, cy, color, triangle_radious);
 }
+
+function anillo()
+{
+	
+}
+
+function tick()
+{
+	
+}

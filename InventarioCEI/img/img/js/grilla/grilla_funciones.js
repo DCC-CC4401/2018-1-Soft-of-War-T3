@@ -70,10 +70,14 @@ function agregar_linea_hora()
 							.attr("stroke-width", 2);
 }
 
-function eliminar_reservas_sala(id)
-{
-	
-	canvas.selectAll("#" + id.replace(/ /g,"_")).remove();
+function ocultar_reservas_sala(id)
+{	
+	canvas.selectAll("#" + id.replace(/ /g,"_")).attr("opacity", 0.0);
+}
+
+function mostrar_reservas_sala(id)
+{	
+	canvas.selectAll("#" + id.replace(/ /g,"_")).attr("opacity", 1.0);
 }
 	
 function hora2minutos(hora)

@@ -1,59 +1,59 @@
 <!DOCTYPE html>
-
+{% load static %}
+{% load staticfiles %}
 <html>
 
 <head>
 	<title>Just Header</title>
 	<meta charset="UTF-8">
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
-	<link rel="stylesheet" type="text/css" href="./header.css">
+	<link rel="stylesheet" type="text/css" href="media/img/css/header.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-       
+
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	
+
 </head>
 <body>
-	
 	<header id = "#header">
 		<ul id="left-nav">
-			<li> <a href="http://www.cei.cl/"> <img src="logo-CEI.png" style="height:65px"> </a> </li>
+			<li> <a href="http://www.cei.cl/"> <img src="media/img/photos/logo-CEI.png" style="height:65px"> </a> </li>
 		</ul>
-		
+
 		<ul id="end-nav">
 			<div class="btn-group">
 				<button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height:82px; background-color:#ddd; border:0px solid transparent">
 					<i class="material-icons" style="color:#bbb; font-size:3rem">settings</i>
 				</button>
 				<div class="dropdown-menu dropdown-menu-right">
-					<button id="configuracion_perfil" class="dropdown-item" type="button">Configuración Perfil</button>
-					<button id="cambiar_contrasena" class="dropdown-item" type="button">Cambiar Contraseña</button>
+					<button id="configuracion_perfil" class="dropdown-item" type="button">Configuraciï¿½n Perfil</button>
+					<button id="cambiar_contrasena" class="dropdown-item" type="button">Cambiar Contraseï¿½a</button>
 					<button id="salir" class="dropdown-item" type="button">Salir</button>
 				</div>
 			</div>
         </ul>
-		
+
 		<ul id="right-nav">
-			<li> <img id="foto_perfil" src="chiko-icon.png" alt="Avatar" style="width:60px"> </li>
+			<li> <img id="foto_perfil" src="media/img/photos/chiko-icon.png" alt="Avatar" style="width:60px"> </li>
 		</ul>
-		
+
 		<ul id="right-nav" style="-webkit-margin-before: 0.5em;">
 			<li id="nombre_usuario" style="text-align: right; font-size:1.5rem"> <i class="material-icons" id = "circulo_disponibilidad" style="color:#bbb; font-size:1rem;">fiber_manual_record</i> Barquito </li>
 			<li id="rut_usuario" style="text-align: right; font-size:0.75rem"> 21.420.133-si </li>
 			<li id="email_usuario" style="text-align: right; font-size:0.75rem"> barqui3@mimail.com </li>
 		</ul>
-		
+
 		<ul id="right-nav">
 			<button type="button" id="boton_email" class="btn" style="background-color:#ddd; border:0px solid transparent">
 				<i class="material-icons" style="color:#bbb; font-size:3rem">mail</i>
 			</button>
 		</ul>
-		
+
 	</header>
 
-	
+
 </body>
 
 </html>

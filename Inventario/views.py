@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import Productos
 
 def index(request):
-    return HttpResponse('Aca debe ir el Login')
+    return render(request, 'header.html', {})
 
 def productos(request):
     products = Productos.objects.all()[:10]

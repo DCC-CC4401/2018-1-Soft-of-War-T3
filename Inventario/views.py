@@ -12,12 +12,3 @@ def productos(request):
         'products': products,
     }
     return render(request, 'productos.html', context)
-
-def header(request):
-    context = {
-        'nombre': "Jocelyn Simmonds",
-        'rut': "12345678-9",
-        'status':1,
-        'mail':"jsimmonds@dcc.uchile.cl"
-    }
-    return render(request, 'header.html', context)

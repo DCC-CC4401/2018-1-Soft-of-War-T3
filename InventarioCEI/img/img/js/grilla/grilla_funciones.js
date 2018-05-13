@@ -2,6 +2,10 @@
 //-----------------------------------------------------------------------------------------------------------------//
 //Funciones
 
+
+// agregar_reserva: str, str, int(1-5), obj(hora:int, minuto:int), obj(hora:int, minuto:int), str(#xxx, #xxxxxx), int -> None
+// Agrega una reserva a la grilla con los datos entregados, los horarios de inicio y término determinan el alto del rectangulo,
+// el color determina el color del rectangulo, el espacio determina la indentacion del rectangulo
 function agregar_reserva(nombre_sala, estado, dia, horario_inicio, horario_termino, color_sala, espacio)
 {
 	var reserva = canvas.append("g").attr("class", "reserva_grilla")
@@ -32,6 +36,8 @@ function agregar_reserva(nombre_sala, estado, dia, horario_inicio, horario_termi
 				.text(estado);
 }
 
+// agregar_linea_hora: None -> None
+// Agrega la linea que indica la hora actual a la grilla
 function agregar_linea_hora()
 {
 	var d = new Date();
@@ -70,21 +76,31 @@ function agregar_linea_hora()
 							.attr("stroke-width", 2);
 }
 
+// ocultar_reservas_sala: str -> None
+// oculta las reservas de la sala correspondientes a la id
 function ocultar_reservas_sala(id)
 {	
 	canvas.selectAll("#" + id.replace(/ /g,"_")).attr("opacity", 0.0);
 }
 
+// mostrar_reservas_sala: str -> None
+// muestra las reservas de la sala correspondientes a la id
 function mostrar_reservas_sala(id)
 {	
 	canvas.selectAll("#" + id.replace(/ /g,"_")).attr("opacity", 1.0);
 }
-	
+
+// hora2minutos: obj(hora:int, minuto:int) -> int
+// Devuelve los minutos correspondientes a una hora
 function hora2minutos(hora)
 {
 	return hora.hora*60 + hora.minuto;
 }
 
+// entero2string: int, int -> str
+// retorna los ultimos 'numero_caracteres' caracteres que corresponden a un numero
+// por ejemplo: entero2string(176,2) = '76'
+// tambien: entero2string(7,2) = '07'
 function entero2string(val, numero_caracteres)
 {
 	if(numero_caracteres == 1)

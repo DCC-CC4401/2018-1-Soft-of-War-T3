@@ -1,7 +1,8 @@
 var filtros = canvas.append("g")
 					.attr("transform", "translate(0," + height.toString() + ")");
 
-//Maximo 21 caracteres en el nombre
+// agregar_filtro: str, str(#xxx,#xxxxxx), int(0-14) -> None
+// Agrega un filtro abajo de la grilla con el nombre, el color y la poscision indicadas
 function agregar_filtro(nombre_sala, color, pos)
 {
 	var grupo = filtros.append("g")
@@ -21,11 +22,15 @@ function agregar_filtro(nombre_sala, color, pos)
 			.text(nombre_sala);
 }
 
+// enable_filter: str -> None
+// Prende el tick del filtro asignado a nombre_sala
 function enable_filter(nombre_sala)
 {
 	canvas.select("#" + nombre_sala.replace(/ /g,"_") + "_filtro").attr("opacity", 1.0)
 }
 
+// disable_filter: str -> None
+// Apaga el tick del filtro asignado a nombre_sala
 function disable_filter(nombre_sala)
 {
 	canvas.select("#" + nombre_sala.replace(/ /g,"_") + "_filtro").attr("opacity", 0.0)

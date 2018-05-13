@@ -1,6 +1,7 @@
+//Parámetros de los cuales dependen todos los elementos de la grilla
 var width = 1200;
-var height = 400;
-var height_filtros = 400;
+var height = width/3;
+var height_filtros = width/3;
 
 var canvas = d3.select("#abc")
 				.append("svg")
@@ -12,7 +13,6 @@ var grupo_texto_horas = canvas.append("g").attr("class", "horas_grilla");
 var grupo_texto_dias = canvas.append("g").attr("class", "dias_grilla");
 					
 //Lineas Horizontales Horas
-
 for(i = 2; i <= 6; i++)
 {
 	grupo_lineas_base.append("line")
@@ -25,8 +25,7 @@ for(i = 2; i <= 6; i++)
 }					
 
 
-// Dias de la Semana
-
+// Texto Dias de la Semana
 var dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
 for(i = 0; i < 5; i++)
 {
@@ -37,8 +36,7 @@ for(i = 0; i < 5; i++)
 }
 
 
-//Horas del dia
-
+// Texto Horas del dia
 var horas = ["10:00","12:00","14:00","16:00","18:00"]
 for(i = 2; i <= 6; i++)
 {

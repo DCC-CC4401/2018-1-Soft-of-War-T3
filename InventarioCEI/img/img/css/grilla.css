@@ -6,6 +6,12 @@
 	alignment-baseline: middle;
 }
 
+.filtro text {
+	font-size: 14px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	alignment-baseline: middle;
+}
+
 .horas_grilla text {
 	font-size: 14px;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;

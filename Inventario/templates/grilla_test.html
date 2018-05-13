@@ -1,0 +1,41 @@
+<!doctype html>
+{% load static %}
+
+<html>
+
+<head>
+	<title>Grilla Test</title>
+	<script src="{% static 'js/grilla/d3_modulo.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/grilla.css' %}">
+</head>
+<body id="abc">
+
+	<script src="{% static 'js/grilla/iconos.js' %}"></script>
+	<script src="{% static 'js/grilla/grilla_fondo.js' %}"></script>
+	<script src="{% static 'js/grilla/grilla_funciones.js' %}"></script>
+	<script src="{% static 'js/grilla/grilla_filtros_funciones.js' %}"></script>
+	
+	<script>
+	
+	agregar_reserva("Sala 1", "RESERVADA", 1, {hora: 14, minuto: 00}, {hora: 16, minuto: 00}, "#feb236", 0);
+	agregar_reserva("Quincho", "OCUPADA", 4, {hora:8, minuto:0},{hora:20, minuto:0}, "#66d", 0);
+	agregar_reserva("Quincho", "RESERVADA", 5, {hora:8, minuto:0},{hora:10, minuto:0}, "#66d", 0);
+	agregar_reserva("Quincho2", "RESERVADA", 4, {hora:10, minuto:0},{hora:20, minuto:0}, "#6d6", 5);
+
+	ocultar_reservas_sala("Sala_1");
+
+	agregar_linea_hora();
+
+	agregar_filtro("Quincho", "#66d", 0);
+	agregar_filtro("Sala de Reuniones CEI", "#6d6", 1);
+	agregar_filtro("Sala 1", "#feb236", 2);
+
+	disable_filter("Sala 1")
+	//Tambien hay una funcion llamada enable_filter que hace que vuelva el tick de un filtro
+	</script>
+
+	<script src="{% static 'js/grilla/grilla_marcos.js' %}"></script>
+
+</body>
+
+</html>

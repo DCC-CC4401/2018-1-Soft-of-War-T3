@@ -12,3 +12,11 @@ def productos(request):
         'products': products,
     }
     return render(request, 'productos.html', context)
+
+def user(request):
+    products = Productos.objects.all()[:10]
+    context = {
+        'products': products,
+    }
+    return render(request, 'user.html', context)
+

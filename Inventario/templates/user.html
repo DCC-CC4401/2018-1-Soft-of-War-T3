@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-md-8">
         <table style="width: 25%">
-        {% if products %}
+        {% if reservs %}
           <tr>
             <th></th>
             <th>Producto</th>
@@ -29,20 +29,20 @@
             <th></th>
           </tr>
           
-            {% for product in products %}
+            {% for rsv in reservs %}
             <tr>
             <td align="center"> 
               <form method="POST"> {% csrf_token %}
-                <button name="remove" value=" {{ product.id }} ">X</button>
+                <button name="remove" value=" {{ rsv.id }} ">X</button>
               </form>
             </td>
-                <td align="center">{{ product.title }}</td>
-                <td align="center"> {{ product.description }} </td>
+                <td align="center">{{ rsv.product }}</td>
+                <td align="center"> {{ rsv.state }} </td>
           </tr>
             {% endfor %}
             </tr>
           {% else %}
-              <p>No hay productos.</p>
+              <p>No hay reservas.</p>
           {% endif %}
         </table>
       </div>

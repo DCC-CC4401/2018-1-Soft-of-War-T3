@@ -12,3 +12,8 @@ def productos(request):
         'products': products,
     }
     return render(request, 'productos.html', context)
+
+def article_detail(request, pk):
+    print(pk)
+    articulo = Productos.objects.get(pk=pk)
+    return render(request, 'articulos.html', {'articulo': articulo})

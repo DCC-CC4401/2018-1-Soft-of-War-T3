@@ -42,7 +42,7 @@
                   <img class="card-img-top" src="{{ product.image.url }}">
                   <div class="card-body">
                       <h5 class="card-title"><i class="material-icons" id = "circulo_disponibilidad" {% if product.status == 1 %} style="color:#B1BC54; font-size:1rem;" {% else %} style="color:#CB3434; font-size:1rem;" {% endif %}>fiber_manual_record</i>
-                        {{product.title}}
+                        <a href="/productos/{{product.id}}">{{product.title}}</a>
                       </h5>
                   </div>
                 </div>

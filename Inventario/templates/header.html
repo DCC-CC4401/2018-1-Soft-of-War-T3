@@ -15,13 +15,14 @@
 
 </head>
 <body>
-	<header id = "#header">
-		<ul id="left-nav">
-			<li> <a href="http://www.cei.cl/"> <img src="{% static 'photos/logo-CEI.png' %}" style="height:65px"> </a> </li>
-		</ul>
 
-		<ul id="end-nav">
-			<div class="btn-group">
+	<header>
+		<div id="header">
+			<div class="left-nav">
+				<a href="http://www.cei.cl/"> <img src="logo-CEI.png" style="height:80px; "> </a>
+			</div>
+
+			<div class="btn-group right-nav">
 				<button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height:82px; background-color:#ddd; border:0px solid transparent">
 					<i class="material-icons" style="color:#bbb; font-size:3rem">settings</i>
 				</button>
@@ -31,25 +32,23 @@
 					<button id="salir" class="dropdown-item" type="button">Salir</button>
 				</div>
 			</div>
-        </ul>
 
-		<ul id="right-nav">
-			<li> <img id="foto_perfil" src="{% static 'photos/chiko-icon.png' %}" alt="Avatar" style="width:60px"> </li>
-		</ul>
+			<div class="right-nav" style="margin-left:15px">
+				<img id="foto_perfil" src="chiko-icon.png" alt="Avatar" style="width:60px">
+			</div>
 
-		<ul id="right-nav" style="-webkit-margin-before: 0.5em;">
-			<li id="nombre_usuario" style="text-align: right; font-size:1.5rem"> <i class="material-icons" id = "circulo_disponibilidad" style="color:#bbb; font-size:1rem;">fiber_manual_record</i>{{nombre}} </li>
-			<li id="rut_usuario" style="text-align: right; font-size:0.75rem">{{rut}} </li>
-			<li id="email_usuario" style="text-align: right; font-size:0.75rem"> {{mail}}</li>
-		</ul>
+			<div class="right-nav">
+					<li id="nombre_usuario" style="text-align: right; font-size:1.5rem"> <i class="material-icons" id = "circulo_disponibilidad" style="color:#bbb; font-size:1rem;">fiber_manual_record</i> Barquito </li>
+					<li id="rut_usuario" style="text-align: right; font-size:0.75rem"> 21.420.133-si </li>
+					<li id="email_usuario" style="text-align: right; font-size:0.75rem"> barqui3@mimail.com </li>
+			</div>
 
-		<ul id="right-nav">
-			<button type="button" id="boton_email" class="btn" style="background-color:#ddd; border:0px solid transparent">
-				<i class="material-icons" style="color:#bbb; font-size:3rem">mail</i>
-			</button>
-		</ul>
-
+			<div class="right-nav" style="margin-left:100px">
+				<button type="button" id="boton_email" class="btn" style="background-color:#ddd; border:0px solid transparent margin-right:10%">
+					<i class="material-icons" style="color:#bbb; font-size:3rem">mail</i>
+				</button>
+			</div>
+		</div>
 	</header>
-
 
 </body>

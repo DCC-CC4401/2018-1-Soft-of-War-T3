@@ -19,7 +19,6 @@ def user(request):
     loans = Prestamo.objects.all()[:10]
     context = {
         'reservs': reservs,
-        'products': products,
         'loans': loans,
     }
     return render(request, 'user.html', context)

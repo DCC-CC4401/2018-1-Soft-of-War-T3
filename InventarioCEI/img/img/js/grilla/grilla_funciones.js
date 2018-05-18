@@ -12,19 +12,19 @@ function agregar_reserva(nombre_sala, estado, dia, horario_inicio, horario_termi
 
 	var arreglo_aux = [3,5,7,9,11];
 
-	var rectangulo_reserva = reserva.append("rect")
-										.attr("fill", color_sala)
-										.attr("height", alto)
-										.attr("width", Math.min(width/7,width*arreglo_aux[dia - 1]/12 - (2*dia - 0.95) * width/12 - espacio*width/147))
-										.attr("x", (2*dia - 0.95) * width/12 + espacio*width/147)
-										.attr("y", inicio);
+	reserva.append("rect")
+			.attr("fill", color_sala)
+			.attr("height", alto)
+			.attr("width", Math.min(width/7,width*arreglo_aux[dia - 1]/12 - (2*dia - 0.95) * width/12 - espacio*width/147))
+			.attr("x", (2*dia - 0.95) * width/12 + espacio*width/147)
+			.attr("y", inicio);
 	var texto_titulo = nombre_sala;
 
 
-	var texto_reserva = reserva.append("text")
-								.attr("x", (2*dia - 0.92) * width/12 + espacio*width/147)
-								.attr("y", inicio+height/80)
-								.text(texto_titulo);
+	reserva.append("text")
+			.attr("x", (2*dia - 0.92) * width/12 + espacio*width/147)
+			.attr("y", inicio+height/80)
+			.text(texto_titulo);
 
 	reserva.append("text")
 				.attr("x", (2*dia - 0.92) * width/12 + espacio*width/147)

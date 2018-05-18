@@ -26,30 +26,31 @@
 
     <script>
       $('.btn-group').on('click', '.btn', function() {
+
         $(this).addClass('active').siblings().removeClass('active');
       });
     </script>
 
-    <div class="btn-group btn-group-sm" role="group">
+    <!--<div class="btn-group btn-group-sm" role="group">
       <div type="button" class="btn btn-default btn-1 active" onclick="show_reservs()">Reservas</div>
       <div type="button" class="btn btn-default btn-2" onclick="show_loans()" >Prestamos</div>
-    </div>
+    </div>-->
 
     <!--Botones de reserva y prestamo-->
-    <div class="container" style="margin-top:60px">
+    <div class="container" style="margin-top:40px">
       <div class="row">
         <div class="col-lg-6">
-          <button class="btn btn-lg btn-outline-info btn-block">Reserva Tu Espacio</button>
+          <button style="height: 100px"  class="btn btn-lg btn-outline-info btn-block">Reserva Tu Espacio</button>
         </div>
         <div class="col-lg-6">
-          <button class="btn btn-lg btn-outline-success btn-block">Pide Tu Articulo</button>
+          <button style="height: 100px" class="btn btn-lg btn-outline-success btn-block">Pide Tu Articulo</button>
         </div>
       </div>
     </div>
 
     <!--Botones para cambiar entre historial de reservas y de prestamos-->
-    <div id="historial" class="container" style="margin-top:100px">
-      <div class="btn-group" style="margin-top: 100px">
+    <div id="historial" class="container" >
+      <div class="btn-group" style="margin-top: 50px">
         <div type="button" class="btn btn-outline-secondary btn-1 active" onclick="show_reservs()">Reservas</div>
         <div type="button" class="btn btn-outline-secondary btn-2 " onclick="show_loans()">Préstamos</div>
       </div>
@@ -60,16 +61,17 @@
       <!--Historial de reservas-->
       <div class="row" id="historial-reservas">
         <div class="col-sm-6">
-          <table class="table table-sm table-responsive-lg">
+          <table class="table table-sm table-responsive-lg" style="border:1px solid #ddd">
             {% if reservs %}
               <tbody>
                 {% for rsv in reservs %}
                   <tr>
-                    <td width="10%"> 
+                    <td><input type="checkbox" class="checkthis" /></td>
+                    <!--<td width="10%"> 
                       <form method="POST"> {% csrf_token %}
-                        <button name="remove" value=" {{ rsv.id }} ">X</button>
+                        <button class="btn btn-outline-secondary" name="remove" value=" {{ rsv.id }} ">X</button>
                       </form>
-                    </td>
+                    </td>-->
                     <td align="left" width="40%">{{ rsv.product }}</td>
                     <td align="right" width="50%"><kbd> {{ rsv.state }} </kbd></td>
                   </tr>
@@ -87,17 +89,13 @@
       <div class="row" id="historial-prestamos" style="display: none">
         <div class="col-sm-12">
           <table class="table table-sm table-responsive-lg">
-            {% if products %}
+            {% if loans %}
               <tbody>
-                {% for product in products %}
+                {% for loan in loans %}
                   <tr>
-                    <td width="5%"> 
-                      <form method="POST"> {% csrf_token %}
-                        <button name="remove" value=" {{ product.id }} ">X</button>
-                      </form>
-                    </td>
-                    <td align="left" width="40%">{{ product.title }}</td>
-                    <td align="right" width="50%"> {{ product.description }} </td>
+                    <td width="33%">{{ loan.product }}</td>
+                    <td width="33%"><kbd> {{ loan.state }} </kbd> </td>
+                    <td width="33%">{{ loan.date }}</td>
                   </tr>
                 {% endfor %}
               </tbody>
@@ -118,8 +116,6 @@
         if (x.style.display === "none") {
           x.style.display = "block";
           y.style.display = "none";
-        } else {
-          x.style.display = "none";
         }
       }
     </script>
@@ -131,11 +127,8 @@
         if (y.style.display === "none") {
           y.style.display = "block";
           x.style.display = "none";
-        } else {
-          y.style.display = "none";
-        }
+        } 
       }
     </script>
-
   </body>
 </html>

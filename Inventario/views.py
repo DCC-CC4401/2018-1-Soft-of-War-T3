@@ -15,8 +15,10 @@ def productos(request):
 
 def user(request):
     reservs = Reserva.objects.all()[:10]
+    products = Productos.objects.all()[:10]
     context = {
         'reservs': reservs,
+        'products': products,
     }
     return render(request, 'user.html', context)
 

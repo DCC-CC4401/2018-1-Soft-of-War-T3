@@ -18,15 +18,36 @@
 
   <body>
 
-    <h2>{{articulo.title}}<span class="badge badge-secondary">
-    {% if articulo.status == 1%}
-      Habilitado
-    {% else %}
-      Deshabilitado
-    {% endif %}
-    </span></h2>
-    <img src="{{ articulo.image.url }}">
-    {{articulo.description}}
+    <div class="form-inline" style="height:120px">
+
+      <div class="col-sm-1"></div>
+      <div class="form-inline col-sm-10">
+        <h2>{{articulo.title}}</h2>
+
+        {% if articulo.status == 1%}
+          <h6 class="badge badge-secondary">Habilitado</h6>
+        {% else %}
+          <h6 class="badge badge-secondary">Deshabilitado</h6>
+        {% endif %}
+
+      </div>
+      <div class="col-sm-1"></div>
+
+    </div>
+
+    <div class="form-inline">
+      <div class="col-sm-1"></div>
+      <img style="width:400px; height:400px" src="{{ articulo.image.url }}">
+      <div class="col-sm-1"></div>
+    </div>
+
+    <div style="height:50px"></div>
+
+    <div class="form-inline">
+      <div class="col-sm-1"></div>
+      {{articulo.description}}
+      <div class="col-sm-1"></div>
+    </div>
 
   </body>
 

@@ -8,7 +8,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
     <style>
       /* Style the active class, and buttons on mouse-over */
       .active, .btn:hover {
@@ -16,7 +15,6 @@
         color: white;
       }
     </style>
-
   </head>
 
   <!--Header-->
@@ -63,11 +61,11 @@
                 {% for rsv in reservs %}
                   <tr>
                     <td><input type="checkbox" class="checkthis" /></td>
-                    <!--<td width="10%"> 
+                    <td width="10%"> 
                       <form method="POST"> {% csrf_token %}
                         <button class="btn btn-outline-secondary" name="remove" value=" {{ rsv.id }} ">X</button>
                       </form>
-                    </td>-->
+                    </td>
                     <td align="left" width="40%">{{ rsv.product }}</td>
                     <td align="right" width="50%"><kbd> {{ rsv.state }} </kbd></td>
                   </tr>

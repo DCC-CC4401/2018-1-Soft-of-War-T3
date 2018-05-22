@@ -1,19 +1,24 @@
+<!DOCTYPE html>
 {% load static %}
 {% load staticfiles %}
 
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/landing_page_usuarios.css' %}">
+    <title>Perfil de Usuario</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
-      /* Style the active class, and buttons on mouse-over */
       .active, .btn:hover {
         background-color: #666;
         color: white;
       }
+      
     </style>
   </head>
 
@@ -23,22 +28,22 @@
   <body>
 
     <!--Botones de reserva y prestamo-->
-    <div class="container" style="margin-top:40px">
+    <div id="botones-principales-sitio" class="container" style="margin-top:40px">
       <div class="row">
         <div class="col-lg-6">
-          <button style="height: 120px"  class="btn btn-lg btn-outline-info btn-block">Reserva Tu Espacio</button>
+          <button style="height: 120px"  class="btn btn-lg btn-info btn-block">Reserva Tu Espacio</button>
         </div>
         <div class="col-lg-6">
-          <button style="height: 120px" class="btn btn-lg btn-outline-success btn-block">Pide Tu Articulo</button>
+          <button style="height: 120px" class="btn btn-lg btn-success btn-block">Pide Tu Articulo</button>
         </div>
       </div>
     </div>
 
     <!--Botones para cambiar entre historial de reservas y de prestamos-->
-    <div id="historial" class="container" >
-      <div class="btn-group" style="margin-top: 50px">
-        <div id="activeButton" type="button" class="btn btn-outline-secondary active" onclick="show_reservs()">Reservas</div>
-        <div type="button" class="btn btn-outline-secondary" onclick="show_loans()">Préstamos</div>
+    <div class="container" >
+      <div id="reservas-o-prestamos" class="btn-group" style="margin-top: 50px">
+        <div type="button" class="btn btn-outline-secondary active" onclick="$('#historial-reservas').show();$('#historial-prestamos').hide();">Reservas</div>
+        <div type="button" class="btn btn-outline-secondary" onclick="$('#historial-prestamos').show();$('#historial-reservas').hide();">Préstamos</div>
       </div>
     </div>
 
@@ -51,32 +56,33 @@
     </script>
 
     <!--Historial-->
-    <div  class="container" style="margin-top:20px"> 
+    <div class="container" style="margin-top:20px"> 
+
       <!--Historial de reservas-->
       <div class="row" id="historial-reservas">
         <div class="col-sm-6">
-          <table class="table table-sm table-responsive-lg" style="border:1px solid #ddd">
+          <table class="table table-hover ">
             {% if reservs %}
               <tbody>
                 {% for rsv in reservs %}
-                  <tr>
+                  <tr style="cursor: pointer;">
                     <td><input type="checkbox" class="checkthis" /></td>
-                    <td width="10%"> 
+                    <!--<td width="10%"> 
                       <form method="POST"> {% csrf_token %}
                         <button class="btn btn-outline-secondary" name="remove" value=" {{ rsv.id }} ">X</button>
                       </form>
-                    </td>
+                    </td>-->
                     <td align="left" width="40%">{{ rsv.product }}</td>
-                    <td align="right" width="50%"><kbd> {{ rsv.state }} </kbd></td>
+                    <td align="right" width="50%"><kbd> {{rsv.state}}  </kbd> </td>
                   </tr>
                 {% endfor %}
               </tbody>
             {% else %}
-              <p>No hay reservas.</p>
+              <p>No tienes reservas registradas.</p>
             {% endif %}
           </table>
         </div>
-        <div class="col-sm-6" >Aqui debe ir el primer producto del historial de reservas</div>
+        <div class="col-sm-6" >Primer producto del historial de reservas</div>
       </div>
 
       <!--Historial de prestamos-->
@@ -102,13 +108,8 @@
 
     </div>
 
-    <div class="list-group">
-      <a href="#" class="list-group-item">First item</a>
-      <a href="#" class="list-group-item">Second item</a>
-      <a href="#" class="list-group-item">Third item</a>
-    </div> 
-    <!--Script para mostrar la tabla de reservas (y ocultar la de prestamos si es necesario-->
-    <script>
+    <!--Script para mostrar la tabla de reservas (y ocultar la de prestamos si es necesario (deprecated)-->
+    <!--<script>
       function show_reservs() {
         var y = document.getElementById("historial-prestamos");
         var x = document.getElementById("historial-reservas");
@@ -117,10 +118,10 @@
           y.style.display = "none";
         }
       }
-    </script>
+    </script>-->
 
-    <!--Script para mostrar la tabla de prestamos (y ocultar la de reservas si es necesario-->
-    <script>
+    <!--Script para mostrar la tabla de prestamos (y ocultar la de reservas si es necesario (deprecated)-->
+    <!--<script>
       function show_loans() {
         var x = document.getElementById("historial-reservas");
         var y = document.getElementById("historial-prestamos");
@@ -129,6 +130,7 @@
           x.style.display = "none";
         } 
       }
-    </script>
+    </script>-->
+
   </body>
 </html>

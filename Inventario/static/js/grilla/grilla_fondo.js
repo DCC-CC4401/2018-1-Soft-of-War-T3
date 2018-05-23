@@ -1,5 +1,5 @@
-var width = 1200;
-var height = 400;
+var width = document.getElementById("mydiv").offsetWidth;
+var height = width/3;
 
 var canvas = d3.select("#abc")
 				.append("svg")

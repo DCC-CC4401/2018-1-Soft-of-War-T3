@@ -37,3 +37,12 @@ def ex(request):
     }
     return render(request, 'ex.html', context)
 
+def grilla_espacios_usuario(request):
+    context = {
+    }
+    return render(request, 'grilla_espacios_usuario.html', context)
+
+def article_detail(request, pk):
+    print(pk)
+    articulo = Productos.objects.get(pk=pk)
+    return render(request, 'articulos.html', {'articulo': articulo})

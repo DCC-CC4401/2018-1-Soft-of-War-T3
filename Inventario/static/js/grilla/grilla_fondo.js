@@ -1,10 +1,11 @@
-var width = 1200;
-var height = 400;
+var width = document.getElementById("grilla").offsetWidth;
+var height = width/3;
+var height_filtros = width/3;
 
-var canvas = d3.select("#abc")
+var canvas = d3.select("#grilla")
 				.append("svg")
 				.attr("width", width)
-				.attr("height", height);
+				.attr("height", height + height_filtros);
 
 var grupo_lineas_base = canvas.append("g");
 var grupo_texto_horas = canvas.append("g").attr("class", "horas_grilla");

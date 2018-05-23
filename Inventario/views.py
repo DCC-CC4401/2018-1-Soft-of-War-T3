@@ -17,9 +17,12 @@ def user(request):
     reservs = Reserva.objects.all()[:10]
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.all()[:10]
+    first_reserv = Reserva.objects.all()[0]
     context = {
+        'products':products,
         'reservs': reservs,
         'loans': loans,
+        'first_reserv':first_reserv,
     }
     return render(request, 'user.html', context)
 

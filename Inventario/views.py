@@ -14,26 +14,35 @@ def productos(request):
     return render(request, 'productos.html', context)
 
 def user(request):
-    reservs = Reserva.objects.all()[:10]
+    reservs = Reserva.objects.order_by('-date')[1:10]
     products = Productos.objects.all()[:10]
-    loans = Prestamo.objects.all()[:10]
-    first_reserv = Reserva.objects.all()[0]
+    loans = Prestamo.objects.order_by('-date')[:10]
+    latest_reserv = Reserva.objects.order_by('-date')[0]
+    penult_reserv = Reserva.objects.order_by('-date')[1]
+    antep_reserv = Reserva.objects.order_by('-date')[2]
     context = {
         'products':products,
         'reservs': reservs,
         'loans': loans,
-        'first_reserv':first_reserv,
+        'latest_reserv':latest_reserv,
+        'penult_reserv':penult_reserv,
+        'antep_reserv':antep_reserv,
     }
+    if request.POST.get("remove", False):
+        instance = Reserva.objects.get(id=request.POST["remove"])
+        instance.delete()
     return render(request, 'user.html', context)
 
 def ex(request):
-    reservs = Reserva.objects.all()[:10]
+    reservs = Reserva.objects.order_by('-date')[1:10]
     products = Productos.objects.all()[:10]
-    loans = Prestamo.objects.all()[:10]
+    loans = Prestamo.objects.order_by('-date')[:10]
+    latest_reserv = Reserva.objects.order_by('-date')[0]
     context = {
+        'products':products,
         'reservs': reservs,
         'loans': loans,
-        'products': products,
+        'latest_reserv':latest_reserv,
     }
     return render(request, 'ex.html', context)
 

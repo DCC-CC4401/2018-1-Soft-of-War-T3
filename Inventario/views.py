@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
-
+import json
 from .models import Productos,Reserva,Prestamo
 
 def index(request):
@@ -11,6 +11,15 @@ def productos(request):
     context = {
         'products': products,
     }
+    if request.method == "POST":
+        buscar = request.POST['busqueda']
+        if not buscar == "":
+            context['busqueda'] = buscar
+            search = Productos.objects.filter(title__contains=buscar)
+            context['search'] = search
+            context['search_len'] = len(search)
+            print(len(search))
+        print(buscar)
     return render(request, 'productos.html', context)
 
 def user(request):

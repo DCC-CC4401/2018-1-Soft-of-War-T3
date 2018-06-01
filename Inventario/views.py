@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import time
 
-from .models import Productos,Reserva,Prestamo
+from .models import Productos,Reserva,Prestamo, ReservaEspacio
 
 def index(request):
     return render(request, 'header.html', {})
+
 
 def productos(request):
     products = Productos.objects.all()[:10]
@@ -12,6 +14,7 @@ def productos(request):
         'products': products,
     }
     return render(request, 'productos.html', context)
+
 
 def user(request):
     reservs = Reserva.objects.all()[:10]
@@ -26,6 +29,7 @@ def user(request):
     }
     return render(request, 'user.html', context)
 
+
 def ex(request):
     reservs = Reserva.objects.all()[:10]
     products = Productos.objects.all()[:10]
@@ -37,10 +41,26 @@ def ex(request):
     }
     return render(request, 'ex.html', context)
 
-def grilla_espacios_usuario(request):
+
+def grilla_espacios_usuario(request, pk):
+    aux = ReservaEspacio.objects.all()
+    reservas_esp = []
+    lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+
+    salas_dict = {}
+    for reserva in aux:
+        if reserva.dia_semana() < 6 and reserva.dia_anho() >= lunes_semana + int(pk)*7 and reserva.dia_anho() < lunes_semana + (int(pk)+1)*7:
+            reservas_esp.append(reserva)
+            salas_dict[reserva.space.name] = 1
+
     context = {
+        'reserva_espacios': reservas_esp,
+        'lunes_semana': lunes_semana,
+        'salas': salas_dict.keys(),
+        'semana_relativa': pk
     }
     return render(request, 'grilla_espacios_usuario.html', context)
+
 
 def article_detail(request, pk):
     print(pk)

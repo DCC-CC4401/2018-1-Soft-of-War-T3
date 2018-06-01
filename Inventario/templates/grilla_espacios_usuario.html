@@ -32,9 +32,36 @@
         <!--Grilla-->
         {%include 'grilla_before.html'%}
         <script>
+            let paleta_colores = ["#feb236", "#66d", "#6d6", "#d66"];
 
+            let array_nombres = [];
+            {% for nombre in salas%}
+                array_nombres.push("{{ nombre }}")
+            {% endfor %}
+
+            {% for reserva in reserva_espacios%}
+
+                agregar_reserva("{{reserva.space.name}}", "{{reserva.state}}", parseInt("{{ reserva.dia_semana }}"),
+                    {
+                        hora: parseInt("{{ reserva.hora_inicial }}"),
+                        minuto: parseInt("{{ reserva.minuto_inicial }}")
+                    },
+                    {
+                        hora: parseInt("{{ reserva.hora_final }}"),
+                        minuto: parseInt("{{ reserva.minuto_final }}")
+                    },
+                    paleta_colores[array_nombres.indexOf("{{ reserva.space.name }}")%paleta_colores.length],
+                    0);
+            {% endfor %}
+
+            let index = 0;
+            {% for nombre in salas%}
+                agregar_filtro("{{ nombre }}", paleta_colores[index%paleta_colores.length], index);
+                index++;
+            {% endfor %}
         </script>
         {%include 'grilla_after.html'%}
+
     </div>
 
   </body>

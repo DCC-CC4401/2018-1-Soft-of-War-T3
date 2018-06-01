@@ -28,3 +28,17 @@ class Prestamo(models.Model):
     def __str__(self):
         return str(self.product)
 
+class Espacio(models.Model):
+    name        = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+
+class Reserva_Espacio(models.Model):
+    # user should be an object User
+    user        = models.CharField(max_length=200, default="No tiene usuario asignado.")
+    space       = models.ForeignKey(Espacio, on_delete=models.CASCADE)
+    state       = models.CharField(max_length=200)
+    date        = models.DateTimeField('date reserved', null=True, blank=True, default=datetime.now)
+
+    def __str__(self):
+        return str(self.space)

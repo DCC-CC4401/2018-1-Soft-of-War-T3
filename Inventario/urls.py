@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^$', views.index, name='header'),
     path('productos/', views.productos, name='productos'),
+    path('productos/busqueda_avanzada',views.busqueda_avanzada, name='busqueda_avanzada'),
     path('user/', views.user, name='user'),
     path('ex/', views.ex, name='ex'),
     url(r'^productos/(?P<pk>[0-9]+)/$', views.article_detail, name='article_detail'),

@@ -32,39 +32,45 @@
 
         <div class="row" style="height: 7%"></div>
 
-        <!--search bar-->
         <div class="row">
-          <form class="form-inline col-sm-12" method="POST" action="/productos/">{% csrf_token%}
-            <input class="form-control col-sm-10" type="text" placeholder="Ej: toldo" name="busqueda" aria-label="Search">
-            <button class="btn btn-outline-success col-sm-2 my-sm-0" type="submit">Buscar</button>
-          </form>
-        </div>
-        <div class="row" style="text-align: center;">
-          <div class="col-sm-10"></div>
-          <div class="col-sm-2"><small><a href="/productos/busqueda_avanzada">Busqueda avanzada</a></small></div>
-        </div>
-
-        <!--result-->
-        {%if search_len == 0%}
-          <h6 style="color:#A2A2A2;">No se encontraron resultados para "{{busqueda}}"</h6>
-        {%endif%}
-        {%if search%}
-          <h6 style="color:#A2A2A2;">{{search_len}} resultados para "{{busqueda}}"</h6>
-        {% endif %}
-        <div class="row form-inline">
-          {% for product in search%}
-            <div class="col-sm-2">
-              <div class="card" >
-                <img class="card-img-top" src="{{ product.image.url }}" height="100px">
-                <div class="card-body">
-                    <h8 class="card-title"><i class="material-icons" id = "circulo_disponibilidad" {% if product.status == 1 %} style="color:#B1BC54; font-size:1rem;" {% else %} style="color:#CB3434; font-size:1rem;" {% endif %}>fiber_manual_record</i>
-                      <a href="/productos/{{product.id}}">{{product.title}}{{i}}</a>
-                    </h8>
+          <!--result-->
+          <div class="col-sm-6">
+            {%if search_len == 0%}
+              <h6 style="color:#A2A2A2;">No se encontraron resultados</h6>
+            {%endif%}
+            {%if search%}
+              <h6 style="color:#A2A2A2;">{{search_len}} resultados</h6>
+            {% endif %}
+            <div class="row form-inline">
+              {% for product in search%}
+                <div class="col-sm-4">
+                  <div class="card" >
+                    <img class="card-img-top" src="{{ product.image.url }}" height="100px">
+                    <div class="card-body">
+                        <h8 class="card-title"><i class="material-icons" id = "circulo_disponibilidad" {% if product.status == 1 %} style="color:#B1BC54; font-size:1rem;" {% else %} style="color:#CB3434; font-size:1rem;" {% endif %}>fiber_manual_record</i>
+                          <a href="/productos/{{product.id}}">{{product.title}}{{i}}</a>
+                        </h8>
+                    </div>
+                  </div>
+                  <div class="row" style="height: 2%"></div>
                 </div>
-              </div>
-              <div class="row" style="height: 2%"></div>
+              {% endfor %}
             </div>
-          {% endfor %}
+          </div>
+
+          <!--search bar-->
+          <div class="col-sm-6">
+            <div class="row jumbotron">
+              <form class="form-inline col-sm-12" method="POST" action="/productos/busqueda_avanzada">{% csrf_token%}
+                <input class="form-control col-sm-10" type="text" placeholder="Ej: toldo" name="busqueda" aria-label="Search">
+                <button class="btn btn-outline-success col-sm-2 my-sm-0" type="submit">Buscar</button>
+              </form>
+              <div class="row" style="text-align: center;">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4"><small><a href="/productos/busqueda_avanzada">Busqueda simple</a></small></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="row" style="height: 7%"></div>

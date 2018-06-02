@@ -20,8 +20,6 @@ def productos(request):
             search = Productos.objects.filter(title__contains=buscar)
             context['search'] = search
             context['search_len'] = len(search)
-            print(len(search))
-        print(buscar)
     return render(request, 'productos.html', context)
 
 
@@ -75,3 +73,17 @@ def article_detail(request, pk):
     print(pk)
     articulo = Productos.objects.get(pk=pk)
     return render(request, 'articulos.html', {'articulo': articulo})
+
+def busqueda_avanzada(request):
+    products = Productos.objects.all()[:10]
+    context = {
+        'products': products,
+    }
+    if request.method == "POST":
+        buscar = request.POST['busqueda']
+        if not buscar == "":
+            context['busqueda'] = buscar
+            search = Productos.objects.filter(title__contains=buscar)
+            context['search'] = search
+            context['search_len'] = len(search)
+    return render(request, 'busqueda_avanzada.html', context)

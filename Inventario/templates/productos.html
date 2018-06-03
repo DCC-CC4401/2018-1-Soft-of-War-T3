@@ -19,7 +19,7 @@
 
   <body>
     <div class="row">
-      <div class="col-sm-1 form-inline"></div>
+      <div class="col-sm-1 col-xs-0 form-inline"></div>
       <div class="col-sm-10">
 
       <!--Botones para cambiar entre historial de reservas y de prestamos-->
@@ -46,14 +46,14 @@
 
         <!--result-->
         {%if search_len == 0%}
-          <h6 style="color:#A2A2A2;">No se encontraron resultados para "{{busqueda}}"</h6>
+          <small style="color:#A2A2A2;">No se encontraron resultados para "{{busqueda}}"</small>
         {%endif%}
         {%if search%}
-          <h6 style="color:#A2A2A2;">{{search_len}} resultados para "{{busqueda}}"</h6>
+          <small style="color:#A2A2A2;">{{search_len}} resultados para "{{busqueda}}"</small>
         {% endif %}
         <div class="row form-inline">
           {% for product in search%}
-            <div class="col-sm-2">
+            <div class="col-lg-2 col-md-3 col-sm-8 col-6">
               <div class="card" >
                 <img class="card-img-top" src="{{ product.image.url }}" height="100px">
                 <div class="card-body">
@@ -75,12 +75,12 @@
 
         <div class="form-inline row">
           {% for product in products%}
-            <div class="col-sm-2">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
               <div class="card" >
-                <img class="card-img-top" src="{{ product.image.url }}" height="100px">
+                <img class="card-img-top" src="{{ product.image.url }}" height="100px" object-fit="cover">
                 <div class="card-body">
                     <h8 class="card-title"><i class="material-icons" id = "circulo_disponibilidad" {% if product.status == 1 %} style="color:#B1BC54; font-size:1rem;" {% else %} style="color:#CB3434; font-size:1rem;" {% endif %}>fiber_manual_record</i>
-                      <a href="/productos/{{product.id}}">{{product.title}}{{i}}</a>
+                      <a href="/productos/{{product.id}}">{{product.title}}</a>
                     </h8>
                 </div>
               </div>
@@ -91,7 +91,7 @@
 
 
       </div>
-      <div class="col-sm-1 form-inline"></div>
+      <div class="col-sm-1 col-xs-0 form-inline"></div>
     </div>
     <div class="row" style="height: 7%"></div>
   </body>

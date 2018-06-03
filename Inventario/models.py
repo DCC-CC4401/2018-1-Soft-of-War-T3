@@ -6,7 +6,7 @@ class Productos(models.Model):
     title       = models.CharField(max_length=200)
     description = models.TextField()
     image       = models.ImageField(upload_to='img/photos/', default='img/photos/default.png')
-    status      = models.IntegerField(default=1, choices=((1, 'Habilitado'),(0, 'Deshabilitado')))
+    status      = models.IntegerField(default=1, choices=((1, 'Disponible'),(0, 'En Prestamo'),(2, 'En Reparacion'),(3, 'Perdido')))
     def __str__(self):
         return self.title
 

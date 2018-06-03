@@ -33,17 +33,51 @@
         <div class="row" style="height: 7%"></div>
 
         <div class="row">
+          <!--search bar-->
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="row jumbotron">
+              <h6 class="col-sm-12" style="color:#A2A2A2;">Busqueda avanzada</h6>
+              <form class="form-inline col-sm-12" method="POST" action="/productos/busqueda_avanzada">{% csrf_token%}
+                <input class="form-control col-lg-2 col-sm-4" type="number" placeholder="ID" name="id" aria-label="Search">
+                <input class="form-control col-lg-10 col-sm-8" type="text" placeholder="Ej: toldo" name="busqueda" aria-label="Search">
+
+                <div class="row" style="height: 8%"></div>
+
+                <small class="col-sm-12" style="color:#A2A2A2;">Fecha Inicio</small>
+                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-md-12 col-sm-8">
+                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-md-12 col-sm-4">
+                <div class="row" style="height: 8%"></div>
+
+                <small class="col-sm-12" style="color:#A2A2A2;">Fecha Termino</small>
+                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-md-12 col-sm-8">
+                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-md-12 col-sm-4">
+                <div class="row" style="height: 8%"></div>
+
+                <select class="form-control col-sm-12" name="estado">
+                  <option>Disponible</option>
+                  <option>En prestamo</option>
+                  <option>Perdido</option>
+                  <option>En reparación</option>
+                </select>
+
+                <div class="row" style="height: 8%"></div>
+
+                <button class="btn btn-outline-success col-sm-12 my-sm-0" type="submit">Buscar</button>
+              </form>
+              <div class="col-sm-12"><small><a href="/productos/">Busqueda simple</a></small></div>
+            </div>
+          </div>
           <!--result-->
-          <div class="col-sm-6">
+          <div class="col-lg-6 col-md-6 col-sm-12">
             {%if search_len == 0%}
-              <h6 style="color:#A2A2A2;">No se encontraron resultados</h6>
+              <small style="color:#A2A2A2;">No se encontraron resultados</small>
             {%endif%}
             {%if search%}
-              <h6 style="color:#A2A2A2;">{{search_len}} resultados</h6>
+              <small style="color:#A2A2A2;">{{search_len}} resultados</small>
             {% endif %}
             <div class="row form-inline">
               {% for product in search%}
-                <div class="col-sm-4">
+                <div class="col-lg-4 col-md-6 col-sm-8 col-6">
                   <div class="card" >
                     <img class="card-img-top" src="{{ product.image.url }}" height="100px">
                     <div class="card-body">
@@ -58,19 +92,7 @@
             </div>
           </div>
 
-          <!--search bar-->
-          <div class="col-sm-6">
-            <div class="row jumbotron">
-              <form class="form-inline col-sm-12" method="POST" action="/productos/busqueda_avanzada">{% csrf_token%}
-                <input class="form-control col-sm-10" type="text" placeholder="Ej: toldo" name="busqueda" aria-label="Search">
-                <button class="btn btn-outline-success col-sm-2 my-sm-0" type="submit">Buscar</button>
-              </form>
-              <div class="row" style="text-align: center;">
-                <div class="col-sm-4"></div>
-                <div class="col-sm-4"><small><a href="/productos/busqueda_avanzada">Busqueda simple</a></small></div>
-              </div>
-            </div>
-          </div>
+
         </div>
 
         <div class="row" style="height: 7%"></div>
@@ -81,7 +103,7 @@
 
         <div class="form-inline row">
           {% for product in products%}
-            <div class="col-sm-2">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
               <div class="card" >
                 <img class="card-img-top" src="{{ product.image.url }}" height="100px">
                 <div class="card-body">

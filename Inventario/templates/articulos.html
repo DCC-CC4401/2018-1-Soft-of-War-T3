@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    <title> {{articulo.title}} </title>
   </head>
 
   <!--Header-->
@@ -27,21 +28,23 @@
 
             <div class="row form-inline">
               <div class="col-sm-1"></div>
-              <h2 class="col-sm-10">{{articulo.title}}
-                <span class="badge badge-success">
+              <h3 class="col-sm-10">{{articulo.title}}
+                <span class="badge
                   {% if articulo.status == 1%}
-                    Habilitado
-                  {% else %}
-                    Deshabilitado
+                    badge-success">Diponible
+                  {% elif articulo.status == 0%}
+                    badge-danger">En prestamo
+                  {% elif articulo.status == 2%}
+                    badge-danger">En reparación
+                  {% elif articulo.status == 3%}
+                    badge-danger">Perdido
                   {% endif %}
                 </span>
-              </h2>
+              </h3>
               <div class="col-sm-1"></div>
             </div>
 
-            <div class="row">
-              <img class="img-thumbnail" style="width:100%; height:400px" src="{{ articulo.image.url }}">
-            </div>
+            <div class="row rounded" style="height:400px; background:url({{ articulo.image.url }}) no-repeat center; background-size: cover;"></div>
 
             <div class="row" style="height: 2%"></div>
 
@@ -51,7 +54,7 @@
 
           </div>
           <div class="col-sm-6">
-            <div class="row" style="height: 5%"></div>
+            <div class="row" style="height: 4%"></div>
 
             <hr>
             <h7 class="col-sm-12" style="color:#A2A2A2;">Solicitar reserva</h7>
@@ -59,20 +62,22 @@
 
             <form class="col-sm-12">
               <small style="color:#A2A2A2;">Fecha Inicio</small>
-              <div class="form-group">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Fecha">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Hora">
+              <div class="form-inline">
+                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-sm-12">
+                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-sm-12">
               </div>
+              <div class="row" style="height: 3%"></div>
 
-              <small style="color:#A2A2A2;">Fecha Fin</small>
-              <div class="form-group">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Fecha">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Hora">
+              <small style="color:#A2A2A2;">Fecha Termino</small>
+              <div class="form-inline">
+                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-sm-12">
+                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-sm-12">
               </div>
+              <div class="row" style="height: 3%"></div>
               <button type="submit" class="btn btn-primary">Reservar</button>
             </form>
 
-            <div class="row" style="height: 7%"></div>
+            <div class="row" style="height: 17%"></div>
             <hr>
 
             <h7 class="col-sm-12" style="color:#A2A2A2;">Historial de reserva</h7>

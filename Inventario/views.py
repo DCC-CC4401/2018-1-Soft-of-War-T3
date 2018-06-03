@@ -5,7 +5,7 @@ import json
 from .models import Productos,Reserva,Prestamo, ReservaEspacio
 
 def index(request):
-    return render(request, 'header.html', {})
+    return render(request, 'login.html', {})
 
 
 def productos(request):
@@ -24,17 +24,18 @@ def productos(request):
 
 
 def user(request):
+
     reservs = Reserva.objects.all()[:10]
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.all()[:10]
-    first_reserv = Reserva.objects.all()[0]
+    #first_reserv = Reserva.objects.all()[0]
     context = {
         'products':products,
         'reservs': reservs,
         'loans': loans,
-        'first_reserv':first_reserv,
+        #'first_reserv':first_reserv,
     }
-    return render(request, 'user.html', context)
+    return render(request, 'user.html',{})
 
 
 def ex(request):

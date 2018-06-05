@@ -1,8 +1,11 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponse
 import time
 import json
-from .models import Productos,Reserva,Prestamo, ReservaEspacio
+from .models import Productos,Reserva,Prestamo, ReservaEspacio, Perfil
+from django.contrib.auth import login, authenticate
+from .forms import SignUpForm
+from django.views.generic import CreateView
 
 def index(request):
     return render(request, 'login.html', {})
@@ -88,3 +91,15 @@ def busqueda_avanzada(request):
             context['search'] = search
             context['search_len'] = len(search)
     return render(request, 'busqueda_avanzada.html', context)
+
+class SignUpView(CreateView):
+    model = Perfil
+    form_class = SignUpForm
+
+    def form_valid(self, form):
+        form.save()
+        usuario = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        usuario = authenticate(username=usuario, password=password)
+        login(self.request, usuario)
+        return redirect('/')

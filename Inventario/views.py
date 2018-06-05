@@ -6,6 +6,7 @@ from .models import Productos,Reserva,Prestamo, ReservaEspacio, Perfil
 from django.contrib.auth import login, authenticate
 from .forms import SignUpForm
 from django.views.generic import CreateView
+from django.contrib.auth.views import LogoutView
 
 def index(request):
     return render(request, 'login.html', {})
@@ -103,3 +104,6 @@ class SignUpView(CreateView):
         usuario = authenticate(username=usuario, password=password)
         login(self.request, usuario)
         return redirect('/')
+
+class SignOutView(LogoutView):
+    pass

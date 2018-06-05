@@ -124,3 +124,6 @@ STATIC_URL = '/static/'
 MEDIA_URL  = '/media/'
 SITE_ROOT  = os.path.realpath(os.path.dirname(__file__))
 MEDIA_ROOT = os.path.join(SITE_ROOT, 'img')
+LOGIN_URL = '/inicia-sesion/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

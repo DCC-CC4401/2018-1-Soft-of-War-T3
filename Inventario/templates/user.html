@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -41,7 +42,7 @@
   <body>      
 
     <!--Botones de reserva y prestamo-->
-    <div id="botones-principales-sitio" class="container" style="margin-top:40px">
+    <!--<div id="botones-principales-sitio" class="container" style="margin-top:40px">
       <div class="row">
         <div class="col-lg-6">
           <button style="height: 120px"  class="btn btn-lg btn-info btn-block">Reserva Tu Espacio</button>
@@ -50,7 +51,7 @@
           <button style="height: 120px" class="btn btn-lg btn-success btn-block">Pide Tu Articulo</button>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <!--Historial-->
     <div class="container" style="margin-top:20px; margin-bottom: 20px"> 
@@ -67,7 +68,9 @@
           </ul>
         </div>
         <div class="p-2 ">
-          <a href="#" class="delete btn btn-outline-danger">Eliminar seleccionados <i class="material-icons">delete</i></a>
+          <form method="POST"> {% csrf_token %}
+            <button name="delete" value="delete" class="delete btn btn-outline-danger" >Eliminar seleccionados <i class="material-icons">delete</i></button>
+          </form>
         </div>
       </div>
 
@@ -83,22 +86,26 @@
                 <div class="btn-group-vertical col-md-12 p-0">
                     <div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0 active" role="button">
                       <div class="float-left"><input type="checkbox" class="checkthis" /></div>
-                      <!--<div>
+                      <div class="float-left">
                         <form method="POST"> {% csrf_token %}
-                          <button class="btn btn-outline-secondary" name="remove" value=" {{ latest_reserv.id }} ">X</button>
+                          <button class="btn btn-sm btn-outline-danger" name="remove" value=" {{ latest_reserv.id }} ">
+                            <i class="material-icons">delete</i>
+                          </button>
                         </form>
-                      </div>-->
+                      </div>
                       <div class="float-left w-25">{{latest_reserv.product}}</div>
                       <div class="float-right"><kbd>{{latest_reserv.state}}</kbd></div>
                     </div>
                   {% for rsv in reservs %}
                     <div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0" role="button">
                       <div class="float-left"><input type="checkbox" class="checkthis" /></div>
-                      <!--<div>
+                      <div class="float-left">
                         <form method="POST"> {% csrf_token %}
-                          <button class="btn btn-outline-secondary" name="remove" value=" {{ rsv.id }} ">X</button>
+                          <button class="btn btn-sm btn-outline-danger" name="remove" value=" {{ rsv.id }} ">
+                            <i class="material-icons">delete</i>
+                          </button>
                         </form>
-                      </div>-->
+                      </div>
                       <div class="float-left w-25">{{rsv.product}}</div>
                       <div class="float-right"><kbd>{{rsv.state}}</kbd></div>
                     </div>
@@ -166,6 +173,7 @@
 
     </div>
 
+    <!--Script JQuery para mostrar el boton de Eliminar al cliquear un checkbox de reservas-->
     <script>
       $(document).ready(function() {
         var $checks = $("input[type='checkbox']").change(function() {
@@ -173,6 +181,13 @@
           $(".delete").toggle(checked);
         });
         $checks.first().change();
+      });
+    </script>
+
+    <script>
+      $(".delete").on('click', function(){
+        $(".checkthis").hide();
+        //var checkedValue = $('.checkthis:checked').val().show();
       });
     </script>
 

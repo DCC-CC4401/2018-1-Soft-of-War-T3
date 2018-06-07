@@ -29,8 +29,14 @@ def user(request):
         'antep_reserv':antep_reserv,
     }
     if request.POST.get("remove", False):
-        instance = Reserva.objects.get(id=request.POST["remove"])
-        instance.delete()
+        #instance = Reserva.objects.get(id=request.POST["remove"])
+        #instance.delete()
+        print("descomentar instrucciones")
+
+    if request.POST.get("delete", False ):
+        print("hola")
+        #Items.objects.filter(id__in=request.POST.getlist('items')).delete()
+
     return render(request, 'user.html', context)
 
 def ex(request):

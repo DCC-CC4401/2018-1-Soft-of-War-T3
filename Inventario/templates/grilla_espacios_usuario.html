@@ -32,11 +32,11 @@
         <!--Grilla-->
         {%include 'grilla_before.html'%}
         <script>
-            let paleta_colores = ["#feb236", "#66d", "#6d6", "#d66"];
+            var paleta_colores = ["#feb236", "#66d", "#6d6", "#d66"];
 
-            let array_nombres = [];
+            var array_nombres = [];
             {% for nombre in salas%}
-                array_nombres.push("{{ nombre }}")
+                array_nombres.push("{{ nombre }}");
             {% endfor %}
 
             {% for reserva in reserva_espacios%}
@@ -54,11 +54,25 @@
                     0);
             {% endfor %}
 
-            let index = 0;
+            var index = 0;
             {% for nombre in salas%}
                 agregar_filtro("{{ nombre }}", paleta_colores[index%paleta_colores.length], index);
+                enable_filter("{{ nombre }}");
                 index++;
             {% endfor %}
+
+        d3.select("#boton_semana_siguiente_grilla")
+            .attr("href", "http://google.com");
+
+        d3.select("#boton_semana_anterior_grilla")
+            .attr("href", "http://google.com");
+
+        d3.select("#boton_mes_siguiente_grilla")
+            .attr("href", "http://google.com");
+
+        d3.select("#boton_mes_anterior_grilla")
+            .attr("href", "http://google.com");
+
         </script>
         {%include 'grilla_after.html'%}
 

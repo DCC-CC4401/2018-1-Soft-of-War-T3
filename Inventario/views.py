@@ -11,16 +11,23 @@ from django.contrib.auth.views import LogoutView
 def index(request):
     return render(request, 'login.html', {})
 
+def verificacion(request):
+    return render(request, 'verificacion.html', {})
 
 def productos(request):
     products = Productos.objects.all()[:10]
     context = {
         'products': products,
     }
+
     if request.method == "POST":
-        buscar = request.POST['busqueda']
+        buscar = ""
+        try:
+            buscar = request.POST['busqueda']
+        except:
+            pass
         if not buscar == "":
-            context['busqueda'] = buscar
+            context['busqueda_2'] = buscar
             search = Productos.objects.filter(title__contains=buscar)
             context['search'] = search
             context['search_len'] = len(search)
@@ -32,14 +39,17 @@ def user(request):
     reservs = Reserva.objects.all()[:10]
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.all()[:10]
-    #first_reserv = Reserva.objects.all()[0]
+    first_reserv = Reserva.objects.all()[:1]
     context = {
         'products':products,
         'reservs': reservs,
         'loans': loans,
-        #'first_reserv':first_reserv,
+        'first_reserv':first_reserv,
     }
     return render(request, 'user.html',{})
+
+def admin(request):
+    return render(request, 'admin.html', {})
 
 
 def ex(request):

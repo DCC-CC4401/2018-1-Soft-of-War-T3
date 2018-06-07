@@ -36,7 +36,7 @@
   <!--Header-->
   {%include 'header.html'%}
 
-  <body>      
+  <body>
 
     <!--Botones de reserva y prestamo-->
     <div id="botones-principales-sitio" class="container-fluid" style="margin-top:40px">
@@ -67,7 +67,7 @@
     </script>
 
     <!--Historial-->
-    <div class="container" style="margin-top:20px"> 
+    <div class="container" style="margin-top:20px">
 
       <!--Historial de reservas-->
       <div class="row" id="historial-reservas">
@@ -78,7 +78,7 @@
                 {% for rsv in reservs %}
                   <tr style="cursor: pointer;">
                     <td><input type="checkbox" class="checkthis" /></td>
-                    <!--<td width="10%"> 
+                    <!--<td width="10%">
                       <form method="POST"> {% csrf_token %}
                         <button class="btn btn-outline-secondary" name="remove" value=" {{ rsv.id }} ">X</button>
                       </form>
@@ -98,7 +98,7 @@
             <img src="img_avatar3.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
             <div class="media-body">
               <h4>John Doe <small><i>Posted on February 19, 2016</i></small></h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>      
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
           </div>
         </div>
@@ -183,7 +183,7 @@
         if (y.style.display === "none") {
           y.style.display = "block";
           x.style.display = "none";
-        } 
+        }
       }
     </script>-->
 

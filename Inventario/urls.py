@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^$', views.index, name='header'),
+    url(r'^$', views.index, name='sign_in'),
     path('productos/', views.productos, name='productos'),
     path('productos/busqueda_avanzada',views.busqueda_avanzada, name='busqueda_avanzada'),
     path('user/', views.user, name='user'),
@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^grilla_espacios/(?P<pk>[0-9]+)/$', views.grilla_espacios_usuario, name='grilla_espacios_usuario'),
     re_path(r'^registrate/$', views.SignUpView.as_view(), name='sign_up'),
     re_path(r'^cerrar-sesion/$', views.SignOutView.as_view(), name='sign_out'),
+    path('verificacion/',views.verificacion,name='verificacion'),
+    path('user/admin', views.admin, name='admin')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

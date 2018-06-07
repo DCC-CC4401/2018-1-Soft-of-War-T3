@@ -48,8 +48,14 @@ def user(request):
     }
     return render(request, 'user.html',{})
 
-def admin(request):
-    return render(request, 'admin.html', {})
+def admin_users(request):
+    return render(request, 'admin_users.html', {})
+
+def admin_inventario(request):
+    return render(request, 'admin_inventario.html', {})
+
+def admin_grilla(request):
+    return render(request, 'admin_grilla.html', {})
 
 
 def ex(request):

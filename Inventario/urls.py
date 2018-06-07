@@ -10,7 +10,9 @@ urlpatterns = [
     path('productos/busqueda_avanzada',views.busqueda_avanzada, name='busqueda_avanzada'),
     path('user/', views.user, name='user'),
     path('ex/', views.ex, name='ex'),
-    path('user/admin', views.admin, name='admin'),
+    path('user/admin/users/', views.admin_users, name='admin_users'),
+    path('user/admin/inventario/', views.admin_inventario, name='admin_inventario'),
+    path('user/admin/grilla/', views.admin_grilla, name='admin_grilla'),
 
     url(r'^productos/(?P<pk>[0-9]+)/$', views.article_detail, name='article_detail'),
     url(r'^grilla_espacios/(?P<pk>[0-9]+)/$', views.grilla_espacios_usuario, name='grilla_espacios_usuario'),

@@ -2,7 +2,6 @@
 {% load staticfiles %}
 
 <html>
-
   <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -46,10 +45,10 @@
 
         <!--result-->
         {%if search_len == 0%}
-          <small style="color:#A2A2A2;">No se encontraron resultados para "{{busqueda}}"</small>
+          <small style="color:#A2A2A2;">No se encontraron resultados para "{{busqueda_2}}"</small>
         {%endif%}
         {%if search%}
-          <small style="color:#A2A2A2;">{{search_len}} resultados para "{{busqueda}}"</small>
+          <small style="color:#A2A2A2;">{{search_len}} resultados para "{{busqueda_2}}"</small>
         {% endif %}
         <div class="row form-inline">
           {% for product in search%}

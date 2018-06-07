@@ -11,16 +11,23 @@ from django.contrib.auth.views import LogoutView
 def index(request):
     return render(request, 'login.html', {})
 
+def verificacion(request):
+    return render(request, 'verificacion.html', {})
 
 def productos(request):
     products = Productos.objects.all()[:10]
     context = {
         'products': products,
     }
+
     if request.method == "POST":
-        buscar = request.POST['busqueda']
+        buscar = ""
+        try:
+            buscar = request.POST['busqueda']
+        except:
+            pass
         if not buscar == "":
-            context['busqueda'] = buscar
+            context['busqueda_2'] = buscar
             search = Productos.objects.filter(title__contains=buscar)
             context['search'] = search
             context['search_len'] = len(search)

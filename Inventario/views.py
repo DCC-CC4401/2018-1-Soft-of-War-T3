@@ -6,7 +6,7 @@ from .models import Productos,Reserva,Prestamo, ReservaEspacio, Perfil
 from django.contrib.auth import login, authenticate
 from .forms import SignUpForm
 from django.views.generic import CreateView
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LoginView, LogoutView
 
 def index(request):
     return render(request, 'login.html', {})
@@ -117,3 +117,6 @@ class SignUpView(CreateView):
 
 class SignOutView(LogoutView):
     pass
+
+class SignInView(LoginView):
+    template_name = 'Inventario/iniciar_sesion.html'

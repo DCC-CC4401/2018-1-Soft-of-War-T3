@@ -15,5 +15,6 @@ urlpatterns = [
     re_path(r'^registrate/$', views.SignUpView.as_view(), name='sign_up'),
     re_path(r'^cerrar-sesion/$', views.SignOutView.as_view(), name='sign_out'),
     path('verificacion/',views.verificacion,name='verificacion'),
-    path('user/admin', views.admin, name='admin')
+    path('user/admin', views.admin, name='admin'),
+    re_path(r'^iniciar-sesion/$', views.SignInView.as_view(), name='sign_in'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

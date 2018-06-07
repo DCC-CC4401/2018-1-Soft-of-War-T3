@@ -16,6 +16,11 @@
 	float : right;
 }
 
+#right-nav-group {
+	min-width: 500px;
+	height : 85px;
+}
+
 .left-nav {
 	display: block;
 	position: absolute;

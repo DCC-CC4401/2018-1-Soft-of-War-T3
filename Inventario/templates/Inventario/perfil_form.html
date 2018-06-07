@@ -20,7 +20,7 @@
     </script>
     <title> Inventario CEI </title>
   </head>
-  <body class="text-center">
+  <body>
     <form action="" method="POST" id="register">
         {% csrf_token %}
        <div class="row">
@@ -78,7 +78,8 @@
 			</div>
 		</div>
 	</div>
-    </form>    
+        <div><a href="{% url 'sign_in' %}"><p class="mt-3 mb-3 text-muted">Volver</p></a></div>
+    </form>
   </body>
 
 </html>

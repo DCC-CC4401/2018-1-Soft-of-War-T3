@@ -1,5 +1,5 @@
 from django.shortcuts import render, render_to_response, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 import time
 import json
 from .models import Productos,Reserva,Prestamo, ReservaEspacio, Perfil
@@ -15,23 +15,26 @@ def verificacion(request):
     return render(request, 'verificacion.html', {})
 
 def productos(request):
-    products = Productos.objects.all()[:10]
-    context = {
-        'products': products,
-    }
+    if request.user.is_authenticated:
+        products = Productos.objects.all()[:10]
+        context = {
+            'products': products,
+        }
 
-    if request.method == "POST":
-        buscar = ""
-        try:
-            buscar = request.POST['busqueda']
-        except:
-            pass
-        if not buscar == "":
-            context['busqueda_2'] = buscar
-            search = Productos.objects.filter(title__contains=buscar)
-            context['search'] = search
-            context['search_len'] = len(search)
-    return render(request, 'productos.html', context)
+        if request.method == "POST":
+            buscar = ""
+            try:
+                buscar = request.POST['busqueda']
+            except:
+                pass
+            if not buscar == "":
+                context['busqueda_2'] = buscar
+                search = Productos.objects.filter(title__contains=buscar)
+                context['search'] = search
+                context['search_len'] = len(search)
+        return render(request, 'productos.html', context)
+    else:
+        return HttpResponseRedirect('/')
 
 
 def user(request):

@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^grilla_espacios/(?P<pk>[0-9]+)/$', views.grilla_espacios_usuario, name='grilla_espacios_usuario'),
     re_path(r'^registrate/$', views.SignUpView.as_view(), name='sign_up'),
     re_path(r'^cerrar-sesion/$', views.SignOutView.as_view(), name='sign_out'),
-    path('verificacion/',views.verificacion,name='verificacion')
+    path('verificacion/',views.verificacion,name='verificacion'),
+    path('user/admin', views.admin, name='admin')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

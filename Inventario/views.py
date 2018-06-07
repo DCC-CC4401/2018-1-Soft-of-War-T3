@@ -48,6 +48,9 @@ def user(request):
     }
     return render(request, 'user.html',{})
 
+def admin(request):
+    return render(request, 'admin.html', {})
+
 
 def ex(request):
     reservs = Reserva.objects.all()[:10]

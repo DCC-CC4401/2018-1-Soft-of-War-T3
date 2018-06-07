@@ -61,20 +61,31 @@
                 index++;
             {% endfor %}
 
-        d3.select("#boton_semana_siguiente_grilla")
-            .attr("href", "http://google.com");
-
-        d3.select("#boton_semana_anterior_grilla")
-            .attr("href", "http://google.com");
-
-        d3.select("#boton_mes_siguiente_grilla")
-            .attr("href", "http://google.com");
-
-        d3.select("#boton_mes_anterior_grilla")
-            .attr("href", "http://google.com");
-
         </script>
         {%include 'grilla_after.html'%}
+
+        <script>
+
+        d3.select("#boton_semana_siguiente_grilla")
+            .on("click", function () {
+                window.open("/grilla_espacios/" + (parseInt({{ semana_relativa }}) + 1));
+            });
+
+        d3.select("#boton_semana_anterior_grilla")
+            .on("click", function () {
+                window.open("/grilla_espacios/" + Math.max(0, (parseInt({{ semana_relativa }}) - 1)).toString());
+            });
+
+        d3.select("#boton_mes_siguiente_grilla")
+            .on("click", function () {
+                window.open("/grilla_espacios/" + (parseInt({{ semana_relativa }}) + 4));
+            });
+
+        d3.select("#boton_mes_anterior_grilla")
+            .on("click", function () {
+                window.open("/grilla_espacios/" + Math.max(0, (parseInt({{ semana_relativa }}) - 4)).toString());
+            });
+        </script>
 
     </div>
 

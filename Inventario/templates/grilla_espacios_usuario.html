@@ -67,24 +67,16 @@
         <script>
 
         d3.select("#boton_semana_siguiente_grilla")
-            .on("click", function () {
-                window.open("/grilla_espacios/" + (parseInt({{ semana_relativa }}) + 1));
-            });
+            .attr("xlink:href", "/grilla_espacios/" + (parseInt({{ semana_relativa }}) + 1));
 
         d3.select("#boton_semana_anterior_grilla")
-            .on("click", function () {
-                window.open("/grilla_espacios/" + Math.max(0, (parseInt({{ semana_relativa }}) - 1)).toString());
-            });
+            .attr("xlink:href", "/grilla_espacios/" + Math.max(0, (parseInt({{ semana_relativa }}) - 1)).toString());
 
         d3.select("#boton_mes_siguiente_grilla")
-            .on("click", function () {
-                window.open("/grilla_espacios/" + (parseInt({{ semana_relativa }}) + 4));
-            });
+            .attr("xlink:href", "/grilla_espacios/" + (parseInt({{ semana_relativa }}) + 4));
 
         d3.select("#boton_mes_anterior_grilla")
-            .on("click", function () {
-                window.open("/grilla_espacios/" + Math.max(0, (parseInt({{ semana_relativa }}) - 4)).toString());
-            });
+            .attr("xlink:href", "/grilla_espacios/" + Math.max(0, (parseInt({{ semana_relativa }}) - 4)).toString());
         </script>
 
     </div>

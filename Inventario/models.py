@@ -14,6 +14,14 @@ class Productos(models.Model):
     def __str__(self):
         return self.title
 
+    def get_status(self):
+        diccionario = {}
+        diccionario[0] = 'En Prestamo'
+        diccionario[1] = 'Disponible'
+        diccionario[2] = 'En Reparacion'
+        diccionario[3] = 'Perdido'
+        return diccionario[int(self.status)]
+
 
 class Reserva(models.Model):
     # user should be an object User
@@ -34,10 +42,19 @@ class Prestamo(models.Model):
     def __str__(self):
         return str(self.product)
 
+
 class Espacio(models.Model):
     name        = models.CharField(max_length=200)
+    status      = models.IntegerField(default=1, choices=((1, 'Disponible'),(0, 'Ocupado'),(2, 'En Reparacion')))
     def __str__(self):
         return self.name
+
+    def get_status(self):
+        diccionario = {}
+        diccionario[0] = 'Ocupado'
+        diccionario[1] = 'Disponible'
+        diccionario[2] = 'En Reparacion'
+        return diccionario[int(self.status)]
 
 
 class ReservaEspacio(models.Model):

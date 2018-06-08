@@ -12,7 +12,7 @@ urlpatterns = [
     path('ex/', views.ex, name='ex'),
     path('user/admin/users/', views.admin_users, name='admin_users'),
     path('user/admin/inventario/', views.admin_inventario, name='admin_inventario'),
-    path('user/admin/grilla/', views.admin_grilla, name='admin_grilla'),
+    url(r'^user/admin/grilla/(?P<pk>[0-9]+)/$', views.admin_grilla, name='admin_grilla'),
 
     url(r'^productos/(?P<pk>[0-9]+)/$', views.article_detail, name='article_detail'),
     url(r'^grilla_espacios/(?P<pk>[0-9]+)/$', views.grilla_espacios_usuario, name='grilla_espacios_usuario'),

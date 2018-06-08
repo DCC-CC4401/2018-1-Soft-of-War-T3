@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 import time
 import json
-from .models import Productos,Reserva,Prestamo, ReservaEspacio, Perfil
+from .models import Productos,Reserva,Prestamo, ReservaEspacio, Perfil, Espacio
 from django.contrib.auth import login, authenticate
 from .forms import SignUpForm
 from django.views.generic import CreateView
@@ -55,10 +55,36 @@ def admin_users(request):
     return render(request, 'admin_users.html', {})
 
 def admin_inventario(request):
-    return render(request, 'admin_inventario.html', {})
+    products = Productos.objects.all()[:10]
+    spaces = Espacio.objects.all()[:10]
 
-def admin_grilla(request):
-    return render(request, 'admin_grilla.html', {})
+    context = {
+        "productos":products,
+        "espacios":spaces,
+    }
+
+    return render(request, 'admin_inventario.html', context)
+
+def admin_grilla(request, pk):
+    aux = ReservaEspacio.objects.all()
+    reservas_esp = []
+    lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+
+    salas_dict = {}
+    for reserva in aux:
+        if reserva.dia_semana() < 6 and reserva.dia_anho() >= lunes_semana + int(
+                pk) * 7 and reserva.dia_anho() < lunes_semana + (int(pk) + 1) * 7:
+            reservas_esp.append(reserva)
+            salas_dict[reserva.space.name] = 1
+
+    context = {
+        'reserva_espacios': reservas_esp,
+        'lunes_semana': lunes_semana,
+        'salas': salas_dict.keys(),
+        'semana_relativa': pk
+    }
+
+    return render(request, 'admin_grilla.html', context)
 
 
 def ex(request):

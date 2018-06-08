@@ -35,10 +35,62 @@
               <i class="material-icons" style="color:#08c602; font-size:3rem; margin: 0 auto;">local_grocery_store</i>
           </div>
           <div class="text-center">
-              <a href="/user/admin/grilla"><i class="material-icons" style="color:#bbb; font-size:3rem; margin: 0 auto;">schedule</i></a>
+              <a href="/user/admin/grilla/0"><i class="material-icons" style="color:#bbb; font-size:3rem; margin: 0 auto;">schedule</i></a>
           </div>
       </div>
       <div class="col-sm-9">
+          <div class="row">
+              <div class="col-sm-6"></div>
+              <div class="col-sm-6"></div>
+          </div>
+          <div class="row">
+              <div class="col-sm-6">
+                  <h5>Artículos</h5>
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">BOTON</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                            <tr>
+                                <td> {{ producto.id }} </td>
+                                <td> {{ producto }} </td>
+                                <td> {{ producto.get_status }} </td>
+                                <td> ayuda </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+              </div>
+              <div class="col-sm-6">
+                  <h5>Espacios</h5>
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">BOTON</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for espacio in espacios %}
+                            <tr>
+                                <td> {{ espacio.id }} </td>
+                                <td> {{ espacio }} </td>
+                                <td> {{ espacio.get_status }} </td>
+                                <td> ayuda </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+              </div>
+          </div>
 
       </div>
       <div class="col-sm-1 col-xs-0 form-inline"></div>

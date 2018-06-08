@@ -40,6 +40,60 @@
       </div>
       <div class="col-sm-9">
 
+          <div id="grilla" class="container" style="align-content: center">
+        <!--Grilla-->
+        {%include 'grilla_before.html'%}
+        <script>
+            var paleta_colores = ["#feb236", "#66d", "#6d6", "#d66"];
+
+            var array_nombres = [];
+            {% for nombre in salas%}
+                array_nombres.push("{{ nombre }}");
+            {% endfor %}
+
+            {% for reserva in reserva_espacios%}
+
+                agregar_reserva("{{reserva.space.name}}", "{{reserva.state}}", parseInt("{{ reserva.dia_semana }}"),
+                    {
+                        hora: parseInt("{{ reserva.hora_inicial }}"),
+                        minuto: parseInt("{{ reserva.minuto_inicial }}")
+                    },
+                    {
+                        hora: parseInt("{{ reserva.hora_final }}"),
+                        minuto: parseInt("{{ reserva.minuto_final }}")
+                    },
+                    paleta_colores[array_nombres.indexOf("{{ reserva.space.name }}")%paleta_colores.length],
+                    0);
+            {% endfor %}
+
+            var index = 0;
+            {% for nombre in salas%}
+                agregar_filtro("{{ nombre }}", paleta_colores[index%paleta_colores.length], index);
+                enable_filter("{{ nombre }}");
+                index++;
+            {% endfor %}
+
+        </script>
+        {%include 'grilla_after.html'%}
+
+        <script>
+
+        d3.select("#boton_semana_siguiente_grilla")
+            .attr("xlink:href", "/user/admin/grilla/" + (parseInt({{ semana_relativa }}) + 1));
+
+        d3.select("#boton_semana_anterior_grilla")
+            .attr("xlink:href", "/user/admin/grilla/" + Math.max(0, (parseInt({{ semana_relativa }}) - 1)).toString());
+
+        d3.select("#boton_mes_siguiente_grilla")
+            .attr("xlink:href", "/user/admin/grilla/" + (parseInt({{ semana_relativa }}) + 4));
+
+        d3.select("#boton_mes_anterior_grilla")
+            .attr("xlink:href", "/user/admin/grilla/" + Math.max(0, (parseInt({{ semana_relativa }}) - 4)).toString());
+
+        </script>
+
+    </div>
+
       </div>
       <div class="col-sm-1 col-xs-0 form-inline"></div>
     </div>

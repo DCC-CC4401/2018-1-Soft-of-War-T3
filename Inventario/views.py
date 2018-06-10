@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Productos,Reserva,Prestamo
 
@@ -18,25 +20,17 @@ def user(request):
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.order_by('-date')[:10]
     latest_reserv = Reserva.objects.order_by('-date')[0]
-    penult_reserv = Reserva.objects.order_by('-date')[1]
-    antep_reserv = Reserva.objects.order_by('-date')[2]
     context = {
         'products':products,
         'reservs': reservs,
         'loans': loans,
         'latest_reserv':latest_reserv,
-        'penult_reserv':penult_reserv,
-        'antep_reserv':antep_reserv,
     }
-    if request.POST.get("remove", False):
-        #instance = Reserva.objects.get(id=request.POST["remove"])
-        #instance.delete()
-        print("descomentar instrucciones")
-
-    if request.POST.get("delete", False ):
-        print("hola")
-        #Items.objects.filter(id__in=request.POST.getlist('items')).delete()
-
+    if request.POST.get("delete",False):
+        my_list = request.POST.get("delete", False).split(",")
+        for item in my_list:
+            instance=Reserva.objects.get(id=item)
+            instance.delete()
     return render(request, 'user.html', context)
 
 def ex(request):
@@ -61,3 +55,5 @@ def article_detail(request, pk):
     print(pk)
     articulo = Productos.objects.get(pk=pk)
     return render(request, 'articulos.html', {'articulo': articulo})
+
+

@@ -32,6 +32,8 @@
       }
     </style>
 
+    
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   </head>
@@ -42,7 +44,7 @@
   <body>      
 
     <!--Botones de reserva y prestamo-->
-    <!--<div id="botones-principales-sitio" class="container" style="margin-top:40px">
+    <div id="botones-principales-sitio" class="container" style="margin-top:40px">
       <div class="row">
         <div class="col-lg-6">
           <button style="height: 120px"  class="btn btn-lg btn-info btn-block">Reserva Tu Espacio</button>
@@ -51,7 +53,7 @@
           <button style="height: 120px" class="btn btn-lg btn-success btn-block">Pide Tu Articulo</button>
         </div>
       </div>
-    </div>-->
+    </div>
 
     <!--Historial-->
     <div class="container" style="margin-top:20px; margin-bottom: 20px"> 
@@ -68,8 +70,8 @@
           </ul>
         </div>
         <div class="p-2 ">
-          <form method="POST"> {% csrf_token %}
-            <button name="delete" value="delete" class="delete btn btn-outline-danger" >Eliminar seleccionados <i class="material-icons">delete</i></button>
+          <form method="POST">{% csrf_token %}
+            <button id="delete-selected" name="delete" value="" class="delete btn btn-outline-danger" >Eliminar seleccionados <i class="material-icons">delete</i></button>
           </form>
         </div>
       </div>
@@ -81,31 +83,17 @@
 
           <!--Historial de reservas-->
           <div class="row">
-            <div class="col-md-6">
-              {% if reservs %}
+            <div id="lista-reservas" class="col-md-6">
+              {% if latest_reserv %}
                 <div class="btn-group-vertical col-md-12 p-0">
-                    <div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0 active" role="button">
-                      <div class="float-left"><input type="checkbox" class="checkthis" /></div>
-                      <div class="float-left">
-                        <form method="POST"> {% csrf_token %}
-                          <button class="btn btn-sm btn-outline-danger" name="remove" value=" {{ latest_reserv.id }} ">
-                            <i class="material-icons">delete</i>
-                          </button>
-                        </form>
-                      </div>
-                      <div class="float-left w-25">{{latest_reserv.product}}</div>
-                      <div class="float-right"><kbd>{{latest_reserv.state}}</kbd></div>
-                    </div>
+                  <div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0 active" role="button">
+                    <div class="float-left"><input type="checkbox" class="checkthis" name="id" value="{{latest_reserv.id}}" /></div>
+                    <div class="float-left w-25">{{latest_reserv.product}}</div>
+                    <div class="float-right"><kbd>{{latest_reserv.state}}</kbd></div>
+                  </div>
                   {% for rsv in reservs %}
                     <div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0" role="button">
-                      <div class="float-left"><input type="checkbox" class="checkthis" /></div>
-                      <div class="float-left">
-                        <form method="POST"> {% csrf_token %}
-                          <button class="btn btn-sm btn-outline-danger" name="remove" value=" {{ rsv.id }} ">
-                            <i class="material-icons">delete</i>
-                          </button>
-                        </form>
-                      </div>
+                      <div class="float-left"><input type="checkbox" class="checkthis" name="id" value="{{rsv.id}}" /></div>
                       <div class="float-left w-25">{{rsv.product}}</div>
                       <div class="float-right"><kbd>{{rsv.state}}</kbd></div>
                     </div>
@@ -184,10 +172,14 @@
       });
     </script>
 
+    <!--Script JQuery para pasar al boton las reservas a eliminar (a traves del attr value)-->
     <script>
-      $(".delete").on('click', function(){
-        $(".checkthis").hide();
-        //var checkedValue = $('.checkthis:checked').val().show();
+      $('#delete-selected').click(function() {
+        var selected = [];
+        $('#a1 input:checked').each(function() {
+          selected.push($(this).attr('value'));
+        });
+        $('#delete-selected').attr("value", selected);
       });
     </script>
 

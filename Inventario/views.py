@@ -16,21 +16,29 @@ def productos(request):
     return render(request, 'productos.html', context)
 
 def user(request):
-    reservs = Reserva.objects.order_by('-date')[1:10]
+    reservs = Reserva.objects.order_by('-date')[:10]
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.order_by('-date')[:10]
     latest_reserv = Reserva.objects.order_by('-date')[0]
+    active_reserv = latest_reserv
     context = {
         'products':products,
         'reservs': reservs,
         'loans': loans,
         'latest_reserv':latest_reserv,
+        'active_reserv':active_reserv,
     }
+    
     if request.POST.get("delete",False):
-        my_list = request.POST.get("delete", False).split(",")
-        for item in my_list:
-            instance=Reserva.objects.get(id=item)
+        reservs_selected = request.POST.get("delete", False).split(",")
+        for reserv in reservs_selected:
+            instance=Reserva.objects.get(id=reserv)
             instance.delete()
+    '''
+    if request.POST.get("reserv_id", False):
+        print("apretaste una reserva")
+        #active_reserv = request.POST.get('reserva', False)
+    '''
     return render(request, 'user.html', context)
 
 def ex(request):

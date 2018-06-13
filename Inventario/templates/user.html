@@ -30,6 +30,10 @@
       .material-icons {
         vertical-align:-14%;
       }
+      .btn-group-vertical.special{
+        display: flex;
+      }
+
     </style>
 
     
@@ -84,18 +88,20 @@
           <!--Historial de reservas-->
           <div class="row">
             <div id="lista-reservas" class="col-md-6">
-              {% if latest_reserv %}
-                <div class="btn-group-vertical col-md-12 p-0">
-                  <div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0 active" role="button">
+              {% if reservs %}
+                <div class="btn-group-vertical reservs-table p-0" style="width: 100%">
+                  <!--<div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0 active" role="button">
                     <div class="float-left"><input type="checkbox" class="checkthis" name="id" value="{{latest_reserv.id}}" /></div>
                     <div class="float-left w-25">{{latest_reserv.product}}</div>
                     <div class="float-right"><kbd>{{latest_reserv.state}}</kbd></div>
-                  </div>
-                  {% for rsv in reservs %}
-                    <div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0" role="button">
-                      <div class="float-left"><input type="checkbox" class="checkthis" name="id" value="{{rsv.id}}" /></div>
-                      <div class="float-left w-25">{{rsv.product}}</div>
-                      <div class="float-right"><kbd>{{rsv.state}}</kbd></div>
+                  </div>-->
+                  {% for rsv in reservs %}  
+                    <div class="d-inline-flex">
+                      <div name="reserv_id" class="check p-2"><input type="checkbox" id="checkbox" class="checkthis" name="id" value="{{rsv.id}}"/></div>
+                      <button id="{{rsv.id}}" class="d-inline-flex btn btn-outline-secondary border border-dark border-right-0 " role="button"> 
+                        <div class="ml-auto">{{rsv.product}}</div>
+                        <div class="mr-auto"><kbd>{{rsv.state}}</kbd></div>
+                      </button>
                     </div>
                   {% endfor %}
                 </div>
@@ -104,28 +110,28 @@
               {% endif %}
             </div>
 
-            <!--ficha con informacion de la reserva-->
-            <div class="col-md-6 border-left border-dark">
+              <!--ficha con informacion de la reserva-->
+              <div class="col-md-6 border-left border-dark default-data" >
 
-              <div class="d-flex flex-row">
-                <div class="p-2"><h3> {{latest_reserv.product.title}} </h3></div>
-                <div class="p-2 "> 
-                  {% language 'es' %}
-                  {{latest_reserv.date|date}} 
-                  {% endlanguage %}
+                <div class="d-flex flex-row">
+                  <div class="p-2"><h3> {{active_reserv.product.title}} </h3></div>
+                  <div class="p-2 "> 
+                    {% language 'es' %}
+                    {{active_reserv.date|date}} 
+                    {% endlanguage %}
+                  </div>
                 </div>
+
+                <div class="d-flex">
+                  <div class="p-2"><h6><kbd>{{active_reserv.state}}</kbd></h6></div>
+                </div>
+
+                <div class="d-flex">  
+                  <div id="photo" class="p-2 rounded border"><img src="{{ active_reserv.product.image.url  }}" alt="Foto No Disponible" class="img img-responsive" ></div>
+                  <div class="p-2 "> {{active_reserv.product.description}} </div>
+                </div>  
+
               </div>
-
-              <div class="d-flex">
-                <div class="p-2"><h6><kbd>{{latest_reserv.state}}</kbd></h6></div>
-              </div>
-
-              <div class="d-flex">  
-                <div class="p-2 rounded border"><img src="{{ latest_reserv.product.image.url  }}" alt="Foto No Disponible" class="img img-responsive" ></div>
-                <div class="p-2 "> {{latest_reserv.product.description}} </div>
-              </div>  
-
-            </div>
           </div>
         </div>
 
@@ -151,15 +157,16 @@
         </div>
       </div>
       
-      <!--Script JQuery para cambiar el estado activo segun el boton que se cliquee-->
-      <script>
-        $(".btn-group-vertical > .btn").click(function(){
-          $(".btn-group-vertical > .btn").removeClass("active");
-          $(this).addClass("active");
-        });
-      </script> 
 
     </div>
+
+    <!--Script JQuery para cambiar el estado activo segun el boton que se cliquee -->
+    <script>
+      $(".reservs-table > .d-inline-flex > .btn").click(function(){
+        $(".btn-group-vertical > .d-inline-flex > .btn").removeClass("active");
+        $(this).addClass("active");
+      });
+    </script> 
 
     <!--Script JQuery para mostrar el boton de Eliminar al cliquear un checkbox de reservas-->
     <script>
@@ -172,11 +179,11 @@
       });
     </script>
 
-    <!--Script JQuery para pasar al boton las reservas a eliminar (a traves del attr value)-->
+    <!--Script JQuery para pasarle al boton las reservas a eliminar (a traves del attr value)-->
     <script>
       $('#delete-selected').click(function() {
         var selected = [];
-        $('#a1 input:checked').each(function() {
+        $('.btn-group-vertical > .d-inline-flex > .check input:checked').each(function() {
           selected.push($(this).attr('value'));
         });
         $('#delete-selected').attr("value", selected);

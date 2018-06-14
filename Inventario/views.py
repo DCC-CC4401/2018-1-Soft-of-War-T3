@@ -15,44 +15,45 @@ def productos(request):
     }
     return render(request, 'productos.html', context)
 
+
 def user(request):
-    reservs = Reserva.objects.order_by('-date')[:10]
-    products = Productos.objects.all()[:10]
-    loans = Prestamo.objects.order_by('-date')[:10]
-    latest_reserv = Reserva.objects.order_by('-date')[0]
-    active_reserv = latest_reserv
-    context = {
-        'products':products,
-        'reservs': reservs,
-        'loans': loans,
-        'latest_reserv':latest_reserv,
-        'active_reserv':active_reserv,
-    }
     
     if request.POST.get("delete",False):
         reservs_selected = request.POST.get("delete", False).split(",")
         for reserv in reservs_selected:
             instance=Reserva.objects.get(id=reserv)
             instance.delete()
-    '''
-    if request.POST.get("reserv_id", False):
-        print("apretaste una reserva")
-        #active_reserv = request.POST.get('reserva', False)
-    '''
-    return render(request, 'user.html', context)
-
-def ex(request):
-    reservs = Reserva.objects.order_by('-date')[1:10]
+    
+    reservs = Reserva.objects.order_by('-date')[:10]
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.order_by('-date')[:10]
     latest_reserv = Reserva.objects.order_by('-date')[0]
+    article_name=latest_reserv.product
+    state=latest_reserv.state
+    date=latest_reserv.date
+    description=latest_reserv.product.description
+    photo = latest_reserv.product.image.url
+
+    if request.POST.get("reserva-activa", False):
+        active_reserv = request.POST.get('reserva-activa', False).split(";")
+        state=active_reserv[0]
+        article_name=active_reserv[1]
+        date=active_reserv[2]
+        description=active_reserv[3]
+        photo=active_reserv[4]
+    
     context = {
         'products':products,
         'reservs': reservs,
         'loans': loans,
         'latest_reserv':latest_reserv,
+        'article_name':article_name,
+        'state':state,
+        'description':description,
+        'rsv_date':date,
+        'photo':photo,
     }
-    return render(request, 'ex.html', context)
+    return render(request, 'user.html', context)
 
 def grilla_espacios_usuario(request):
     context = {

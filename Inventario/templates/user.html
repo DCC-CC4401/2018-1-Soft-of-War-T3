@@ -16,13 +16,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
-      .active, .btn:hover {
+      /*.active, .btn:hover {
         background-color: #666;
         color: white;
-      }
-      .img{
-        border-radius: 50%;
-      }
+      }*/
       .tab-pane {
         background-color: #fff;
         color: #000;
@@ -30,14 +27,8 @@
       .material-icons {
         vertical-align:-14%;
       }
-      .btn-group-vertical.special{
-        display: flex;
-      }
 
     </style>
-
-    
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   </head>
@@ -87,9 +78,9 @@
 
           <!--Historial de reservas-->
           <div class="row">
-            <div id="lista-reservas" class="col-md-6">
+            <div id="lista-reservas" class="col-md-6 ">
               {% if reservs %}
-                <div class="btn-group-vertical reservs-table p-0" style="width: 100%">
+                <div class="btn-group-vertical reservs-table p-0">
                   <!--<div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0 active" role="button">
                     <div class="float-left"><input type="checkbox" class="checkthis" name="id" value="{{latest_reserv.id}}" /></div>
                     <div class="float-left w-25">{{latest_reserv.product}}</div>
@@ -98,10 +89,12 @@
                   {% for rsv in reservs %}  
                     <div class="d-inline-flex">
                       <div name="reserv_id" class="check p-2"><input type="checkbox" id="checkbox" class="checkthis" name="id" value="{{rsv.id}}"/></div>
-                      <button id="{{rsv.id}}" class="d-inline-flex btn btn-outline-secondary border border-dark border-right-0 " role="button"> 
-                        <div class="ml-auto">{{rsv.product}}</div>
-                        <div class="mr-auto"><kbd>{{rsv.state}}</kbd></div>
-                      </button>
+                      <form method="POST" action="#/">{% csrf_token %}
+                        <button value="{{rsv.state}};{{rsv.product.title}};{% language 'es' %}{{rsv.date}}{% endlanguage %};{{rsv.product.description}};{{rsv.product.image.url}} " name="reserva-activa" class="d-inline-flex btn asd btn-outline-secondary border border-dark border-right-0" role="button"> 
+                          <div class="ml-auto">{{rsv.product}}</div>
+                          <div class="mr-auto"><kbd>{{rsv.state}}</kbd></div>
+                        </button>
+                      </form> 
                     </div>
                   {% endfor %}
                 </div>
@@ -111,25 +104,9 @@
             </div>
 
               <!--ficha con informacion de la reserva-->
-              <div class="col-md-6 border-left border-dark default-data" >
+              <div class="col-md-6 border-left border-right border-dark default-data" >
 
-                <div class="d-flex flex-row">
-                  <div class="p-2"><h3> {{active_reserv.product.title}} </h3></div>
-                  <div class="p-2 "> 
-                    {% language 'es' %}
-                    {{active_reserv.date|date}} 
-                    {% endlanguage %}
-                  </div>
-                </div>
-
-                <div class="d-flex">
-                  <div class="p-2"><h6><kbd>{{active_reserv.state}}</kbd></h6></div>
-                </div>
-
-                <div class="d-flex">  
-                  <div id="photo" class="p-2 rounded border"><img src="{{ active_reserv.product.image.url  }}" alt="Foto No Disponible" class="img img-responsive" ></div>
-                  <div class="p-2 "> {{active_reserv.product.description}} </div>
-                </div>  
+                {% include 'info_reserv.html' %}
 
               </div>
           </div>
@@ -165,6 +142,12 @@
       $(".reservs-table > .d-inline-flex > .btn").click(function(){
         $(".btn-group-vertical > .d-inline-flex > .btn").removeClass("active");
         $(this).addClass("active");
+        $.ajax({
+          url: '{% url 'user'  %}',
+          success: function(data) {
+            $('.default-data').html(data);
+          }
+        });
       });
     </script> 
 

@@ -66,7 +66,7 @@
         </div>
         <div class="p-2 ">
           <form method="POST">{% csrf_token %}
-            <button id="delete-selected" name="delete" value="" class="delete btn btn-outline-danger" >Eliminar seleccionados <i class="material-icons">delete</i></button>
+            <button id="delete-selected" name="delete" value="" class="delete btn btn-outline-danger" hidden="true">Eliminar seleccionados <i class="material-icons">delete</i></button>
           </form>
         </div>
       </div>
@@ -77,22 +77,17 @@
         <div id="historial-reservas" class="tab-pane active"><br>
 
           <!--Historial de reservas-->
-          <div class="row">
-            <div id="lista-reservas" class="col-md-6 ">
+          <div class="row d-flex">
+            <div id="lista-reservas" class="col-sm-6 ">
               {% if reservs %}
-                <div class="btn-group-vertical reservs-table p-0">
-                  <!--<div id="a1" class="btn btn-md btn-outline-secondary border border-dark border-right-0 active" role="button">
-                    <div class="float-left"><input type="checkbox" class="checkthis" name="id" value="{{latest_reserv.id}}" /></div>
-                    <div class="float-left w-25">{{latest_reserv.product}}</div>
-                    <div class="float-right"><kbd>{{latest_reserv.state}}</kbd></div>
-                  </div>-->
+                <div class="btn-group-vertical col-sm-12 reservs-table p-0">
                   {% for rsv in reservs %}  
-                    <div class="d-inline-flex">
-                      <div name="reserv_id" class="check p-2"><input type="checkbox" id="checkbox" class="checkthis" name="id" value="{{rsv.id}}"/></div>
-                      <form method="POST" action="#/">{% csrf_token %}
-                        <button value="{{rsv.state}};{{rsv.product.title}};{% language 'es' %}{{rsv.date}}{% endlanguage %};{{rsv.product.description}};{{rsv.product.image.url}} " name="reserva-activa" class="d-inline-flex btn asd btn-outline-secondary border border-dark border-right-0" role="button"> 
-                          <div class="ml-auto">{{rsv.product}}</div>
-                          <div class="mr-auto"><kbd>{{rsv.state}}</kbd></div>
+                    <div class="d-flex col-sm-12">
+                      <div name="reserv_id" class="check p-1"><input type="checkbox" id="checkbox" class="checkthis" name="id" value="{{rsv.id}}"/></div>
+                      <form method="POST" class="col-sm-11" action="#/">{% csrf_token %}
+                        <button id="{{rsv.id}}" value="{{rsv.state}};{{rsv.product.title}};{% language 'es' %}{{rsv.date}}{% endlanguage %};{{rsv.product.description}};{{rsv.product.image.url}};{{rsv.id}}" name="reserva-activa" class=" d-inline-flex btn btn-md btn-outline-secondary border border-dark border-right-0" role="button"> 
+                          <div class="">{{rsv.product}}</div>
+                          <div class="ml-auto "><kbd>{{rsv.state}}</kbd></div>
                         </button>
                       </form> 
                     </div>
@@ -104,7 +99,7 @@
             </div>
 
               <!--ficha con informacion de la reserva-->
-              <div class="col-md-6 border-left border-right border-dark default-data" >
+              <div class="col-sm-6 border-left border-right border-dark flex-data" >
 
                 {% include 'info_reserv.html' %}
 
@@ -113,16 +108,16 @@
         </div>
 
         <!--Historial de prestamos-->
-        <div id="historial-prestamos" class="row tab-pane fade"><br>
+        <div id="historial-prestamos" class="tab-pane fade"><br>
           {% if loans %}
-              <div class="btn-group-vertical col-md-12">
+              <div class="btn-group-vertical col-sm-12">
                 {% for loan in loans %}
-                  <a class="d-flex justify-content-between btn btn-md btn-outline-secondary border border-dark">
-                    <div>{{loan.product}}</div>
-                    <div><kbd>{{loan.state}}</kbd></div>
-                    <div> 
+                  <a class="d-inline-flex btn btn-outline-secondary border border-dark">
+                    <div class="p-0 mr-auto">{{loan.product}}</div>
+                    <div class="p-0"><kbd>{{loan.state}}</kbd></div>
+                    <div class="p-0"> 
                       {% language 'es' %}
-                      {{loan.date|date}} 
+                      {{loan.date}} 
                       {% endlanguage %}
                     </div>
                   </a>
@@ -137,15 +132,15 @@
 
     </div>
 
-    <!--Script JQuery para cambiar el estado activo segun el boton que se cliquee -->
+    <div class="active-button" hidden="true">{{active_reserv_id}}</div>
+
+    <!--Script JQuery para actualizar vista-->
     <script>
       $(".reservs-table > .d-inline-flex > .btn").click(function(){
-        $(".btn-group-vertical > .d-inline-flex > .btn").removeClass("active");
-        $(this).addClass("active");
         $.ajax({
           url: '{% url 'user'  %}',
           success: function(data) {
-            $('.default-data').html(data);
+            $('.flex-data').html(data);
           }
         });
       });
@@ -157,8 +152,18 @@
         var $checks = $("input[type='checkbox']").change(function() {
           var checked = $checks.is(':checked');
           $(".delete").toggle(checked);
+          $('.delete').removeAttr('hidden');
         });
         $checks.first().change();
+      });
+    </script>
+
+    <!--Script JQuery para destacar en la lista la reserva que se muestra a la derecha-->
+    <script>
+      $(document).ready(function(){
+        var active_button = $('.active-button').text();
+        var x = document.getElementById(active_button);
+        x.classList.add("active"); 
       });
     </script>
 
@@ -166,7 +171,7 @@
     <script>
       $('#delete-selected').click(function() {
         var selected = [];
-        $('.btn-group-vertical > .d-inline-flex > .check input:checked').each(function() {
+        $('.btn-group-vertical > .d-flex > .check input:checked').each(function() {
           selected.push($(this).attr('value'));
         });
         $('#delete-selected').attr("value", selected);

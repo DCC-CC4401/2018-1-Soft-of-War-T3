@@ -33,6 +33,7 @@ def user(request):
     date=latest_reserv.date
     description=latest_reserv.product.description
     photo = latest_reserv.product.image.url
+    active_reserv_id=latest_reserv.id
 
     if request.POST.get("reserva-activa", False):
         active_reserv = request.POST.get('reserva-activa', False).split(";")
@@ -41,6 +42,7 @@ def user(request):
         date=active_reserv[2]
         description=active_reserv[3]
         photo=active_reserv[4]
+        active_reserv_id=active_reserv[5]
     
     context = {
         'products':products,
@@ -52,6 +54,7 @@ def user(request):
         'description':description,
         'rsv_date':date,
         'photo':photo,
+        'active_reserv_id': active_reserv_id,
     }
     return render(request, 'user.html', context)
 

@@ -98,6 +98,12 @@ def ex(request):
     }
     return render(request, 'ex.html', context)
 
+def admin_producto(request,pk):
+    print(pk)
+    print("hola estas en admin")
+    articulo=Productos.objects.get(pk=pk)
+    return render(request, 'admin_producto.html', {'articulo': articulo})
+
 
 def grilla_espacios_usuario(request, pk):
     aux = ReservaEspacio.objects.all()

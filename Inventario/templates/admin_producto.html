@@ -1,0 +1,114 @@
+{% load static %}
+{% load staticfiles %}
+
+<html>
+
+  <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing_page_usuarios.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <title> {{articulo.title}} </title>
+  </head>
+
+  <!--Header-->
+  {%include 'header.html'%}
+
+  <body>
+    <div class="row" style="height: 5%"></div>
+    <div class="row">
+      <div class="col-sm-1 form-inline"></div>
+      <div class="col-sm-10">
+
+        <div class="row">
+          <div class="col-sm-6">
+
+            <div class="row form-inline">
+              <div class="col-sm-1"></div>
+              <h3 class="col-sm-10">{{articulo.title}}
+                <span class="badge
+                  {% if articulo.status == 1%}
+                    badge-success">Diponible
+                  {% elif articulo.status == 0%}
+                    badge-danger">En prestamo
+                  {% elif articulo.status == 2%}
+                    badge-danger">En reparación
+                  {% elif articulo.status == 3%}
+                    badge-danger">Perdido
+                  {% endif %}
+                </span>
+              </h3>
+              <div class="col-sm-1"></div>
+            </div>
+
+            <div class="row rounded" style="height:400px; background:url({{ articulo.image.url }}) no-repeat center; background-size: cover;"></div>
+
+            <div class="row" style="height: 2%"></div>
+
+            <div class="row jumbotron">
+                {{articulo.description}}
+            </div>
+
+          </div>
+          <div class="col-sm-6">
+            <div class="row" style="height: 4%"></div>
+
+            <hr>
+            <h7 class="col-sm-12" style="color:#A2A2A2;">Solicitar reserva</h7>
+            <div class="row" style="height: 3%"></div>
+
+            <form class="col-sm-12">
+              <small style="color:#A2A2A2;">Fecha Inicio</small>
+              <div class="form-inline">
+                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-sm-12">
+                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-sm-12">
+              </div>
+              <div class="row" style="height: 3%"></div>
+
+              <small style="color:#A2A2A2;">Fecha Termino</small>
+              <div class="form-inline">
+                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-sm-12">
+                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-sm-12">
+              </div>
+              <div class="row" style="height: 3%"></div>
+              <button type="submit" class="btn btn-primary">Reservar</button>
+            </form>
+
+            <div class="row" style="height: 17%"></div>
+            <hr>
+
+            <h7 class="col-sm-12" style="color:#A2A2A2;">Historial de reserva</h7>
+            <div class="row" style="height: 3%"></div>
+
+            <div class="col-sm-12">
+              <table class="table table-sm table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Inicio</th>
+                    <th scope="col">Fin</th>
+                    <th scope="col">Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>02/06/2018 11:00</td>
+                    <td>02/06/2018 12:00</td>
+                    <td>En prestamo</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-1 form-inline"></div>
+    </div>
+    <div class="row" style="height: 7%"></div>
+  </body>
+
+</html>

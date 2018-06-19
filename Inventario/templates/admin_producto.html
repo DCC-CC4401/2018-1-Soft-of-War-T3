@@ -9,18 +9,27 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/landing_page_usuarios.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+
+
+    <!-- x-editable (bootstrap version) -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+    
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
     <title> {{articulo.title}} </title>
+
   </head>
 
   <!--Header-->
   {%include 'header.html'%}
 
   <body>
-
 
     <div class="row" style="height: 5%"></div>
     <div class="row">
@@ -31,8 +40,10 @@
           <div class="col-sm-6">
 
             <div class="row form-inline">
-              <div class="col-sm-1"></div>
-              <h3 class="col-sm-10">{{articulo.title}} <i class="tiny material-icons">edit</i>
+              <!--<div class="col-sm-1"></div>-->
+              <h3 class="col-sm-10">
+                
+                  {{articulo.title}}
                 <span class="badge
                   {% if articulo.status == 1%}
                     badge-success">Disponible
@@ -43,21 +54,25 @@
                   {% elif articulo.status == 3%}
                     badge-danger">Perdido
                   {% endif %}
-                </span>
               </h3>
               <div class="col-sm-1"></div>
             </div>
 
-            <div class="row rounded" style="height:400px; background:url({{ articulo.image.url }}) no-repeat center; background-size: cover;"></div>
+            <!--imagen del articulo-->
+            <div class="row rounded" style="height:400px; background:url({{articulo.image.url}}) no-repeat center; background-size: cover;"></div>
 
             <div class="row" style="height: 2%"></div>
 
+            <!--descripcion del articulo-->
             <div class="row jumbotron">
+              <a href="#">
+                <i class="material-icons">edit</i>
+              </a>
                 {{articulo.description}}
             </div>
 
           </div>
-          <div class="col-sm-6">
+          <!--<div class="col-sm-6">
             <div class="row" style="height: 4%"></div>
 
             <hr>
@@ -104,7 +119,7 @@
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </div>-->
 
           </div>
         </div>
@@ -113,6 +128,50 @@
       <div class="col-sm-1 form-inline"></div>
     </div>
     <div class="row" style="height: 7%"></div>
+
+    <div class="container">
+
+      <h1>X-editable starter template</h1>
+
+      <div>
+        <span>Username:</span>
+        <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>
+      </div>
+      
+      <div>
+        <span>Status:</span>
+        <a href="#" id="status"></a>
+      </div>
+
+      
+    </div>
+
+    <script>
+      $(document).ready(function() {
+        $.fn.editable.defaults.mode = 'inline';     
+        
+        //make username editable
+        $('#username').editable();
+        
+        //make status editable
+        $('#status').editable({
+            type: 'select',
+            title: 'Select status',
+            placement: 'right',
+            value: 2,
+            source: [
+                {value: 1, text: 'status 1'},
+                {value: 2, text: 'status 2'},
+                {value: 3, text: 'status 3'},
+            ]
+            /*
+            //uncomment these lines to send data on server
+            ,pk: 1
+            ,url: '/post'
+            */
+        });
+      });
+    </script>
   </body>
 
 </html>

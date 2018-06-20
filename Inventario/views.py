@@ -100,10 +100,25 @@ def ex(request):
 
 def admin_producto(request,pk):
     print(pk)
-    print("hola estas en admin")
     articulo=Productos.objects.get(pk=pk)
-    return render(request, 'admin_producto.html', {'articulo': articulo})
+    if request.POST.get('pk') == 'name':
+        articulo.title=request.POST.get('value')
+        articulo.save()
+        print("nuevo nombre de articulo:", articulo.title)
 
+    if request.POST.get('pk') == 'description':
+        articulo.description=request.POST.get('value')
+        articulo.save()
+        print("nueva descripcion de articulo:", articulo.description)
+
+    if request.POST.get('pk') == 'state':
+        articulo.status=request.POST.get('value')
+        articulo.save()
+        print("nuevo estado de articulo:", articulo.get_status())
+
+    
+
+    return render(request, 'admin_producto.html', {'articulo': articulo})
 
 def grilla_espacios_usuario(request, pk):
     aux = ReservaEspacio.objects.all()

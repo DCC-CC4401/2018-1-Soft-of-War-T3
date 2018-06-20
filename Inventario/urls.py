@@ -16,7 +16,6 @@ urlpatterns = [
 
     url(r'^user/admin/productos/(?P<pk>[0-9]+)/$', views.admin_producto, name='admin_article_detail'),
 
-
     url(r'^productos/(?P<pk>[0-9]+)/$', views.article_detail, name='article_detail'),
     url(r'^grilla_espacios/(?P<pk>[0-9]+)/$', views.grilla_espacios_usuario, name='grilla_espacios_usuario'),
 

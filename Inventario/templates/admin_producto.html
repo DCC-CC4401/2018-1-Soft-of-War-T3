@@ -37,30 +37,32 @@
 
               <!--nombre de articulo y estado-->
               <h3>
-                <span id="title">
-                  <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">{{articulo.title}}</a>
+                <span>
+                  <a href="#" id="articulo{{articulo.id}}" data-type="text" data-pk="name" data-title="enter new name" data-url="{% url 'admin_article_detail' articulo.id %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}">{{ articulo.title }}</a>
                 </span>
                 <span class="badge
                   {% if articulo.status == 1%}
-                    badge-success"><a id="state" href="#">Disponible</a> 
+                    badge-success"><a id="state{{articulo.id}}" data-type="select" data-pk="state" data-title="enter new status" data-url="{% url 'admin_article_detail' articulo.id %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" href="#">Disponible</a> 
                   {% elif articulo.status == 0%}
-                    badge-danger"><a href="#" id="state">En préstamo</a>
+                    badge-danger"><a id="state{{articulo.id}}" data-type="select" data-pk="state" data-title="enter new status" data-url="{% url 'admin_article_detail' articulo.id %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" href="#">En préstamo</a> 
                   {% elif articulo.status == 2%}
-                    badge-danger"><a id="state" href="#">En reparación</a>
+                    badge-danger"><a id="state{{articulo.id}}" data-type="select" data-pk="state" data-title="enter new status" data-url="{% url 'admin_article_detail' articulo.id %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" href="#">En reparación</a> 
                   {% elif articulo.status == 3%}
-                    badge-danger"><a id="state" href="#">Perdido</a>
+                    badge-danger"><a id="state{{articulo.id}}" data-type="select" data-pk="state" data-title="enter new status" data-url="{% url 'admin_article_detail' articulo.id %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" href="#">Perdido</a> 
                   {% endif %}
               </h3>
 
             </div>
 
             <!--imagen del articulo-->
-            <div class="row rounded" style="height:400px; background:url({{articulo.image.url}}) no-repeat center; background-size: cover;"></div>
+            <a href="#" id="foto"><div class="row rounded" style="height:400px; background:url({{articulo.image.url}}) no-repeat center; background-size: cover;"></div></a>
 
             <div class="row" style="height: 2%"></div>
 
             <!--descripcion del articulo-->
-            <div class="row jumbotron"><a href="#" id="description" data-type="textarea" data-pk="1">{{articulo.description}}</a></div>
+            <div class="row jumbotron">
+              <a href="#" id="description{{articulo.id}}" data-type="textarea" data-pk="description" data-title="enter new description" data-url="{% url 'admin_article_detail' articulo.id %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}">{{articulo.description}}</a>
+            </div>
 
           </div>
 
@@ -122,31 +124,23 @@
 
     <script>
       $(document).ready(function() {
-        $.fn.editable.defaults.mode = 'inline';     
+        $.fn.editable.defaults.mode = 'inline';   
         
         //make article name editable
-        $('#title').editable();
+        $('#articulo{{articulo.id}}').editable();
         
         //make article state editable
-        $('#state').editable({
-            type: 'select',
-            title: 'Select status',
-            placement: 'right',
-            value: 1,
+        $('#state{{articulo.id}}').editable({
             source: [
                 {value: 1, text: 'Disponible'},
-                {value: 2, text: 'En préstamo'},
-                {value: 3, text: 'En reparación'},
-                {value: 4, text: 'Perdido'},
-            ]
-            
-            //uncomment these lines to send data on server
-            //,pk: 1
-            //,url: '/post'
-            
+                {value: 0, text: 'En préstamo'},
+                {value: 2, text: 'En reparación'},
+                {value: 3, text: 'Perdido'},
+            ],
         });
 
-        $('#description').editable();
+        $('#description{{articulo.id}}').editable();
+        $('#foto').editable();
 
       });
     </script>

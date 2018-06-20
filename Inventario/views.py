@@ -78,7 +78,7 @@ def user(request):
         'photo':photo,
         'active_reserv_id': active_reserv_id,
     }
-    return render(request, 'user.html',{})
+    return render(request, 'user.html',context)
 
 def admin_users(request):
     return render(request, 'admin_users.html', {})

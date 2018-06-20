@@ -52,10 +52,10 @@
                             <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Estado</th>
-                            <th scope="col">BOTON</th>
+                            <th scope="col">Botónes</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="lista_productos">
                         {% for producto in productos %}
                             <tr>
                                 <td> {{ producto.id }} </td>
@@ -66,6 +66,10 @@
                         {% endfor %}
                     </tbody>
                   </table>
+                  <div class="d-flex justify-content-between">
+                      <button type="button" class="btn btn-outline-secondary" onclick="location.href = '/user/admin/inventario/' + Math.max({{ indice_productos }}-1, 0).toString() + '/{{ indice_espacios }}';"> << </button>
+                      <button type="button" class="btn btn-outline-secondary" onclick="location.href = '/user/admin/inventario/' + Math.min({{ indice_productos }}+1, {{ max_indice_productos }}).toString() + '/{{ indice_espacios }}';"> >> </button>
+                  </div>
               </div>
               <div class="col-sm-6">
                   <h5>Espacios</h5>
@@ -75,7 +79,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Estado</th>
-                            <th scope="col">BOTON</th>
+                            <th scope="col">Botónes</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,9 +93,12 @@
                         {% endfor %}
                     </tbody>
                   </table>
+                  <div class="d-flex justify-content-between">
+                      <button type="button" class="btn btn-outline-secondary" onclick="location.href = '/user/admin/inventario/{{ indice_productos }}/' + Math.max({{ indice_espacios }}-1, 0).toString();"> << </button>
+                      <button type="button" class="btn btn-outline-secondary" onclick="location.href = '/user/admin/inventario/{{ indice_productos }}/' + Math.min({{ indice_espacios }}+1, {{ max_indice_espacios }}).toString();"> >> </button>
+                  </div>
               </div>
           </div>
-
       </div>
       <div class="col-sm-1 col-xs-0 form-inline"></div>
     </div>

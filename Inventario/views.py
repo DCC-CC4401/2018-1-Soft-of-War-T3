@@ -83,13 +83,19 @@ def user(request):
 def admin_users(request):
     return render(request, 'admin_users.html', {})
 
-def admin_inventario(request):
-    products = Productos.objects.all()[:10]
-    spaces = Espacio.objects.all()[:10]
+def admin_inventario(request, pc, sc):
+    esp = 10
+
+    products = Productos.objects.all().order_by('title')[(esp*int(pc)) : (esp*(int(pc)+1))]
+    spaces = Espacio.objects.all().order_by('name')[esp*int(sc):esp*(int(sc)+1)]
 
     context = {
         "productos":products,
         "espacios":spaces,
+        "indice_productos":int(pc),
+        "max_indice_productos": int((len(Productos.objects.all())-1)/esp),
+        "indice_espacios":int(sc),
+        "max_indice_espacios": int((len(Espacio.objects.all())-1)/esp)
     }
 
     return render(request, 'admin_inventario.html', context)

@@ -57,6 +57,12 @@
             <!--imagen del articulo-->
             <a href="#" id="foto"><div class="row rounded" style="height:400px; background:url({{articulo.image.url}}) no-repeat center; background-size: cover;"></div></a>
 
+            <form action="/user/admin/productos/{{articulo.id}}/" method="POST" enctype="multipart/form-data" id="form_tomaFoto{{page}}">{% csrf_token %}
+              <input type="hidden" value="image{{articulo.id}}" name="image">
+              <p><input type="file" accept="image/*" name="foto" required></p>
+              <p><input type="submit" value="Enviar foto" class="boton"></p>
+            </form>
+
             <div class="row" style="height: 2%"></div>
 
             <!--descripcion del articulo-->
@@ -140,7 +146,6 @@
         });
 
         $('#description{{articulo.id}}').editable();
-        $('#foto').editable();
 
       });
     </script>

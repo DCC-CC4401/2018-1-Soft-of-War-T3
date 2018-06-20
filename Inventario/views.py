@@ -99,7 +99,6 @@ def ex(request):
     return render(request, 'ex.html', context)
 
 def admin_producto(request,pk):
-    print(pk)
     articulo=Productos.objects.get(pk=pk)
     if request.POST.get('pk') == 'name':
         articulo.title=request.POST.get('value')
@@ -116,7 +115,10 @@ def admin_producto(request,pk):
         articulo.save()
         print("nuevo estado de articulo:", articulo.get_status())
 
-    
+    if request.POST.get('image'):
+        articulo.image=request.FILES['foto']
+        articulo.save()
+        print("se ha cambiado la foto de articulo", articulo.id)
 
     return render(request, 'admin_producto.html', {'articulo': articulo})
 

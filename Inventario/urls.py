@@ -10,7 +10,6 @@ urlpatterns = [
     path('productos/busqueda_avanzada',views.busqueda_avanzada, name='busqueda_avanzada'),
     path('user/', views.user, name='user'),
 
-    path('ex/', views.ex, name='ex'),
     path('user/admin/users/', views.admin_users, name='admin_users'),
     path('user/admin/inventario/', views.admin_inventario, name='admin_inventario'),
     url(r'^user/admin/grilla/(?P<pk>[0-9]+)/$', views.admin_grilla, name='admin_grilla'),

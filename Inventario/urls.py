@@ -11,7 +11,7 @@ urlpatterns = [
     path('user/', views.user, name='user'),
 
     path('user/admin/users/', views.admin_users, name='admin_users'),
-    url(r'^user/admin/inventario/(?P<pc>[0-9]+)/(?P<sc>[0-9]+)/$', views.admin_inventario, name='admin_inventario'),
+    path('user/admin/inventario/', views.admin_inventario, name='admin_inventario'),
     url(r'^user/admin/grilla/(?P<pk>[0-9]+)/$', views.admin_grilla, name='admin_grilla'),
 
     url(r'^user/admin/productos/(?P<pk>[0-9]+)/$', views.admin_producto, name='admin_article_detail'),

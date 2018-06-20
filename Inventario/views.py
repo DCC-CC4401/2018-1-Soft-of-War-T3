@@ -7,6 +7,7 @@ from django.contrib.auth import login, authenticate
 from .forms import SignUpForm
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     return render(request, 'login.html', {})
@@ -37,17 +38,45 @@ def productos(request):
         return HttpResponseRedirect('/')
 
 
-def user(request):
 
-    reservs = Reserva.objects.all()[:10]
+def user(request):
+    if request.POST.get("delete",False):
+        reservs_selected = request.POST.get("delete", False).split(",")
+        for reserv in reservs_selected:
+            instance=Reserva.objects.get(id=reserv)
+            instance.delete()
+    
+    reservs = Reserva.objects.order_by('-date')[:10]
     products = Productos.objects.all()[:10]
-    loans = Prestamo.objects.all()[:10]
-    first_reserv = Reserva.objects.all()[:1]
+    loans = Prestamo.objects.order_by('-date')[:10]
+    latest_reserv = Reserva.objects.order_by('-date')[0]
+    article_name=latest_reserv.product
+    state=latest_reserv.state
+    date=latest_reserv.date
+    description=latest_reserv.product.description
+    photo = latest_reserv.product.image.url
+    active_reserv_id=latest_reserv.id
+
+    if request.POST.get("reserva-activa", False):
+        active_reserv = request.POST.get('reserva-activa', False).split(";")
+        state=active_reserv[0]
+        article_name=active_reserv[1]
+        date=active_reserv[2]
+        description=active_reserv[3]
+        photo=active_reserv[4]
+        active_reserv_id=active_reserv[5]
+    
     context = {
         'products':products,
         'reservs': reservs,
         'loans': loans,
-        'first_reserv':first_reserv,
+        'latest_reserv':latest_reserv,
+        'article_name':article_name,
+        'state':state,
+        'description':description,
+        'rsv_date':date,
+        'photo':photo,
+        'active_reserv_id': active_reserv_id,
     }
     return render(request, 'user.html',{})
 
@@ -85,7 +114,6 @@ def admin_grilla(request, pk):
     }
 
     return render(request, 'admin_grilla.html', context)
-
 
 def ex(request):
     reservs = Reserva.objects.all()[:10]

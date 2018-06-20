@@ -126,6 +126,29 @@ def ex(request):
     }
     return render(request, 'ex.html', context)
 
+def admin_producto(request,pk):
+    articulo=Productos.objects.get(pk=pk)
+    if request.POST.get('pk') == 'name':
+        articulo.title=request.POST.get('value')
+        articulo.save()
+        print("nuevo nombre de articulo:", articulo.title)
+
+    if request.POST.get('pk') == 'description':
+        articulo.description=request.POST.get('value')
+        articulo.save()
+        print("nueva descripcion de articulo:", articulo.description)
+
+    if request.POST.get('pk') == 'state':
+        articulo.status=request.POST.get('value')
+        articulo.save()
+        print("nuevo estado de articulo:", articulo.get_status())
+
+    if request.POST.get('image'):
+        articulo.image=request.FILES['foto']
+        articulo.save()
+        print("se ha cambiado la foto de articulo", articulo.id)
+
+    return render(request, 'admin_producto.html', {'articulo': articulo})
 
 def grilla_espacios_usuario(request, pk):
     aux = ReservaEspacio.objects.all()

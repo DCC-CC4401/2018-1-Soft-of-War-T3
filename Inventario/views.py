@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 import time
 import json
-from .models import Productos,Reserva,Prestamo, ReservaEspacio, Perfil, Espacio
+from .models import Productos,Reserva,Prestamo, ReservaEspacio, Perfil, Espacio, User
 from django.contrib.auth import login, authenticate
 from .forms import SignUpForm
 from django.views.generic import CreateView
@@ -193,6 +193,9 @@ class SignUpView(CreateView):
 
     def form_valid(self, form):
         form.save()
+        user = User.objects.get(username=form.cleaned_data.get('username'))
+        user.perfil.rut = form.cleaned_data.get('rut')
+        user.save()
         usuario = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password1')
         usuario = authenticate(username=usuario, password=password)

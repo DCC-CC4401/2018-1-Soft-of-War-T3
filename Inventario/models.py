@@ -93,6 +93,7 @@ class Perfil(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='img/photos/', default='img/photos/default.png')
     status = models.IntegerField(default=1,choices=((1, 'Habilitado'), (0, 'No Habilitado')))
+    rut = models.CharField(max_length=20)
 
     # Python 3
     def __str__(self):

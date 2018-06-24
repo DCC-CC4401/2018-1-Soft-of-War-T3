@@ -114,12 +114,14 @@ def admin_grilla(request, pk):
                 pk) * 7 and reserva.dia_anho() < lunes_semana + (int(pk) + 1) * 7:
             reservas_esp.append(reserva)
             salas_dict[reserva.space.name] = 1
-
+    # Prestamos
+    prestamos = Prestamo.objects.all().filter(admin=request.user.perfil)
     context = {
         'reserva_espacios': reservas_esp,
         'lunes_semana': lunes_semana,
         'salas': salas_dict.keys(),
-        'semana_relativa': pk
+        'semana_relativa': pk,
+        'prestamos': prestamos
     }
 
     return render(request, 'admin_grilla.html', context)

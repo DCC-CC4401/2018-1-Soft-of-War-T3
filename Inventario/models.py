@@ -9,7 +9,7 @@ from django.dispatch import receiver
 class Perfil(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='img/photos/', default='img/photos/default.png')
-    status = models.IntegerField(default=1,choices=((1, 'Habilitado'), (0, 'No Habilitado')))
+    status = models.IntegerField(default=1,choices=((2, 'Admin'),(1, 'Habilitado'), (0, 'No Habilitado')))
     rut = models.CharField(max_length=20)
 
     # Python 3
@@ -53,7 +53,8 @@ class Reserva(models.Model):
 
 
 class Prestamo(models.Model):
-    user = models.ForeignKey(Perfil, on_delete=models.CASCADE)
+    user = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='user')
+    admin = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='admin')
     product     = models.ForeignKey(Productos, on_delete=models.CASCADE)
     state       = models.CharField(max_length=200)
     date        = models.DateTimeField('date borrowed', null=True, blank=True, default=datetime.now)

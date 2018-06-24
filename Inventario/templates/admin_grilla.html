@@ -98,6 +98,35 @@
       <div class="col-sm-1 col-xs-0 form-inline"></div>
     </div>
     <div class="row" style="height: 7%"></div>
+    <h7 class="col-sm-12" style="color:#A2A2A2;">Historial de préstamos</h7>
+            <div class="row" style="height: 3%"></div>
+            {% if prestamos %}
+            <div class="col-sm-12">
+              <table class="table table-sm table-striped">
+                <thead>
+                  <tr>
+                      <th scope="col">Usuario</th>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for prestamo in prestamos %}
+                        <tr>
+                            <td>{{prestamo.user}}</td>
+                            <td>{{prestamo.date}}</td>
+                            <td>{{prestamo.state}}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                <p>No hay préstamos </p>
+                {% endif %}
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
   </body>
 
 </html>

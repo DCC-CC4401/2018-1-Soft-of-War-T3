@@ -80,24 +80,27 @@
             <div class="row" style="height: 17%"></div>
             <hr>
 
-            <h7 class="col-sm-12" style="color:#A2A2A2;">Historial de reserva</h7>
+            <h7 class="col-sm-12" style="color:#A2A2A2;">Historial de préstamos</h7>
             <div class="row" style="height: 3%"></div>
-
+            {% if prestamos %}
             <div class="col-sm-12">
               <table class="table table-sm table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">Inicio</th>
-                    <th scope="col">Fin</th>
+                    <th scope="col">Fecha</th>
                     <th scope="col">Estado</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>02/06/2018 11:00</td>
-                    <td>02/06/2018 12:00</td>
-                    <td>En prestamo</td>
-                  </tr>
+                    {% for prestamo in prestamos %}
+                        <tr>
+                            <td>{{prestamo.date}}</td>
+                            <td>{{prestamo.state}}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    No hay préstamos
+                {% endif %}
                 </tbody>
               </table>
             </div>
@@ -112,3 +115,29 @@
   </body>
 
 </html>
+
+
+{% if list_producto %}
+    <ul>
+        {% for producto in list_producto %}
+            <table>
+                <tr>
+                <form action="{% url 'borrar' producto.id %}"  method="post" >
+                {% csrf_token %}
+                    <input type="submit" value="Borrar" />
+                </form>{{producto.nombre }}
+                <form action="{% url 'quitar' producto.id %}"  method="post" >
+                {% csrf_token %}
+                    <input type="submit" value="Quitar Uno!" />
+                </form> {{ producto.count }}
+                    <form action="{% url 'agregarUno' producto.id %}"  method="post" >
+                {% csrf_token %}
+                    <input type="submit" value="Agregar Uno!" />
+                </form>
+            </tr>
+            </table>
+        {% endfor %}
+    </ul>
+{% else %}
+    No hay productos
+{% endif %}

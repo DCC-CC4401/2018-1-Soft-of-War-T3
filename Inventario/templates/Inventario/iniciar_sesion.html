@@ -21,7 +21,7 @@
         <h1 class="h3 mb-3 font-weight-normal">Iniciar Sesión</h1>
          {% csrf_token %}
          <label for="username" class="sr-only">Usuario</label>
-         <input class="form-control" type="text" id="username" name="username"  placeholder="Usuario" required autofocus>
+         <input class="form-control" type="email" id="username" name="username"  placeholder="Usuario" required autofocus>
          <label for="password" class="sr-only">Password</label>
          <input class="form-control" type="password" name="password" id="password" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>

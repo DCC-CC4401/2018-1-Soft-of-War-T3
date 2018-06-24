@@ -171,7 +171,12 @@ def grilla_espacios_usuario(request, pk):
 def article_detail(request, pk):
     print(pk)
     articulo = Productos.objects.get(pk=pk)
-    return render(request, 'articulos.html', {'articulo': articulo})
+    prestamos = Prestamo.objects.all().filter(product=articulo)
+    context = {
+        'articulo': articulo,
+        'prestamos': prestamos
+    }
+    return render(request, 'articulos.html', context)
 
 def busqueda_avanzada(request):
     products = Productos.objects.all()[:10]

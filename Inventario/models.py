@@ -6,6 +6,26 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+class Perfil(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='img/photos/', default='img/photos/default.png')
+    status = models.IntegerField(default=1,choices=((1, 'Habilitado'), (0, 'No Habilitado')))
+    rut = models.CharField(max_length=20)
+
+    # Python 3
+    def __str__(self):
+        return self.usuario.username
+
+@receiver(post_save, sender=User)
+def crear_usuario_perfil(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(usuario=instance)
+
+@receiver(post_save, sender=User)
+def guardar_usuario_perfil(sender, instance, **kwargs):
+    instance.perfil.save()
+
+
 class Productos(models.Model):
     title       = models.CharField(max_length=200)
     description = models.TextField()
@@ -24,8 +44,7 @@ class Productos(models.Model):
 
 
 class Reserva(models.Model):
-    # user should be an object User
-    user        = models.CharField(max_length=200, default="No tiene usuario asignado.")
+    user = models.ForeignKey(Perfil, on_delete=models.CASCADE)
     product     = models.ForeignKey(Productos, on_delete=models.CASCADE)
     state       = models.CharField(max_length=200)
     date        = models.DateTimeField('date reserved', null=True, blank=True, default=datetime.now)
@@ -34,8 +53,7 @@ class Reserva(models.Model):
 
 
 class Prestamo(models.Model):
-    # user should be an object User
-    user        = models.CharField(max_length=200, default="No tiene usuario asignado")
+    user = models.ForeignKey(Perfil, on_delete=models.CASCADE)
     product     = models.ForeignKey(Productos, on_delete=models.CASCADE)
     state       = models.CharField(max_length=200)
     date        = models.DateTimeField('date borrowed', null=True, blank=True, default=datetime.now)
@@ -58,8 +76,7 @@ class Espacio(models.Model):
 
 
 class ReservaEspacio(models.Model):
-    # user should be an object User
-    user        = models.CharField(max_length=200, default="No tiene usuario asignado.")
+    user        = models.ForeignKey(Perfil, on_delete=models.CASCADE)
     space       = models.ForeignKey(Espacio, on_delete=models.CASCADE)
     state       = models.CharField(max_length=200)
     date_start  = models.DateTimeField('date start', null=True, blank=True, default=datetime.now)
@@ -89,21 +106,4 @@ class ReservaEspacio(models.Model):
         return int(self.date_start.strftime('%j'))
 
 
-class Perfil(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='img/photos/', default='img/photos/default.png')
-    status = models.IntegerField(default=1,choices=((1, 'Habilitado'), (0, 'No Habilitado')))
-    rut = models.CharField(max_length=20)
 
-    # Python 3
-    def __str__(self):
-        return self.usuario.username
-
-@receiver(post_save, sender=User)
-def crear_usuario_perfil(sender, instance, created, **kwargs):
-    if created:
-        Perfil.objects.create(usuario=instance)
-
-@receiver(post_save, sender=User)
-def guardar_usuario_perfil(sender, instance, **kwargs):
-    instance.perfil.save()

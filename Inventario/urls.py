@@ -23,4 +23,6 @@ urlpatterns = [
     re_path(r'^cerrar-sesion/$', views.SignOutView.as_view(), name='sign_out'),
     re_path(r'^$', views.SignInView.as_view(), name='sign'),
     path('grilla_espacios/', views.grilla_espacios_usuario, name='grilla_espacios_usuario'),
+
+    path('user/admin/grilla/0/<int:estado_id>/', views.admin_filtrar_prestamos, name='admin_filtrar_prestamos'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

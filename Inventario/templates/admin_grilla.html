@@ -99,10 +99,16 @@
     </div>
     <div class="row" style="height: 7%"></div>
     <h7 class="col-sm-12" style="color:#A2A2A2;">Historial de préstamos</h7>
+
+    <a href="/user/admin/grilla/0"><i>Todos</i></a>
+    <a href="/user/admin/grilla/0/0"><i>Vigentes</i></a>
+    <a href="/user/admin/grilla/0/2"><i>Caducados</i></a>
+    <a href="/user/admin/grilla/0/3"><i>Perdidos</i></a>
+
             <div class="row" style="height: 3%"></div>
             {% if prestamos %}
             <div class="col-sm-12">
-              <table class="table table-sm table-striped">
+              <table class="table">
                 <thead>
                   <tr>
                       <th scope="col">Usuario</th>
@@ -115,7 +121,7 @@
                         <tr>
                             <td>{{prestamo.user}}</td>
                             <td>{{prestamo.date}}</td>
-                            <td>{{prestamo.state}}</td>
+                            <td>{{prestamo.get_state_display}}</td>
                         </tr>
                     {% endfor %}
                 {% else %}

@@ -231,13 +231,14 @@ def admin_filtrar_prestamos(request, estado_id):
 
     # Prestamos
 
-        prestamos = Prestamo.objects.all().filter(admin=request.user.perfil, state=estado_id).order_by('-date')
+    prestamos = Prestamo.objects.all().filter(admin=request.user.perfil, state=estado_id).order_by('-date')
+
     context = {
         'reserva_espacios': reservas_esp,
         'lunes_semana': lunes_semana,
         'salas': salas_dict.keys(),
         'semana_relativa': pk,
-        'prestamos': prestamos
+        'prestamos': prestamos,
     }
 
     return render(request, 'admin_grilla.html', context)

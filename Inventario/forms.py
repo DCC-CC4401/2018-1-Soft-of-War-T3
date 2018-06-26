@@ -21,4 +21,3 @@ class SignUpForm(UserCreationForm):
             'password2',
             'rut',
         )
-

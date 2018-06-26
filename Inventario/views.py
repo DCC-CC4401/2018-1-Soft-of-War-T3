@@ -92,6 +92,32 @@ def admin_inventario(request):
         except:
             pass
 
+        try:
+            delete_id = request.POST['eliminar_producto']
+            Productos.objects.filter(id=delete_id).delete()
+        except:
+            pass
+
+        diccionario = {}
+        diccionario['En Prestamo'] = 0
+        diccionario['Disponible'] = 1
+        diccionario['En Reparacion'] = 2
+        diccionario['Perdido'] = 3
+
+        try:
+            m = Productos.objects.create(title=request.POST['input_nombre_producto'],
+                                     description=request.POST['input_descripcion_producto'],
+                                     status=diccionario[request.POST['input_estado_producto']],)
+
+            try:
+                m.image = request.FILES['input_imagen_producto']
+                m.save()
+            except:
+                pass
+        except:
+            pass
+
+
     products = Productos.objects.filter(title__contains=buscar).order_by('title')
     spaces = Espacio.objects.filter(name__contains=buscar).order_by('name')
 

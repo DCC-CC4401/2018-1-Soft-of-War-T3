@@ -117,7 +117,7 @@
                 {% for loan in loans %}
                   <a class="d-inline-flex btn btn-outline-secondary border border-dark">
                     <div class="p-0 mr-auto">{{loan.product}}</div>
-                    <div class="p-0"><kbd>{{loan.state}}</kbd></div>
+                    <div class="p-0"><kbd>{{loan.get_state_display}}</kbd></div>
                     <div class="p-0"> 
                       {% language 'es' %}
                       {{loan.date}} 

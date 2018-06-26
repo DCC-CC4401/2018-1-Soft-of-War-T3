@@ -115,29 +115,3 @@
   </body>
 
 </html>
-
-
-{% if list_producto %}
-    <ul>
-        {% for producto in list_producto %}
-            <table>
-                <tr>
-                <form action="{% url 'borrar' producto.id %}"  method="post" >
-                {% csrf_token %}
-                    <input type="submit" value="Borrar" />
-                </form>{{producto.nombre }}
-                <form action="{% url 'quitar' producto.id %}"  method="post" >
-                {% csrf_token %}
-                    <input type="submit" value="Quitar Uno!" />
-                </form> {{ producto.count }}
-                    <form action="{% url 'agregarUno' producto.id %}"  method="post" >
-                {% csrf_token %}
-                    <input type="submit" value="Agregar Uno!" />
-                </form>
-            </tr>
-            </table>
-        {% endfor %}
-    </ul>
-{% else %}
-    No hay productos
-{% endif %}

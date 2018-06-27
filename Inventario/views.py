@@ -49,13 +49,21 @@ def user(request):
     reservs = Reserva.objects.order_by('-date')[:10]
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.order_by('-date')[:10]
-    latest_reserv = Reserva.objects.order_by('-date')[0]
-    article_name=latest_reserv.product
-    state=latest_reserv.state
-    date=latest_reserv.date
-    description=latest_reserv.product.description
-    photo = latest_reserv.product.image.url
-    active_reserv_id=latest_reserv.id
+    latest_reserv = Reserva.objects.order_by('-date').first()
+    article_name=''
+    state=''
+    date=''
+    description=''
+    photo = ''
+    active_reserv_id=''
+
+    if latest_reserv:
+        article_name=latest_reserv.product
+        state=latest_reserv.state
+        date=latest_reserv.date
+        description=latest_reserv.product.description
+        photo = latest_reserv.product.image.url
+        active_reserv_id=latest_reserv.id
 
     if request.POST.get("reserva-activa", False):
         active_reserv = request.POST.get('reserva-activa', False).split(";")

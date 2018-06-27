@@ -17,23 +17,45 @@
 
   </head>
   <body>
-  
-    <div class="d-flex flex-row">
-      <div class="p-2 w-50"><h3> {{article_name}} </h3></div>
-      <div class="p-2 "> 
-        {% language 'es' %}
-        {{rsv_date}} 
-        {% endlanguage %}
+    {% if reservs %}
+      <div class="d-flex flex-row">
+        <div class="p-2 w-50"><h3> {{article_name}} </h3></div>
+        <div class="p-2 "> 
+          {% language 'es' %}
+          {{rsv_date}} 
+          {% endlanguage %}
+        </div>
       </div>
-    </div>
 
-    <div class="d-flex">
-      <div class="p-2 w-100"><h6><kbd>{{state}}</kbd></h6></div>
-    </div>
+      <div class="d-flex" >
+        <div class="p-2 w-100">
+          <h6>
+            <kbd id="estado">{{state}}</kbd>
+          </h6>
+        </div>
+      </div>
 
-    <div class="d-flex">  
-      <div id="photo" class="p-2 w-50"><img src="{{photo}}" alt="Foto No Disponible" class="img img-thumbnail img-fluid img-responsive" ></div>
-      <div class="p-2 "> {{description}} </div>
-    </div>  
+      <div class="d-flex">  
+        <div id="photo" class="p-2 w-50"><img src="{{photo}}" alt="Foto No Disponible" class="img img-thumbnail img-fluid img-responsive" ></div>
+        <div class="p-2 "> {{description}} </div>
+      </div>
+    {% else %}
+    {% endif %}
+
+    <!--Script JQuery para mostrar texto del estado-->
+    <script>
+      $(document).ready(function(){
+        if ($('#estado').text()==2) {
+          $('#estado').text('Pendiente');
+        }
+        else if ($('#estado').text()==0){
+          $('#estado').text('Rechazada');
+        }
+        else{
+          $('#estado').text('Aprobada');
+        }
+      });
+    </script>
+
   </body>
 </html>

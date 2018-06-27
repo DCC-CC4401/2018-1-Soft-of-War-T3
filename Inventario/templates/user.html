@@ -90,7 +90,7 @@
                       <form method="POST" class="col-sm-11" action="#/">{% csrf_token %}
                         <button id="{{rsv.id}}" value="{{rsv.state}};{{rsv.product.title}};{% language 'es' %}{{rsv.date}}{% endlanguage %};{{rsv.product.description}};{{rsv.product.image.url}};{{rsv.id}}" name="reserva-activa" class=" d-inline-flex btn btn-md btn-outline-secondary border border-dark border-right-0" role="button"> 
                           <div class="">{{rsv.product}}</div>
-                          <div class="ml-auto "><kbd>{{rsv.state}}</kbd></div>
+                          <div class="ml-auto "><kbd>{{rsv.get_state_display}}</kbd></div>
                         </button>
                       </form> 
                     </div>

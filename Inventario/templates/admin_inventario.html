@@ -1,0 +1,179 @@
+{% load static %}
+{% load staticfiles %}
+
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing_page_usuarios.css' %}">
+
+    <title> Administrador </title>
+  </head>
+
+  <!--Header-->
+  {%include 'header.html'%}
+
+  <body>
+    <div class="row" style="height: 5%"></div>
+    <div class="row">
+        <div class="col-sm-2 form-inline"></div>
+        <div class="col-sm-9">
+            <h4>Búsqueda</h4>
+            <!--search bar-->
+            <div class="row">
+              <form class="form-inline col-sm-12" method="POST" action="/user/admin/inventario/">{% csrf_token%}
+                <input class="form-control col-sm-10" type="text" placeholder="Ej: toldo" name="busqueda" aria-label="Search">
+                <button class="btn btn-outline-success col-sm-2 my-sm-0" type="submit">Buscar</button>
+              </form>
+            </div>
+        </div>
+        <div class="col-sm-1 col-xs-0 form-inline"></div>
+    </div>
+
+    <div class="row" style="height: 4%"></div>
+
+    <div class="row">
+      <div class="col-sm-2">
+          <div class="text-center">
+              <a href="/user/admin/users"><i class="material-icons" style="color: #bbb; font-size:3rem; margin: 0 auto;">group</i></a>
+          </div>
+          <div class="text-center">
+              <i class="material-icons" style="color:#08c602; font-size:3rem; margin: 0 auto;">local_grocery_store</i>
+          </div>
+          <div class="text-center">
+              <a href="/user/admin/grilla/0"><i class="material-icons" style="color:#bbb; font-size:3rem; margin: 0 auto;">schedule</i></a>
+          </div>
+      </div>
+      <div class="col-sm-9">
+          <div class="row">
+              <div class="col-sm-6"></div>
+              <div class="col-sm-6"></div>
+          </div>
+          <div class="row">
+              <div class="col-sm-6">
+                  <h5>Artículos</h5>
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">
+                                <div class="row">
+                                    <div style="margin: 0 auto;">
+                                        <button type="button" data-toggle="modal" data-target="#exampleModal"><i class="material-icons" style="color:#08c602; margin: 0 auto;"> control_point </i></button>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="lista_productos">
+                        {% for producto in productos %}
+                            <tr>
+                                <td> {{ producto.id }} </td>
+                                <td> {{ producto }} </td>
+                                <td> {{ producto.get_status }} </td>
+                                <td>
+                                    <div class="row">
+                                        <button class="btn-primary-outline" type="submit" onclick="window.open('/user/admin/productos/{{ producto.id }}');"><i class="material-icons">edit</i></button>
+                                        <form class="form-inline" style="margin: 0 auto" method="POST" action="/user/admin/inventario/">{% csrf_token%}
+                                            <input class="form-control" type="hidden" name="eliminar_producto" aria-label="Delete" value="{{ producto.id }}">
+                                            <button type="submit"><i class="material-icons" style="color:#c80802">delete_forever</i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+              </div>
+              <div class="col-sm-6">
+                  <h5>Espacios</h5>
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">
+                                <div class="row">
+                                    <form class="form-inline" style="margin: 0 auto" method="POST" action="/user/admin/inventario/">{% csrf_token%}
+                                        <input class="form-control" type="hidden" name="agregar_espacio" aria-label="Add" value="1">
+                                        <button type="submit"><i class="material-icons" style="color:#08c602; margin: 0 auto;"> control_point </i></button>
+                                    </form>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for espacio in espacios %}
+                            <tr>
+                                <td> {{ espacio.id }} </td>
+                                <td> {{ espacio }} </td>
+                                <td> {{ espacio.get_status }} </td>
+                                <td> <div class="row">
+                                        <button class="btn-primary-outline" type="submit"><i class="material-icons">edit</i></button>
+                                        <form class="form-inline" style="margin: 0 auto" method="POST" action="/user/admin/inventario/">{% csrf_token%}
+                                            <input class="form-control" type="hidden" name="eliminar_espacio" aria-label="Delete" value="{{ espacio.id }}">
+                                            <button type="submit"><i class="material-icons" style="color:#c80802">delete_forever</i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-1 col-xs-0 form-inline"></div>
+    </div>
+    <div class="row" style="height: 7%"></div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Nuevo Producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form enctype="multipart/form-data" method="POST" action="/user/admin/inventario/">{% csrf_token%}
+                <div class="form-group">
+                    <label for="input_nombre_producto">Nombre</label>
+                    <input type="text" class="form-control" name="input_nombre_producto" aria-describedby="Product_Name" placeholder="Por ejemplo: Toldo">
+                </div>
+                <div class="form-group">
+                    <label for="input_descripcion_producto">Descripción</label>
+                    <textarea class="form-control" name="input_descripcion_producto" rows="7" placeholder="Medidas, estado, caracteristicas especiales"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="input_imagen_producto">Imagen del Producto</label>
+                    <input type="file" class="form-control-file" accept="image/*" name="input_imagen_producto">
+
+                </div>
+                <div class="form-group">
+                    <label for="input_estado_producto">State</label>
+                    <select name="input_estado_producto" class="form-control">
+                        <option selected>Disponible</option>
+                        <option>En Prestamo</option>
+                        <option>En Reparacion</option>
+                        <option>Perdido</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  </body>
+
+</html>

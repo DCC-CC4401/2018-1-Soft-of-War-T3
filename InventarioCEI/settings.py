@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jquery'
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,6 @@ STATIC_URL = '/static/'
 MEDIA_URL  = '/media/'
 SITE_ROOT  = os.path.realpath(os.path.dirname(__file__))
 MEDIA_ROOT = os.path.join(SITE_ROOT, 'img')
+LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/productos'
+LOGOUT_REDIRECT_URL = '/'

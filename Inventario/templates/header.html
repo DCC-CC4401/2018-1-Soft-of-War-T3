@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+{% load staticfiles %}
+
+
+<div>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<header>
+		<div id="header">
+			<div class="left-nav">
+				<a href="http://www.cei.cl/"> <img src="/media/img/photos/logo-CEI.png" style="height:80px; "> </a>
+			</div>
+
+            <div id="right-nav-group">
+                <div class="btn-group right-nav">
+                    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height:82px; background-color:#ddd; border:0px solid transparent">
+                        <i class="material-icons" style="color:#bbb; font-size:3rem">settings</i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" style="position: absolute; z-index: 1111;">
+                        <a id="configuracion_perfil" class="dropdown-item" href=".">Configuración Perfil</a>
+                        <a id="cambiar_contrasena" class="dropdown-item" href=".">Cambiar Contraseña</a>
+                        <a id="salir" class="dropdown-item" href=".">Salir</a>
+                    </div>
+                </div>
+
+                <div class="right-nav" style="margin-left:15px">
+                    <img id="foto_perfil" src="/media/img/photos/chiko-icon.png" alt="Avatar" style="width:60px">
+                </div>
+
+                <div class="right-nav">
+                        <li id="nombre_usuario" style="text-align: right; font-size:1.5rem"> <i class="material-icons" id = "circulo_disponibilidad" style="color:#bbb; font-size:1rem;">fiber_manual_record</i>{{user.first_name}} {{user.last_name}}</li>
+                        <li id="rut_usuario" style="text-align: right; font-size:0.75rem"> {{user.perfil.rut}} </li>
+                        <li id="email_usuario" style="text-align: right; font-size:0.75rem"> {{user.email}} </li>
+                </div>
+
+                <div class="right-nav" style="margin-left:50px">
+                    <button type="button" id="boton_email" class="btn" style="background-color:#ddd; border:0px solid transparent margin-right:10%">
+                        <i class="material-icons" style="color:#bbb; font-size:3rem">mail</i>
+                    </button>
+                </div>
+            </div>
+		</div>
+	</header>
+
+</div>

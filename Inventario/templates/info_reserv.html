@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+{% load staticfiles %}
+
+<html>
+  <head>
+    <title>Perfil de Usuario</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  </head>
+  <body>
+    {% if reservs %}
+      <div class="d-flex flex-row">
+        <div class="p-2 w-50"><h3> {{article_name}} </h3></div>
+        <div class="p-2 "> 
+          {% language 'es' %}
+          {{rsv_date}} 
+          {% endlanguage %}
+        </div>
+      </div>
+
+      <div class="d-flex" >
+        <div class="p-2 w-100">
+          <h6>
+            <kbd id="estado">{{state}}</kbd>
+          </h6>
+        </div>
+      </div>
+
+      <div class="d-flex">  
+        <div id="photo" class="p-2 w-50"><img src="{{photo}}" alt="Foto No Disponible" class="img img-thumbnail img-fluid img-responsive" ></div>
+        <div class="p-2 "> {{description}} </div>
+      </div>
+    {% else %}
+    {% endif %}
+
+    <!--Script JQuery para mostrar texto del estado-->
+    <script>
+      $(document).ready(function(){
+        if ($('#estado').text()==2) {
+          $('#estado').text('Pendiente');
+        }
+        else if ($('#estado').text()==0){
+          $('#estado').text('Rechazada');
+        }
+        else{
+          $('#estado').text('Aprobada');
+        }
+      });
+    </script>
+
+  </body>
+</html>

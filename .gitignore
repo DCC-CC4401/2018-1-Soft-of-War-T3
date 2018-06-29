@@ -1,0 +1,8 @@
+# ignore __pycache__
+*/__pycache__/
+Inventario/migrations/__pycache__/
+InventarioCEI/__pycache__/
+Inventario/__pycache__/
+
+# ignore the idea folder
+.idea/

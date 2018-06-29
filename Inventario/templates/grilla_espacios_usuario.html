@@ -1,0 +1,86 @@
+{% load static %}
+{% load staticfiles %}
+
+<html>
+
+  <head>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/landing_page_usuarios.css' %}">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+      <title> Espacios </title>
+
+  </head>
+
+  <!--Header-->
+  {%include 'header.html'%}
+
+  <body>
+
+    <!--Botones para cambiar entre historial de reservas y de prestamos-->
+    <div id="cambio_busqueda" class="container" style="align-content: center;">
+        <div class="btn-group" style="margin-top: 50px;text-align: center; width: inherit; display: inline-block">
+        <a href="/productos"><div type="button" class="btn btn-outline-secondary">Productos</div></a>
+        <div type="button" class="btn btn-outline-secondary active">Espacios</div>
+      </div>
+    </div>
+
+    <div id="grilla" class="container" style="align-content: center">
+        <!--Grilla-->
+        {%include 'grilla_before.html'%}
+        <script>
+            var paleta_colores = ["#feb236", "#66d", "#6d6", "#d66"];
+
+            var array_nombres = [];
+            {% for nombre in salas%}
+                array_nombres.push("{{ nombre }}");
+            {% endfor %}
+
+            {% for reserva in reserva_espacios%}
+
+                agregar_reserva("{{reserva.space.name}}", "{{reserva.state}}", parseInt("{{ reserva.dia_semana }}"),
+                    {
+                        hora: parseInt("{{ reserva.hora_inicial }}"),
+                        minuto: parseInt("{{ reserva.minuto_inicial }}")
+                    },
+                    {
+                        hora: parseInt("{{ reserva.hora_final }}"),
+                        minuto: parseInt("{{ reserva.minuto_final }}")
+                    },
+                    paleta_colores[array_nombres.indexOf("{{ reserva.space.name }}")%paleta_colores.length],
+                    0);
+            {% endfor %}
+
+            var index = 0;
+            {% for nombre in salas%}
+                agregar_filtro("{{ nombre }}", paleta_colores[index%paleta_colores.length], index);
+                enable_filter("{{ nombre }}");
+                index++;
+            {% endfor %}
+
+        </script>
+        {%include 'grilla_after.html'%}
+
+        <script>
+
+        d3.select("#boton_semana_siguiente_grilla")
+            .attr("xlink:href", "/grilla_espacios/" + (parseInt({{ semana_relativa }}) + 1));
+
+        d3.select("#boton_semana_anterior_grilla")
+            .attr("xlink:href", "/grilla_espacios/" + Math.max(0, (parseInt({{ semana_relativa }}) - 1)).toString());
+
+        d3.select("#boton_mes_siguiente_grilla")
+            .attr("xlink:href", "/grilla_espacios/" + (parseInt({{ semana_relativa }}) + 4));
+
+        d3.select("#boton_mes_anterior_grilla")
+            .attr("xlink:href", "/grilla_espacios/" + Math.max(0, (parseInt({{ semana_relativa }}) - 4)).toString());
+        </script>
+
+    </div>
+
+  </body>
+
+</html>

@@ -1,26 +1,98 @@
 {% load static %}
 {% load staticfiles %}
+
 <html>
   <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing_page_usuarios.css' %}">
+
+    <title> Productos </title>
   </head>
+
+  <!--Header-->
+  {%include 'header.html'%}
 
   <body>
     <div class="row">
-        {% for product in products%}
-          <div class="col-sm-3">
-            <div class="card" style="width: 100%;">
-              <img class="card-img-top" src="{{ product.image.url }}">
-              <div class="card-body">
-                <h5 class="card-title">{{product.title}}</h5>
+      <div class="col-sm-1 col-xs-0 form-inline"></div>
+      <div class="col-sm-10">
+
+      <!--Botones para cambiar entre historial de reservas y de prestamos-->
+      <div id="cambio_busqueda" class="container" style="align-content: center;">
+        <div class="btn-group" style="margin-top: 50px;text-align: center; width: inherit; display: inline-block">
+          <div type="button" class="btn btn-outline-secondary active">Productos</div>
+          <a href="/grilla_espacios/0"><div type="button" class="btn btn-outline-secondary">Espacios</div></a>
+        </div>
+      </div>
+
+        <div class="row" style="height: 7%"></div>
+
+        <!--search bar-->
+        <div class="row">
+          <form class="form-inline col-sm-12" method="POST" action="/productos/">{% csrf_token%}
+            <input class="form-control col-sm-10" type="text" placeholder="Ej: toldo" name="busqueda" aria-label="Search">
+            <button class="btn btn-outline-success col-sm-2 my-sm-0" type="submit">Buscar</button>
+          </form>
+        </div>
+        <div class="row" style="text-align: center;">
+          <div class="col-sm-10"></div>
+          <div class="col-sm-2"><small><a href="/productos/busqueda_avanzada">Busqueda avanzada</a></small></div>
+        </div>
+
+        <!--result-->
+        {%if search_len == 0%}
+          <small style="color:#A2A2A2;">No se encontraron resultados para "{{busqueda_2}}"</small>
+        {%endif%}
+        {%if search%}
+          <small style="color:#A2A2A2;">{{search_len}} resultados para "{{busqueda_2}}"</small>
+        {% endif %}
+        <div class="row form-inline">
+          {% for product in search%}
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+              <div class="card" >
+                <img class="card-img-top" src="{{ product.image.url }}" height="100px">
+                <div class="card-body">
+                    <h8 class="card-title"><i class="material-icons" id = "circulo_disponibilidad" {% if product.status == 1 %} style="color:#B1BC54; font-size:1rem;" {% else %} style="color:#CB3434; font-size:1rem;" {% endif %}>fiber_manual_record</i>
+                      <a href="/productos/{{product.id}}">{{product.title}}{{i}}</a>
+                    </h8>
+                </div>
               </div>
+              <div class="row" style="height: 2%"></div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
+
+        <div class="row" style="height: 7%"></div>
+
+        <!--Product cards-->
+        <h5 style="color:#A2A2A2;">Todos los productos</h5>
+        <hr>
+
+        <div class="form-inline row">
+          {% for product in products%}
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+              <div class="card" >
+                <img class="card-img-top" src="{{ product.image.url }}" height="100px" object-fit="cover">
+                <div class="card-body">
+                    <h8 class="card-title"><i class="material-icons" id = "circulo_disponibilidad" {% if product.status == 1 %} style="color:#B1BC54; font-size:1rem;" {% else %} style="color:#CB3434; font-size:1rem;" {% endif %}>fiber_manual_record</i>
+                      <a href="/productos/{{product.id}}">{{product.title}}</a>
+                    </h8>
+                </div>
+              </div>
+              <div class="row" style="height: 2%"></div>
+            </div>
+          {% endfor %}
+        </div>
+
+
+      </div>
+      <div class="col-sm-1 col-xs-0 form-inline"></div>
     </div>
+    <div class="row" style="height: 7%"></div>
   </body>
 
 </html>

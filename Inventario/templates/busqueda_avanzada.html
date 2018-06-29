@@ -1,0 +1,128 @@
+{% load static %}
+{% load staticfiles %}
+
+<html>
+
+  <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing_page_usuarios.css' %}">
+
+    <title> Productos </title>
+  </head>
+
+  <!--Header-->
+  {%include 'header.html'%}
+
+  <body>
+    <div class="row">
+      <div class="col-sm-1 form-inline"></div>
+      <div class="col-sm-10">
+
+      <!--Botones para cambiar entre historial de reservas y de prestamos-->
+      <div id="cambio_busqueda" class="container" style="align-content: center;">
+        <div class="btn-group" style="margin-top: 50px;text-align: center; width: inherit; display: inline-block">
+          <div type="button" class="btn btn-outline-secondary active">Productos</div>
+          <a href="/grilla_espacios/0"><div type="button" class="btn btn-outline-secondary">Espacios</div></a>
+        </div>
+      </div>
+
+        <div class="row" style="height: 7%"></div>
+
+        <div class="row">
+          <!--search bar-->
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="row jumbotron">
+              <h6 class="col-sm-12" style="color:#A2A2A2;">Busqueda avanzada</h6>
+              <form class="form-inline col-sm-12" method="POST" action="/productos/busqueda_avanzada">{% csrf_token%}
+                <input class="form-control col-lg-2 col-sm-4" type="number" placeholder="ID" name="id" aria-label="Search">
+                <input class="form-control col-lg-10 col-sm-8" type="text" placeholder="Ej: toldo" name="busqueda" aria-label="Search">
+
+                <div class="row" style="height: 8%"></div>
+
+                <small class="col-sm-12" style="color:#A2A2A2;">Fecha Inicio</small>
+                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-md-12 col-sm-8">
+                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-md-12 col-sm-4">
+                <div class="row" style="height: 8%"></div>
+
+                <small class="col-sm-12" style="color:#A2A2A2;">Fecha Termino</small>
+                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-md-12 col-sm-8">
+                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-md-12 col-sm-4">
+                <div class="row" style="height: 8%"></div>
+
+                <select class="form-control col-sm-12" name="estado">
+                  <option>Disponible</option>
+                  <option>En prestamo</option>
+                  <option>Perdido</option>
+                  <option>En reparación</option>
+                  <option>Todos</option>
+                </select>
+
+                <div class="row" style="height: 8%"></div>
+
+                <button class="btn btn-outline-success col-sm-12 my-sm-0" type="submit">Buscar</button>
+              </form>
+              <div class="col-sm-12"><small><a href="/productos/">Busqueda simple</a></small></div>
+            </div>
+          </div>
+          <!--result-->
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            {%if search_len == 0%}
+              <small style="color:#A2A2A2;">No se encontraron resultados</small>
+            {%endif%}
+            {%if search%}
+              <small style="color:#A2A2A2;">{{search_len}} resultados</small>
+            {% endif %}
+            <div class="row form-inline">
+              {% for product in search%}
+                <div class="col-lg-4 col-md-6 col-sm-8 col-6">
+                  <div class="card" >
+                    <img class="card-img-top" src="{{ product.image.url }}" height="100px">
+                    <div class="card-body">
+                        <h8 class="card-title"><i class="material-icons" id = "circulo_disponibilidad" {% if product.status == 1 %} style="color:#B1BC54; font-size:1rem;" {% else %} style="color:#CB3434; font-size:1rem;" {% endif %}>fiber_manual_record</i>
+                          <a href="/productos/{{product.id}}">{{product.title}}{{i}}</a>
+                        </h8>
+                    </div>
+                  </div>
+                  <div class="row" style="height: 2%"></div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="row" style="height: 7%"></div>
+
+        <!--Product cards-->
+        <h5 style="color:#A2A2A2;">Todos los productos</h5>
+        <hr>
+
+        <div class="form-inline row">
+          {% for product in products%}
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+              <div class="card" >
+                <img class="card-img-top" src="{{ product.image.url }}" height="100px">
+                <div class="card-body">
+                    <h8 class="card-title"><i class="material-icons" id = "circulo_disponibilidad" {% if product.status == 1 %} style="color:#B1BC54; font-size:1rem;" {% else %} style="color:#CB3434; font-size:1rem;" {% endif %}>fiber_manual_record</i>
+                      <a href="/productos/{{product.id}}">{{product.title}}{{i}}</a>
+                    </h8>
+                </div>
+              </div>
+              <div class="row" style="height: 2%"></div>
+            </div>
+          {% endfor %}
+        </div>
+
+
+      </div>
+      <div class="col-sm-1 form-inline"></div>
+    </div>
+    <div class="row" style="height: 7%"></div>
+  </body>
+
+</html>

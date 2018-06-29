@@ -1,0 +1,31 @@
+#header li {
+	list-style-type : none;
+}
+
+#header {
+	background:#ddd;
+	height : 85px;
+	position: relative;
+}
+
+.right-nav {
+	display: block;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	float : right;
+}
+
+#right-nav-group {
+	min-width: 500px;
+	height : 85px;
+}
+
+.left-nav {
+	display: block;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	margin-top: 5px;
+	float : left;
+}

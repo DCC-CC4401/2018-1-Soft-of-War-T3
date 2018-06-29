@@ -126,7 +126,7 @@
                     </tr>
                   {% endfor %}
               {% else %}
-                <p>No tienes reservas registradas.</p>
+                <p>No hay reservas pendientes.</p>
               {% endif %}
         </tbody>
         </form>
@@ -158,7 +158,19 @@
                         <tr>
                             <td>{{prestamo.user}}</td>
                             <td>{{prestamo.date}}</td>
-                            <td>{{prestamo.get_state_display}}</td>
+                            <td>
+                            <span class="badge
+                  {% if prestamo.state == 0%}
+                    badge-warning"> Vigente
+                  {% elif prestamo.state == 2%}
+                    badge-danger">Caducado
+                  {% elif prestamo.state == 3%}
+                    badge-danger">Perdido
+                  {% elif prestamo.state == 1%}
+                    badge-success">Recibido
+                  {% endif %}
+                            </span>
+                </td>
                         </tr>
                     {% endfor %}
                 {% else %}

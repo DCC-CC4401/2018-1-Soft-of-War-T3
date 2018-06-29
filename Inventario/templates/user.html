@@ -117,7 +117,17 @@
                 {% for loan in loans %}
                   <a class="d-inline-flex btn btn-outline-secondary border border-dark">
                     <div class="p-0 mr-auto">{{loan.product}}</div>
-                    <div class="p-0"><kbd>{{loan.get_state_display}}</kbd></div>
+                    <div class="p-0"> <span class="badge
+                  {% if loan.state == 0%}
+                    badge-warning"> Vigente
+                  {% elif loan.state == 2%}
+                    badge-danger">Caducado
+                  {% elif loan.state == 3%}
+                    badge-danger">Perdido
+                  {% elif loan.state == 1%}
+                    badge-success">Recibido
+                  {% endif %}
+                            </span></div>
                     <div class="p-0"> 
                       {% language 'es' %}
                       {{loan.date}} 

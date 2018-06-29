@@ -138,6 +138,16 @@ def admin_inventario(request):
     return render(request, 'admin_inventario.html', context)
 
 def admin_grilla(request, pk):
+
+    #Aceptar Reservas
+    if request.POST.getlist('accept_id'):
+        for rsv in request.POST.getlist('accept_id'):
+            rsv_accept = Reserva.objects.get(pk=rsv)
+            rsv_accept.state=1
+            rsv_accept.save()
+            accept = Prestamo(user=rsv_accept.user, admin=request.user.perfil, state=0, product=rsv_accept.product, date=rsv_accept.date)
+            accept.save()
+
     aux = ReservaEspacio.objects.all()
     reservas_esp = []
     lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))

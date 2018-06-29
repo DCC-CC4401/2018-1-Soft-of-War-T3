@@ -46,7 +46,7 @@ class Productos(models.Model):
 class Reserva(models.Model):
     user = models.ForeignKey(Perfil, on_delete=models.CASCADE)
     product     = models.ForeignKey(Productos, on_delete=models.CASCADE)
-    state       = models.IntegerField(default=1, choices=((1, 'Aceptada'),(0, 'Rechazada'),(2, 'Pendiente')))
+    state       = models.IntegerField(default=2, choices=((1, 'Aceptada'),(0, 'Rechazada'),(2, 'Pendiente')))
     date        = models.DateTimeField('date reserved', null=True, blank=True, default=datetime.now)
     def __str__(self):
         return str(self.product)
@@ -56,7 +56,7 @@ class Prestamo(models.Model):
     user = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='user')
     admin = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='admin')
     product     = models.ForeignKey(Productos, on_delete=models.CASCADE)
-    state       = models.IntegerField(default=1, choices=((1, 'Recibido'),(0, 'Vigente'),(2, 'Caducado'), (3, 'Perdido')))
+    state       = models.IntegerField(default=0, choices=((1, 'Recibido'),(0, 'Vigente'),(2, 'Caducado'), (3, 'Perdido')))
     date        = models.DateTimeField('date borrowed', null=True, blank=True, default=datetime.now)
     def __str__(self):
         return str(self.product)

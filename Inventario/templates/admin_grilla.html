@@ -96,9 +96,43 @@
 
       </div>
       <div class="col-sm-1 col-xs-0 form-inline"></div>
-    </div>
-    <div class="row" style="height: 7%"></div>
-    <h7 class="col-sm-12" style="color:#A2A2A2;">Historial de préstamos</h7>
+
+    <div class="row" style="height: 7%">
+        <div id="lista-reservas" class="col-sm-6">
+            <h7 style="color:#A2A2A2;"> Reservas Pendientes</h7>
+        <div class="row" style="height: 3%"></div>
+              {% if reservas_pendientes %}
+                <td class="col-sm-12">
+                <table class="table">
+                  <form action method="POST">{% csrf_token %}
+                <thead>
+                  <tr>
+                      <th scope="col"> <button type="submit" id="accept" name="accept" value="" class="btn btn-outline-success">Aceptar Reservas <i class="material-icons">check_circle_outline</i></button> </th>
+                      <th scope="col">Usuario</th>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for rsv in reservas_pendientes %}
+                      <tr>
+
+                          <td class="">{{rsv.product}}</td>
+                          <td class="ml-auto "><kbd>{{rsv.state}}</kbd></td>
+                      <td name="reserv_id" class="check p-1"><input type="checkbox" id="checkbox" class="checkthis" name="id" value="{{rsv.id}}"/></td>
+                    </tr>
+                  {% endfor %}
+              {% else %}
+                <p>No tienes reservas registradas.</p>
+              {% endif %}
+        </tbody>
+        </form>
+              </table>
+            </div>
+
+
+    <div class="col-sm-6">
+    <h7 style="color:#A2A2A2;"> Historial de préstamos</h7>
 
     <a href="/user/admin/grilla/0"><i>Todos</i></a>
     <a href="/user/admin/grilla/0/0"><i>Vigentes</i></a>
@@ -130,9 +164,10 @@
                 </tbody>
               </table>
             </div>
-
+            </div>
           </div>
-        </div>
+    </div>
+
   </body>
 
 </html>

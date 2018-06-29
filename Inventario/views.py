@@ -150,12 +150,16 @@ def admin_grilla(request, pk):
             salas_dict[reserva.space.name] = 1
     # Prestamos
     prestamos = Prestamo.objects.all().filter(admin=request.user.perfil).order_by('-date')
+
+    # Reservas Pendientes
+    reservas = Reserva.objects.all().filter(state=2)
     context = {
         'reserva_espacios': reservas_esp,
         'lunes_semana': lunes_semana,
         'salas': salas_dict.keys(),
         'semana_relativa': pk,
-        'prestamos': prestamos
+        'prestamos': prestamos,
+        'reservas_pendientes': reservas,
     }
 
     return render(request, 'admin_grilla.html', context)

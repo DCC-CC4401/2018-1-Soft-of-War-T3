@@ -109,6 +109,7 @@
                 <thead>
                   <tr>
                       <th scope="col"> <button type="submit" id="accept" name="accept" value="" class="btn btn-outline-success">Aceptar Reservas <i class="material-icons">check_circle_outline</i></button> </th>
+                      <th scope="col"> <button type="submit" id="reject" name="reject" value="" class="btn btn-outline-danger">Rechazar Reservas <i class="material-icons">cancel</i></button> </th>
                       <th scope="col">Usuario</th>
                       <th scope="col">Fecha</th>
                       <th scope="col">Estado</th>
@@ -117,10 +118,11 @@
                 <tbody>
                   {% for rsv in reservas_pendientes %}
                       <tr>
-
+                          <td></td>
+                          <td name="reserv_id" class="check p-1"><input type="checkbox" id="checkbox" class="checkthis" name="accept_id" value="{{rsv.id}}"/></td>
+                          <td>{{ rsv.user }}</td>
                           <td class="">{{rsv.product}}</td>
                           <td class="ml-auto "><kbd>{{rsv.state}}</kbd></td>
-                      <td name="reserv_id" class="check p-1"><input type="checkbox" id="checkbox" class="checkthis" name="accept_id" value="{{rsv.id}}"/></td>
                     </tr>
                   {% endfor %}
               {% else %}

@@ -139,14 +139,21 @@ def admin_inventario(request):
 
 def admin_grilla(request, pk):
 
-    #Aceptar Reservas
+    #Aceptar o Rechazar Reservas
     if request.POST.getlist('accept_id'):
-        for rsv in request.POST.getlist('accept_id'):
-            rsv_accept = Reserva.objects.get(pk=rsv)
-            rsv_accept.state=1
-            rsv_accept.save()
-            accept = Prestamo(user=rsv_accept.user, admin=request.user.perfil, state=0, product=rsv_accept.product, date=rsv_accept.date)
-            accept.save()
+        if 'accept' in request.POST:
+            for rsv in request.POST.getlist('accept_id'):
+                rsv_accept = Reserva.objects.get(pk=rsv)
+                rsv_accept.state=1 #Aceptar
+                rsv_accept.save()
+                accept = Prestamo(user=rsv_accept.user, admin=request.user.perfil, state=0, product=rsv_accept.product, date=rsv_accept.date)
+                accept.save()
+        elif 'reject' in request.POST:
+            for rsv in request.POST.getlist('accept_id'):
+                rsv_accept = Reserva.objects.get(pk=rsv)
+                rsv_accept.state = 0 #Rechazar
+                rsv_accept.save()
+
 
     aux = ReservaEspacio.objects.all()
     reservas_esp = []
@@ -159,10 +166,10 @@ def admin_grilla(request, pk):
             reservas_esp.append(reserva)
             salas_dict[reserva.space.name] = 1
     # Prestamos
-    prestamos = Prestamo.objects.all().filter(admin=request.user.perfil).order_by('-date')
+    prestamos = Prestamo.objects.all().filter(admin=request.user.perfil).order_by('-date')[:10]
 
     # Reservas Pendientes
-    reservas = Reserva.objects.all().filter(state=2)
+    reservas = Reserva.objects.all().filter(state=2)[:10]
     context = {
         'reserva_espacios': reservas_esp,
         'lunes_semana': lunes_semana,

@@ -44,7 +44,8 @@ def user(request):
         reservs_selected = request.POST.get("delete", False).split(",")
         for reserv in reservs_selected:
             instance=Reserva.objects.get(id=reserv)
-            instance.delete()
+            if instance.state==2:
+                instance.delete()
     
     reservs = Reserva.objects.order_by('-date')[:10]
     products = Productos.objects.all()[:10]

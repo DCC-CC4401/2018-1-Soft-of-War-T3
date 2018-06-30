@@ -30,7 +30,7 @@
       <div class="d-flex" >
         <div class="p-2 w-100">
           <h6>
-            <kbd id="estado">{{state}}</kbd>
+            <span id="estado" class="badge">{{state}}</span>
           </h6>
         </div>
       </div>
@@ -42,17 +42,20 @@
     {% else %}
     {% endif %}
 
-    <!--Script JQuery para mostrar texto del estado-->
+    <!--Script JQuery para mostrar texto del estado y color asociado-->
     <script>
       $(document).ready(function(){
         if ($('#estado').text()==2) {
           $('#estado').text('Pendiente');
+          $('#estado').addClass('badge-warning');
         }
         else if ($('#estado').text()==0){
           $('#estado').text('Rechazada');
+          $('#estado').addClass('badge-danger');
         }
         else{
           $('#estado').text('Aprobada');
+          $('#estado').addClass('badge-success');
         }
       });
     </script>

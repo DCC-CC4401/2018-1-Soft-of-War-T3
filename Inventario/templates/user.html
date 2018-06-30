@@ -38,14 +38,16 @@
 
   <body>
 
-    <!--Botones de reserva y prestamo-->
+    <!--Botones de reserva de espacio y de articulo-->
     <div id="botones-principales-sitio" class="container" style="margin-top:40px">
       <div class="row">
+        <!--Boton a la seccion de reserva de espacio-->
         <div class="col-lg-6">
           <a href="{% url 'grilla_espacios_usuario' 0 %}">
             <button style="height: 120px"  class="btn btn-lg btn-info btn-block">Reservar un Espacio</button>
           </a>
         </div>
+        <!--Boton a la seccion de reserva de articulo-->
         <div class="col-lg-6">
           <a href="{% url 'productos' %}">
             <button style="height: 120px" class="btn btn-lg btn-success btn-block">Pedir un Articulo</button>
@@ -54,32 +56,38 @@
       </div>
     </div>
 
-    <!--Historial-->
+    <!--Historial de reservas y prestamos del usuario-->
     <div class="container" style="margin-top:20px; margin-bottom: 20px"> 
 
       <div class="d-flex border-bottom">
         <div class="p-2 mr-auto ">
+          <!--Pestañas para mostrar historial-->
           <ul class="nav nav-tabs" role="tablist">
+            <!--Tab para mostrar reservas-->
             <li class="nav-item">
               <a class="nav-link active border border-dark border-bottom-0 btn btn-outline-secondary" data-toggle="tab" href="#historial-reservas">Reservas</a>
             </li>
+            <!--Tab para mostrar prestamos-->
             <li class="nav-item">
               <a class="nav-link btn border border-dark border-bottom-0 btn-outline-secondary" data-toggle="tab" href="#historial-prestamos">Préstamos</a>
             </li>
           </ul>
         </div>
+
+
         <div class="p-2 ">
+          <!--Boton escondido para eliminar las reservas seleccionadas-->
           <form method="POST">{% csrf_token %}
             <button id="delete-selected" name="delete" value="" class="delete btn btn-outline-danger" hidden="true">Eliminar seleccionados <i class="material-icons">delete</i></button>
           </form>
         </div>
       </div>
 
-      <!-- Tab panes -->
+      <!-- Contenido de las tabs -->
       <div class="tab-content">
-        <div id="historial-reservas" class="tab-pane active"><br>
 
-          <!--Historial de reservas-->
+        <!--Historial de reservas-->
+        <div id="historial-reservas" class="tab-pane active"><br>
           <div class="row d-flex">
             <div id="lista-reservas" class="col-sm-6 ">
               {% if reservs %}
@@ -90,7 +98,15 @@
                       <form method="POST" class="col-sm-11" action="#/">{% csrf_token %}
                         <button id="{{rsv.id}}" value="{{rsv.state}};{{rsv.product.title}};{% language 'es' %}{{rsv.date}}{% endlanguage %};{{rsv.product.description}};{{rsv.product.image.url}};{{rsv.id}}" name="reserva-activa" class=" d-inline-flex btn btn-md btn-outline-secondary border border-dark border-right-0" role="button"> 
                           <div class="">{{rsv.product}}</div>
-                          <div class="ml-auto "><kbd>{{rsv.get_state_display}}</kbd></div>
+                          <div class="ml-auto "><span class="badge 
+                            {% if rsv.state == 0%}
+                            badge-danger">Rechazada
+                            {% elif rsv.state == 1%}
+                            badge-success">Aceptada
+                            {% elif rsv.state == 2%}
+                            badge-warning">Pendiente
+                            {% endif %}
+                          </span></div>
                         </button>
                       </form> 
                     </div>
@@ -103,9 +119,7 @@
 
               <!--ficha con informacion de la reserva-->
               <div class="col-sm-6 border-left border-right border-dark flex-data" >
-
                 {% include 'info_reserv.html' %}
-
               </div>
           </div>
         </div>
@@ -147,7 +161,7 @@
 
     <div class="active-button" hidden="true">{{active_reserv_id}}</div>
 
-    <!--Script JQuery para actualizar vista-->
+    <!--Script JQuery para actualizar vista al cliquear una reserva-->
     <script>
       $(".reservs-table > .d-inline-flex > .btn").click(function(){
         $.ajax({

@@ -40,10 +40,12 @@ def productos(request):
 
 
 def user(request):
+    #al cliquear boton de eliminar seleccionados se eliminan las reservas pendientes seleccionadas
     if request.POST.get("delete",False):
         reservs_selected = request.POST.get("delete", False).split(",")
         for reserv in reservs_selected:
             instance=Reserva.objects.get(id=reserv)
+            #eliminar solo las reservas pendientes (estado 2)
             if instance.state==2:
                 instance.delete()
     
@@ -58,6 +60,7 @@ def user(request):
     photo = ''
     active_reserv_id=''
 
+    #inicialmente se muestra en la vista de la reserva (lado derecho) los detallesdela primera reserva
     if latest_reserv:
         article_name=latest_reserv.product
         state=latest_reserv.state
@@ -66,6 +69,7 @@ def user(request):
         photo = latest_reserv.product.image.url
         active_reserv_id=latest_reserv.id
 
+    #si se cliquea una reserva, se actualizan los datos a mostrar en la info de reserva (lado derecho)
     if request.POST.get("reserva-activa", False):
         active_reserv = request.POST.get('reserva-activa', False).split(";")
         state=active_reserv[0]

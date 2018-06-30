@@ -12,7 +12,8 @@ class Perfil(models.Model):
     status = models.IntegerField(default=1,choices=((2, 'Admin'),(1, 'Habilitado'), (0, 'No Habilitado')))
     rut = models.CharField(max_length=20)
 
-    # Python 3
+    # __str__: None -> str
+    # Retorna el nombre del usuario
     def __str__(self):
         return self.usuario.username
 
@@ -31,9 +32,14 @@ class Productos(models.Model):
     description = models.TextField()
     image       = models.ImageField(upload_to='img/photos/', default='img/photos/default.png')
     status      = models.IntegerField(default=1, choices=((1, 'Disponible'),(0, 'En Prestamo'),(2, 'En Reparacion'),(3, 'Perdido')))
+
+    # __str__: None -> str
+    # Retorna el nombre del producto
     def __str__(self):
         return self.title
 
+    # get_status: None -> str
+    # Retorna el estado del producto como string
     def get_status(self):
         diccionario = {}
         diccionario[0] = 'En Prestamo'
@@ -58,6 +64,9 @@ class Prestamo(models.Model):
     product     = models.ForeignKey(Productos, on_delete=models.CASCADE)
     state       = models.IntegerField(default=0, choices=((1, 'Recibido'),(0, 'Vigente'),(2, 'Caducado'), (3, 'Perdido')))
     date        = models.DateTimeField('date borrowed', null=True, blank=True, default=datetime.now)
+
+    # __str__: None -> str
+    # Retorna el nombre del producto prestado
     def __str__(self):
         return str(self.product)
 
@@ -65,9 +74,14 @@ class Prestamo(models.Model):
 class Espacio(models.Model):
     name        = models.CharField(max_length=200)
     status      = models.IntegerField(default=1, choices=((1, 'Disponible'),(0, 'Ocupado'),(2, 'En Reparacion')))
+
+    # __str__: None -> str
+    # Retorna el nombre del espacio
     def __str__(self):
         return self.name
 
+    # get_status: None -> str
+    # Retorna el estado del espacio como string
     def get_status(self):
         diccionario = {}
         diccionario[0] = 'Ocupado'
@@ -83,26 +97,38 @@ class ReservaEspacio(models.Model):
     date_start  = models.DateTimeField('date start', null=True, blank=True, default=datetime.now)
     date_end    = models.DateTimeField('date finish', null=True, blank=True, default=datetime.now)
 
+    # __str__: None -> str
+    # Retorna el nombre del espacio reservado
     def __str__(self):
-        fecha_1 = 0
-        fecha_2 = 0
         return str(self.space)
 
+    # hora_inicial: None -> int
+    # Retorna un entero con la componente de horas de la hora inicial de la reserva
     def hora_inicial(self):
         return int(self.date_start.strftime('%H'))
 
+    # hora_final: None -> int
+    # Retorna un entero con la componente de horas de la hora final de la reserva
     def hora_final(self):
         return int(self.date_end.strftime('%H'))
 
+    # minuto_inicial: None -> int
+    # Retorna un entero con la componente de minutos de la hora inicial de la reserva
     def minuto_inicial(self):
         return int(self.date_start.strftime('%M'))
 
+    # minuto_final: None -> int
+    # Retorna un entero con la componente de minutos de la hora final de la reserva
     def minuto_final(self):
         return int(self.date_end.strftime('%M'))
 
+    # dia_semana: None -> int
+    # Retorna un entero con el dia relativo de la semana en que se realizo la reserva
     def dia_semana(self):
         return int(self.date_start.strftime('%w'))
 
+    # dia_anho: None -> int
+    # Retorna un entero con el dia del anho en que se realizo el pedido
     def dia_anho(self):
         return int(self.date_start.strftime('%j'))
 

@@ -40,13 +40,24 @@ def productos(request):
 
 
 def user(request):
+    alert=''
     #al cliquear boton de eliminar seleccionados se eliminan las reservas pendientes seleccionadas
     if request.POST.get("delete",False):
         reservs_selected = request.POST.get("delete", False).split(",")
+        reservas_pendientes= []
         for reserv in reservs_selected:
             instance=Reserva.objects.get(id=reserv)
-            #eliminar solo las reservas pendientes (estado 2)
-            if instance.state==2:
+            reservas_pendientes.append(instance.state)
+
+        if 0 in reservas_pendientes:
+            print('Solo puedes eliminar reservas pendientes')
+            alert='Solo puedes eliminar reservas pendientes'
+        elif 1 in reservas_pendientes:
+            print('Solo puedes eliminar reservas pendientes')
+            alert='Solo puedes eliminar reservas pendientes'
+        else:
+            for reserv in reservs_selected:
+                instance=Reserva.objects.get(id=reserv)
                 instance.delete()
     
     reservs = Reserva.objects.order_by('-date')[:10]
@@ -90,6 +101,7 @@ def user(request):
         'rsv_date':date,
         'photo':photo,
         'active_reserv_id': active_reserv_id,
+        'alert': alert,
     }
     return render(request, 'user.html',context)
 

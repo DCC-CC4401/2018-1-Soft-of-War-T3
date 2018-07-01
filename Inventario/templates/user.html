@@ -56,6 +56,19 @@
       </div>
     </div>
 
+    {% if alert %}
+    <div class="container p-2">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="alert alert-warning alert-dismissible">
+            <a href="#" class="close" data-dismiss='alert' aria-label="close">&times;</a>
+            {{alert}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
     <!--Historial de reservas y prestamos del usuario-->
     <div class="container" style="margin-top:20px; margin-bottom: 20px"> 
 
@@ -73,7 +86,6 @@
             </li>
           </ul>
         </div>
-
 
         <div class="p-2 ">
           <!--Boton escondido para eliminar las reservas seleccionadas-->
@@ -94,7 +106,7 @@
                 <div class="btn-group-vertical col-sm-12 reservs-table p-0">
                   {% for rsv in reservs %}  
                     <div class="d-flex col-sm-12">
-                      <div name="reserv_id" class="check p-1"><input type="checkbox" id="checkbox" class="checkthis" name="id" value="{{rsv.id}}"/></div>
+                      <div name="reserv_id" class="check p-1"><input type="checkbox" id="checkbox" class="checkthis" name="{{rsv.state}}" value="{{rsv.id}}"/></div>
                       <form method="POST" class="col-sm-11" action="#/">{% csrf_token %}
                         <button id="{{rsv.id}}" value="{{rsv.state}};{{rsv.product.title}};{% language 'es' %}{{rsv.date}}{% endlanguage %};{{rsv.product.description}};{{rsv.product.image.url}};{{rsv.id}}" name="reserva-activa" class=" d-inline-flex btn btn-md btn-outline-secondary border border-dark border-right-0" role="button"> 
                           <div class="">{{rsv.product}}</div>
@@ -156,7 +168,6 @@
         </div>
       </div>
       
-
     </div>
 
     <div class="active-button" hidden="true">{{active_reserv_id}}</div>
@@ -178,7 +189,7 @@
       $(document).ready(function() {
         var $checks = $("input[type='checkbox']").change(function() {
           var checked = $checks.is(':checked');
-          $(".delete").toggle(checked);
+          $('.delete').toggle(checked);
           $('.delete').removeAttr('hidden');
         });
         $checks.first().change();

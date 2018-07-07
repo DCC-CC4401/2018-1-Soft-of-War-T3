@@ -28,6 +28,28 @@
       </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <h2 id="fecha" style="text-align: center;"></h2>
+            <script>
+                const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                                        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                var date = new Date();
+                if(date.getDay() > 5)
+                {
+                    date.setDate(date.getDate() - (date.getDay() - 1) + 7 + 7*parseInt("{{ semana_relativa }}"));
+                }
+                else
+                {
+                    date.setDate(date.getDate() - (date.getDay() - 1) + 7*parseInt("{{ semana_relativa }}"));
+                }
+                document.getElementById("fecha").innerHTML = "Semana del Lunes " + date.getDate().toString() + " de " + monthNames[date.getMonth()] + " " + date.getFullYear().toString();
+            </script>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
     <div id="grilla" class="container" style="align-content: center">
         <!--Grilla-->
         {%include 'grilla_before.html'%}

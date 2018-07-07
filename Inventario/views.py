@@ -174,7 +174,11 @@ def admin_grilla(request, pk):
 
     aux = ReservaEspacio.objects.all()
     reservas_esp = []
-    lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+
+    if int(time.strftime('%w')) < 5:
+        lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+    else:
+        lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w')) + 7
 
     salas_dict = {}
     for reserva in aux:
@@ -225,7 +229,14 @@ def admin_producto(request,pk):
 def grilla_espacios_usuario(request, pk):
     aux = ReservaEspacio.objects.all()
     reservas_esp = []
-    lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+
+    if int(time.strftime('%w')) < 5:
+        lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+    else:
+        lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w')) + 7
+
+    print(int(time.strftime('%j')) - int(time.strftime('%w')))
+    print(int(time.strftime('%j')) - int(time.strftime('%w')) + 7)
 
     salas_dict = {}
     for reserva in aux:

@@ -9,13 +9,18 @@ from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.decorators.csrf import csrf_exempt
 
+#Vista que maneja el login page
 def index(request):
-    return render(request, 'login.html', {})
+    return render(request, 'iniciar_sesion.html', {})
 
 def verificacion(request):
     return render(request, 'verificacion.html', {})
 
+#Vista que maneja landing page para usuarios naturales
 def productos(request):
+    #Caso en que el usuario que inicia sesion es Administrador
+    if request.user.perfil.status == 2:
+        return render(request, 'admin_users.html', {})
     if request.user.is_authenticated:
         products = Productos.objects.all()[:10]
         context = {

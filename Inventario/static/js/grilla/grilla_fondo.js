@@ -1,6 +1,6 @@
 var width = document.getElementById("grilla").offsetWidth;
 var height = width/3;
-var height_filtros = width/3;
+var height_filtros = width/3 * (2.0/13.0);
 
 var canvas = d3.select("#grilla")
 				.append("svg")

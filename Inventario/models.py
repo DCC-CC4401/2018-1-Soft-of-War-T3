@@ -131,6 +131,3 @@ class ReservaEspacio(models.Model):
     # Retorna un entero con el dia del anho en que se realizo el pedido
     def dia_anho(self):
         return int(self.date_start.strftime('%j'))
-
-
-

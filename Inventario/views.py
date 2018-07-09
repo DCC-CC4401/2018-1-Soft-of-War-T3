@@ -44,8 +44,6 @@ def productos(request):
         return HttpResponseRedirect('/')
 
 def user(request):
-    status=request.user.perfil.get_status_display()
-    print(status)
     alert=''
     #al cliquear boton de eliminar seleccionados se eliminan las reservas pendientes seleccionadas
     if request.POST.get("delete",False):
@@ -56,10 +54,8 @@ def user(request):
             reservas_pendientes.append(instance.state)
 
         if 0 in reservas_pendientes:
-            print('Solo puedes eliminar reservas pendientes')
             alert='Solo puedes eliminar reservas pendientes'
         elif 1 in reservas_pendientes:
-            print('Solo puedes eliminar reservas pendientes')
             alert='Solo puedes eliminar reservas pendientes'
         else:
             for reserv in reservs_selected:
@@ -108,7 +104,6 @@ def user(request):
         'photo':photo,
         'active_reserv_id': active_reserv_id,
         'alert': alert,
-        'status': status,
     }
     return render(request, 'user.html',context)
 

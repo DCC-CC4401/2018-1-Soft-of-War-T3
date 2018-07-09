@@ -8,6 +8,7 @@ from .forms import SignUpForm
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime, timedelta
 
 #Vista que maneja el login page
 def index(request):
@@ -258,13 +259,20 @@ def grilla_espacios_usuario(request, pk):
     return render(request, 'grilla_espacios_usuario.html', context)
 
 def reservarArticulo(request):
+    print("########")
     actual = datetime.now() - timedelta(hours=4)
     limite1 = datetime.strptime('09:00 am' , '%H:%M %p')
-    limite2 = datetime.strptime('06:00 pm' , '%H:%M %p')
+    limite2 = datetime.strptime('18:00' , '%H:%M')
     inicio = datetime.strptime(request.POST['din'] , '%d/%m/%Y %I:%M %p')
     fin    = datetime.strptime(request.POST['dout'], '%d/%m/%Y %I:%M %p')
 
-    if inicio.hour < limite1.hour or inicio.hour > limite2.hour or inicio  (actual + timedelta(hours=1)):
+    print(inicio.hour < limite1.hour)
+    print(inicio.hour > limite2.hour)
+    print(inicio.hour)
+    print(limite2.hour)
+    print(inicio < (actual + timedelta(hours=1)))
+
+    if inicio.hour < limite1.hour or inicio.hour > limite2.hour or inicio < (actual + timedelta(hours=1)):
         print("fuera de rango")
     else:
         usuario = User.objects.filter(id=request.POST['user'])

@@ -64,7 +64,7 @@ def user(request):
             for reserv in reservs_selected:
                 instance=Reserva.objects.get(id=reserv)
                 instance.delete()
-    
+
     reservs = Reserva.objects.order_by('-date')[:10]
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.order_by('-date')[:10]
@@ -94,7 +94,7 @@ def user(request):
         description=active_reserv[3]
         photo=active_reserv[4]
         active_reserv_id=active_reserv[5]
-    
+
     context = {
         'products':products,
         'reservs': reservs,
@@ -257,7 +257,6 @@ def grilla_espacios_usuario(request, pk):
     }
     return render(request, 'grilla_espacios_usuario.html', context)
 
-<<<<<<< HEAD
 def reservarArticulo(request):
     actual = datetime.now() - timedelta(hours=4)
     limite1 = datetime.strptime('09:00 am' , '%H:%M %p')
@@ -274,8 +273,6 @@ def reservarArticulo(request):
         reserva = Reserva(user=request.user.perfil, state=2, product=producto[0], date=inicio)
         reserva.save()
     return HttpResponseRedirect('/productos/'+str(request.POST['id']))
-=======
->>>>>>> ec83df55f24f3d9efeaba3dcb4e34d620e00993a
 
 def article_detail(request, pk):
     print(pk)

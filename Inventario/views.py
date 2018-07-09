@@ -8,7 +8,6 @@ from .forms import SignUpForm
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.decorators.csrf import csrf_exempt
-from datetime import datetime, timedelta
 
 #Vista que maneja el login page
 def index(request):
@@ -43,6 +42,8 @@ def productos(request):
     else:
         return HttpResponseRedirect('/')
 
+
+
 def user(request):
     alert=''
     #al cliquear boton de eliminar seleccionados se eliminan las reservas pendientes seleccionadas
@@ -63,7 +64,7 @@ def user(request):
             for reserv in reservs_selected:
                 instance=Reserva.objects.get(id=reserv)
                 instance.delete()
-
+    
     reservs = Reserva.objects.order_by('-date')[:10]
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.order_by('-date')[:10]
@@ -93,7 +94,7 @@ def user(request):
         description=active_reserv[3]
         photo=active_reserv[4]
         active_reserv_id=active_reserv[5]
-
+    
     context = {
         'products':products,
         'reservs': reservs,
@@ -256,6 +257,7 @@ def grilla_espacios_usuario(request, pk):
     }
     return render(request, 'grilla_espacios_usuario.html', context)
 
+<<<<<<< HEAD
 def reservarArticulo(request):
     actual = datetime.now() - timedelta(hours=4)
     limite1 = datetime.strptime('09:00 am' , '%H:%M %p')
@@ -272,8 +274,11 @@ def reservarArticulo(request):
         reserva = Reserva(user=request.user.perfil, state=2, product=producto[0], date=inicio)
         reserva.save()
     return HttpResponseRedirect('/productos/'+str(request.POST['id']))
+=======
+>>>>>>> ec83df55f24f3d9efeaba3dcb4e34d620e00993a
 
 def article_detail(request, pk):
+    print(pk)
     articulo = Productos.objects.get(pk=pk)
     prestamos = Prestamo.objects.all().filter(product=articulo)
     context = {
@@ -288,16 +293,8 @@ def busqueda_avanzada(request):
         'products': products,
     }
     if request.method == "POST":
-        print(request.POST)
-        id     = request.POST['id']
         buscar = request.POST['busqueda']
-        din    = request.POST['din']
-        tin    = request.POST['tin']
-        dout   = request.POST['dout']
-        tout   = request.POST['tout']
-        estado = request.POST['estado']
-
-        if not buscar == "" or not id == "":
+        if not buscar == "":
             context['busqueda'] = buscar
             search = Productos.objects.filter(title__contains=buscar)
             context['search'] = search

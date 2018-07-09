@@ -257,7 +257,6 @@ def grilla_espacios_usuario(request, pk):
     return render(request, 'grilla_espacios_usuario.html', context)
 
 def reservarArticulo(request):
-    print("########")
     actual = datetime.now() - timedelta(hours=4)
     limite1 = datetime.strptime('09:00 am' , '%H:%M %p')
     limite2 = datetime.strptime('06:00 pm' , '%H:%M %p')

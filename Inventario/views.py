@@ -8,7 +8,6 @@ from .forms import SignUpForm
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.decorators.csrf import csrf_exempt
-from datetime import datetime, timedelta
 
 #Vista que maneja el login page
 def index(request):
@@ -43,6 +42,8 @@ def productos(request):
     else:
         return HttpResponseRedirect('/')
 
+
+
 def user(request):
     alert=''
     #al cliquear boton de eliminar seleccionados se eliminan las reservas pendientes seleccionadas
@@ -54,14 +55,16 @@ def user(request):
             reservas_pendientes.append(instance.state)
 
         if 0 in reservas_pendientes:
+            print('Solo puedes eliminar reservas pendientes')
             alert='Solo puedes eliminar reservas pendientes'
         elif 1 in reservas_pendientes:
+            print('Solo puedes eliminar reservas pendientes')
             alert='Solo puedes eliminar reservas pendientes'
         else:
             for reserv in reservs_selected:
                 instance=Reserva.objects.get(id=reserv)
                 instance.delete()
-
+    
     reservs = Reserva.objects.order_by('-date')[:10]
     products = Productos.objects.all()[:10]
     loans = Prestamo.objects.order_by('-date')[:10]
@@ -91,7 +94,7 @@ def user(request):
         description=active_reserv[3]
         photo=active_reserv[4]
         active_reserv_id=active_reserv[5]
-
+    
     context = {
         'products':products,
         'reservs': reservs,
@@ -254,25 +257,9 @@ def grilla_espacios_usuario(request, pk):
     }
     return render(request, 'grilla_espacios_usuario.html', context)
 
-def reservarArticulo(request):
-    print("########")
-    actual = datetime.now() - timedelta(hours=4)
-    limite1 = datetime.strptime('09:00 am' , '%H:%M %p')
-    limite2 = datetime.strptime('06:00 pm' , '%H:%M %p')
-    inicio = datetime.strptime(request.POST['din'] , '%d/%m/%Y %I:%M %p')
-    fin    = datetime.strptime(request.POST['dout'], '%d/%m/%Y %I:%M %p')
-
-    if inicio.hour < limite1.hour or inicio.hour > limite2.hour or inicio  (actual + timedelta(hours=1)):
-        print("fuera de rango")
-    else:
-        usuario = User.objects.filter(id=request.POST['user'])
-        producto= Productos.objects.filter(id=request.POST['id'])
-
-        reserva = Reserva(user=request.user.perfil, state=2, product=producto[0], date=inicio)
-        reserva.save()
-    return HttpResponseRedirect('/productos/'+str(request.POST['id']))
 
 def article_detail(request, pk):
+    print(pk)
     articulo = Productos.objects.get(pk=pk)
     prestamos = Prestamo.objects.all().filter(product=articulo)
     context = {
@@ -287,16 +274,8 @@ def busqueda_avanzada(request):
         'products': products,
     }
     if request.method == "POST":
-        print(request.POST)
-        id     = request.POST['id']
         buscar = request.POST['busqueda']
-        din    = request.POST['din']
-        tin    = request.POST['tin']
-        dout   = request.POST['dout']
-        tout   = request.POST['tout']
-        estado = request.POST['estado']
-
-        if not buscar == "" or not id == "":
+        if not buscar == "":
             context['busqueda'] = buscar
             search = Productos.objects.filter(title__contains=buscar)
             context['search'] = search

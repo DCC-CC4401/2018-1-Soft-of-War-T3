@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+#Extención del modelo Usuario que incluye django
 class Perfil(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='img/photos/', default='img/photos/default.png')

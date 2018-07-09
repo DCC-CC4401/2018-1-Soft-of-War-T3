@@ -282,6 +282,8 @@ def busqueda_avanzada(request):
             context['search_len'] = len(search)
     return render(request, 'busqueda_avanzada.html', context)
 
+
+#vista que registra usuarios
 class SignUpView(CreateView):
     model = Perfil
     form_class = SignUpForm
@@ -297,9 +299,11 @@ class SignUpView(CreateView):
         login(self.request, usuario)
         return redirect('/')
 
+#vista que permite cerrar sesion
 class SignOutView(LogoutView):
     pass
 
+#Vista del login
 class SignInView(LoginView):
     template_name = 'Inventario/iniciar_sesion.html'
 

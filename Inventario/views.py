@@ -66,9 +66,9 @@ def user(request):
                 instance=Reserva.objects.get(id=reserv)
                 instance.delete()
 
-    reservs = Reserva.objects.order_by('-date')[:10]
+    reservs = Reserva.objects.filter(user=request.user.perfil).order_by('-date')[:10]
     products = Productos.objects.all()[:10]
-    loans = Prestamo.objects.order_by('-date')[:10]
+    loans = Prestamo.objects.filter(user=request.user.perfil).order_by('-date')[:10]
     latest_reserv = Reserva.objects.order_by('-date').first()
     article_name=''
     state=''

@@ -277,7 +277,7 @@ def reservarArticulo(request):
     else:
         producto= Productos.objects.filter(id=request.POST['id'])
 
-        reserva = Reserva(user=request.user.perfil, state=2, product=producto, date=inicio)
+        reserva = Reserva(user=request.user.perfil, state=2, product=producto[0], date=inicio)
         reserva.save()
     return HttpResponseRedirect('/productos/'+str(request.POST['id']))
 
@@ -319,7 +319,7 @@ class SignUpView(CreateView):
         password = form.cleaned_data.get('password1')
         usuario = authenticate(username=usuario, password=password)
         login(self.request, usuario)
-        return redirect('/')
+        return redirect('/productos')
 
 #vista que permite cerrar sesion
 class SignOutView(LogoutView):

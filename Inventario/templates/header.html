@@ -8,6 +8,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <!--<div class="container">{{user.perfil.get_status_display}} </div>
+    <div class="container">{{user.perfil.status}} </div>-->
+
+
     <div id="header" class="row">
 
         <!-- Lado de la Izquierda del Header -->
@@ -27,7 +31,7 @@
 
                 <!-- Datos de Usuario -->
                 <div style="margin: 0 20px 0 0">
-                        <li id="nombre_usuario" style="text-align: right; font-size:1.5rem"> <i class="material-icons" id = "circulo_disponibilidad" style="color:#bbb; font-size:1rem;">fiber_manual_record</i>{{user.first_name}} {{user.last_name}}</li>
+                        <li id="nombre_usuario" style="text-align: right; font-size:1.5rem"> <i class="material-icons" id = "circulo_disponibilidad" style="{% ifequal user.perfil.status 0 %}color:#f00{% else%}color:#04B404{% endifequal %}; font-size:1rem;">fiber_manual_record</i>{{user.first_name}} {{user.last_name}}</li>
                         <li id="rut_usuario" style="text-align: right; font-size:0.75rem"> {{user.perfil.rut}} </li>
                         <li id="email_usuario" style="text-align: right; font-size:0.75rem"> {{user.email}} </li>
                 </div>

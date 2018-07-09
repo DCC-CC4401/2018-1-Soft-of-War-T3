@@ -275,17 +275,15 @@ def reservarArticulo(request):
     if inicio.hour < limite1.hour or inicio.hour > limite2.hour or inicio < (actual + timedelta(hours=1)):
         print("fuera de rango")
     else:
-        usuario = User.objects.filter(id=request.POST['user'])
         producto= Productos.objects.filter(id=request.POST['id'])
 
-        reserva = Reserva(user=request.user.perfil, state=2, product=producto[0], date=inicio)
+        reserva = Reserva(user=request.user.perfil, state=2, product=producto, date=inicio)
         reserva.save()
     return HttpResponseRedirect('/productos/'+str(request.POST['id']))
 
 def article_detail(request, pk):
-    print(pk)
     articulo = Productos.objects.get(pk=pk)
-    prestamos = Prestamo.objects.all().filter(product=articulo)
+    prestamos = Prestamo.objects.all().filter(product=articulo).order_by('-date')
     context = {
         'articulo': articulo,
         'prestamos': prestamos

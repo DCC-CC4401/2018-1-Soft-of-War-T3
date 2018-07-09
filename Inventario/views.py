@@ -54,10 +54,8 @@ def user(request):
             reservas_pendientes.append(instance.state)
 
         if 0 in reservas_pendientes:
-            print('Solo puedes eliminar reservas pendientes')
             alert='Solo puedes eliminar reservas pendientes'
         elif 1 in reservas_pendientes:
-            print('Solo puedes eliminar reservas pendientes')
             alert='Solo puedes eliminar reservas pendientes'
         else:
             for reserv in reservs_selected:

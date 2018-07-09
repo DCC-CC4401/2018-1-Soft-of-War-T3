@@ -10,7 +10,10 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <title> {{articulo.title}} </title>
   </head>
 
@@ -60,20 +63,27 @@
             <h7 class="col-sm-12" style="color:#A2A2A2;">Solicitar reserva</h7>
             <div class="row" style="height: 3%"></div>
 
-            <form class="col-sm-12">
+            <form class="col-sm-12" method="POST" action="{% url 'reservarArticulo' %}">{% csrf_token%}
               <small style="color:#A2A2A2;">Fecha Inicio</small>
-              <div class="form-inline">
-                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-sm-12">
-                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-sm-12">
+              <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                    <input type="text" name="din" class="form-control datetimepicker-input" data-target="#datetimepicker4"/>
+                    <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
               </div>
               <div class="row" style="height: 3%"></div>
 
               <small style="color:#A2A2A2;">Fecha Termino</small>
-              <div class="form-inline">
-                <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control col-lg-8 col-sm-12">
-                <input type="time" name="bday" max="23:59" min="00:00" class="form-control col-lg-4 col-sm-12">
-              </div>
+              <div class="input-group date" id="datetimepicker5" data-target-input="nearest">
+                    <input type="text" name="dout" class="form-control datetimepicker-input" data-target="#datetimepicker5"/>
+                    <div class="input-group-append" data-target="#datetimepicker5" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
               <div class="row" style="height: 3%"></div>
+              <input type="hidden" name="articulo" value={{articulo}}>
+              <input type="hidden" name="user" value={{user.id}}>
+              <input type="hidden" name="id" value={{articulo.id}}>
               <button type="submit" class="btn btn-primary">Reservar</button>
             </form>
 
@@ -112,6 +122,26 @@
       <div class="col-sm-1 form-inline"></div>
     </div>
     <div class="row" style="height: 7%"></div>
+
+
+    <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker4').datetimepicker({
+                    format: 'DD/MM/YYYY hh:mm a',
+                    daysOfWeekDisabled: [0, 6],
+                    disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 9 })], [moment({ h: 18 }), moment({ h: 24 })]]
+
+                });
+            });
+            $(function () {
+                $('#datetimepicker5').datetimepicker({
+                    format: 'DD/MM/YYYY hh:mm a',
+                    daysOfWeekDisabled: [0, 6],
+                    disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 9 })], [moment({ h: 18 }), moment({ h: 24 })]]
+
+                });
+            });
+    </script>
   </body>
 
 </html>

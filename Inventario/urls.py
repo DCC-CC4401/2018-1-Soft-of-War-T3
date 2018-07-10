@@ -21,6 +21,7 @@ urlpatterns = [
 
     #Ficha articulo persona natural
     url(r'^productos/(?P<pk>[0-9]+)/$', views.article_detail, name='article_detail'),
+    path('reservar/', views.reservarArticulo, name='reservarArticulo'),
 
     #USUARIO PERSONA ADMINISTRADOR
     #Urls para perfil usuario administrador

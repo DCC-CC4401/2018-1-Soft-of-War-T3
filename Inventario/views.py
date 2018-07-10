@@ -8,14 +8,20 @@ from .forms import SignUpForm
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime, timedelta
 
+#Vista que maneja el login page
 def index(request):
-    return render(request, 'login.html', {})
+    return render(request, 'iniciar_sesion.html', {})
 
 def verificacion(request):
     return render(request, 'verificacion.html', {})
 
+#Vista que maneja landing page para usuarios naturales
 def productos(request):
+    #Caso en que el usuario que inicia sesion es Administrador
+    if request.user.perfil.status == 2:
+        return render(request, 'admin_users.html', {})
     if request.user.is_authenticated:
         products = Productos.objects.all()[:10]
         context = {
@@ -40,15 +46,29 @@ def productos(request):
 
 
 def user(request):
+    alert=''
+    #al cliquear boton de eliminar seleccionados se eliminan las reservas pendientes seleccionadas
     if request.POST.get("delete",False):
         reservs_selected = request.POST.get("delete", False).split(",")
+        reservas_pendientes= []
         for reserv in reservs_selected:
             instance=Reserva.objects.get(id=reserv)
-            instance.delete()
-    
-    reservs = Reserva.objects.order_by('-date')[:10]
+            reservas_pendientes.append(instance.state)
+
+        if 0 in reservas_pendientes:
+            print('Solo puedes eliminar reservas pendientes')
+            alert='Solo puedes eliminar reservas pendientes'
+        elif 1 in reservas_pendientes:
+            print('Solo puedes eliminar reservas pendientes')
+            alert='Solo puedes eliminar reservas pendientes'
+        else:
+            for reserv in reservs_selected:
+                instance=Reserva.objects.get(id=reserv)
+                instance.delete()
+
+    reservs = Reserva.objects.filter(user=request.user.perfil).order_by('-date')[:10]
     products = Productos.objects.all()[:10]
-    loans = Prestamo.objects.order_by('-date')[:10]
+    loans = Prestamo.objects.filter(user=request.user.perfil).order_by('-date')[:10]
     latest_reserv = Reserva.objects.order_by('-date').first()
     article_name=''
     state=''
@@ -57,6 +77,7 @@ def user(request):
     photo = ''
     active_reserv_id=''
 
+    #inicialmente se muestra en la vista de la reserva (lado derecho) los detallesdela primera reserva
     if latest_reserv:
         article_name=latest_reserv.product
         state=latest_reserv.state
@@ -65,6 +86,7 @@ def user(request):
         photo = latest_reserv.product.image.url
         active_reserv_id=latest_reserv.id
 
+    #si se cliquea una reserva, se actualizan los datos a mostrar en la info de reserva (lado derecho)
     if request.POST.get("reserva-activa", False):
         active_reserv = request.POST.get('reserva-activa', False).split(";")
         state=active_reserv[0]
@@ -73,7 +95,7 @@ def user(request):
         description=active_reserv[3]
         photo=active_reserv[4]
         active_reserv_id=active_reserv[5]
-    
+
     context = {
         'products':products,
         'reservs': reservs,
@@ -85,6 +107,7 @@ def user(request):
         'rsv_date':date,
         'photo':photo,
         'active_reserv_id': active_reserv_id,
+        'alert': alert,
     }
     return render(request, 'user.html',context)
 
@@ -138,9 +161,30 @@ def admin_inventario(request):
     return render(request, 'admin_inventario.html', context)
 
 def admin_grilla(request, pk):
+
+    #Aceptar o Rechazar Reservas
+    if request.POST.getlist('accept_id'):
+        if 'accept' in request.POST:
+            for rsv in request.POST.getlist('accept_id'):
+                rsv_accept = Reserva.objects.get(pk=rsv)
+                rsv_accept.state=1 #Aceptar
+                rsv_accept.save()
+                accept = Prestamo(user=rsv_accept.user, admin=request.user.perfil, state=0, product=rsv_accept.product, date=rsv_accept.date)
+                accept.save()
+        elif 'reject' in request.POST:
+            for rsv in request.POST.getlist('accept_id'):
+                rsv_accept = Reserva.objects.get(pk=rsv)
+                rsv_accept.state = 0 #Rechazar
+                rsv_accept.save()
+
+
     aux = ReservaEspacio.objects.all()
     reservas_esp = []
-    lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+
+    if int(time.strftime('%w')) < 5:
+        lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+    else:
+        lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w')) + 7
 
     salas_dict = {}
     for reserva in aux:
@@ -149,10 +193,10 @@ def admin_grilla(request, pk):
             reservas_esp.append(reserva)
             salas_dict[reserva.space.name] = 1
     # Prestamos
-    prestamos = Prestamo.objects.all().filter(admin=request.user.perfil).order_by('-date')
+    prestamos = Prestamo.objects.all().filter(admin=request.user.perfil).order_by('-date')[:10]
 
     # Reservas Pendientes
-    reservas = Reserva.objects.all().filter(state=2)
+    reservas = Reserva.objects.all().filter(state=2)[:10]
     context = {
         'reserva_espacios': reservas_esp,
         'lunes_semana': lunes_semana,
@@ -191,7 +235,14 @@ def admin_producto(request,pk):
 def grilla_espacios_usuario(request, pk):
     aux = ReservaEspacio.objects.all()
     reservas_esp = []
-    lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+
+    if int(time.strftime('%w')) < 5:
+        lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w'))
+    else:
+        lunes_semana = int(time.strftime('%j')) - int(time.strftime('%w')) + 7
+
+    print(int(time.strftime('%j')) - int(time.strftime('%w')))
+    print(int(time.strftime('%j')) - int(time.strftime('%w')) + 7)
 
     salas_dict = {}
     for reserva in aux:
@@ -207,11 +258,32 @@ def grilla_espacios_usuario(request, pk):
     }
     return render(request, 'grilla_espacios_usuario.html', context)
 
+def reservarArticulo(request):
+    print("########")
+    actual = datetime.now() - timedelta(hours=4)
+    limite1 = datetime.strptime('09:00 am' , '%H:%M %p')
+    limite2 = datetime.strptime('18:00' , '%H:%M')
+    inicio = datetime.strptime(request.POST['din'] , '%d/%m/%Y %I:%M %p')
+    fin    = datetime.strptime(request.POST['dout'], '%d/%m/%Y %I:%M %p')
+
+    print(inicio.hour < limite1.hour)
+    print(inicio.hour > limite2.hour)
+    print(inicio.hour)
+    print(limite2.hour)
+    print(inicio < (actual + timedelta(hours=1)))
+
+    if inicio.hour < limite1.hour or inicio.hour > limite2.hour or inicio < (actual + timedelta(hours=1)):
+        print("fuera de rango")
+    else:
+        producto= Productos.objects.filter(id=request.POST['id'])
+
+        reserva = Reserva(user=request.user.perfil, state=2, product=producto[0], date=inicio)
+        reserva.save()
+    return HttpResponseRedirect('/productos/'+str(request.POST['id']))
 
 def article_detail(request, pk):
-    print(pk)
     articulo = Productos.objects.get(pk=pk)
-    prestamos = Prestamo.objects.all().filter(product=articulo)
+    prestamos = Prestamo.objects.all().filter(product=articulo).order_by('-date')
     context = {
         'articulo': articulo,
         'prestamos': prestamos
@@ -232,6 +304,8 @@ def busqueda_avanzada(request):
             context['search_len'] = len(search)
     return render(request, 'busqueda_avanzada.html', context)
 
+
+#vista que registra usuarios
 class SignUpView(CreateView):
     model = Perfil
     form_class = SignUpForm
@@ -245,11 +319,13 @@ class SignUpView(CreateView):
         password = form.cleaned_data.get('password1')
         usuario = authenticate(username=usuario, password=password)
         login(self.request, usuario)
-        return redirect('/')
+        return redirect('/productos')
 
+#vista que permite cerrar sesion
 class SignOutView(LogoutView):
     pass
 
+#Vista del login
 class SignInView(LoginView):
     template_name = 'Inventario/iniciar_sesion.html'
 

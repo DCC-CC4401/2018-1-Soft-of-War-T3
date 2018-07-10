@@ -66,9 +66,9 @@ def user(request):
                 instance=Reserva.objects.get(id=reserv)
                 instance.delete()
 
-    reservs = Reserva.objects.order_by('-date')[:10]
+    reservs = Reserva.objects.filter(user=request.user.perfil).order_by('-date')[:10]
     products = Productos.objects.all()[:10]
-    loans = Prestamo.objects.order_by('-date')[:10]
+    loans = Prestamo.objects.filter(user=request.user.perfil).order_by('-date')[:10]
     latest_reserv = Reserva.objects.order_by('-date').first()
     article_name=''
     state=''
@@ -277,7 +277,7 @@ def reservarArticulo(request):
     else:
         producto= Productos.objects.filter(id=request.POST['id'])
 
-        reserva = Reserva(user=request.user.perfil, state=2, product=producto, date=inicio)
+        reserva = Reserva(user=request.user.perfil, state=2, product=producto[0], date=inicio)
         reserva.save()
     return HttpResponseRedirect('/productos/'+str(request.POST['id']))
 
@@ -319,7 +319,7 @@ class SignUpView(CreateView):
         password = form.cleaned_data.get('password1')
         usuario = authenticate(username=usuario, password=password)
         login(self.request, usuario)
-        return redirect('/')
+        return redirect('/productos')
 
 #vista que permite cerrar sesion
 class SignOutView(LogoutView):
@@ -347,12 +347,16 @@ def admin_filtrar_prestamos(request, estado_id):
 
     prestamos = Prestamo.objects.all().filter(admin=request.user.perfil, state=estado_id).order_by('-date')
 
+    # Reservas Pendientes
+    reservas = Reserva.objects.all().filter(state=2)[:10]
+
     context = {
         'reserva_espacios': reservas_esp,
         'lunes_semana': lunes_semana,
         'salas': salas_dict.keys(),
         'semana_relativa': pk,
         'prestamos': prestamos,
+        'reservas_pendientes': reservas,
     }
 
     return render(request, 'admin_grilla.html', context)

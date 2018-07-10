@@ -126,16 +126,14 @@
                 <h7 style="color:#A2A2A2;"> Reservas Pendientes</h7>
                 <div class="row" style="height: 3%"></div>
                 {% if reservas_pendientes %}
-                    <div class="row">
+                    <form action method="POST">{% csrf_token %}
                         <button type="submit" id="accept" name="accept" value="" class="btn btn-outline-success">
                                 Aceptar Reservas <i class="material-icons">check_circle_outline</i>
                         </button>
-                        <button type="submit" id="reject" name="reject" value="" class="btn btn-outline-danger">
+                        <button type="submit" id="reject" name="reject" class="btn btn-outline-danger">
                                 Rechazar Reservas <i class="material-icons">cancel</i>
                         </button>
-                    </div>
                     <table class="table">
-                    <form action method="POST">{% csrf_token %}
                     <thead>
                     <tr>
                         <th scope="col"></th>
@@ -152,7 +150,7 @@
                                                                           value="{{ rsv.id }}"/></td>
                             <td>{{ rsv.user }}</td>
                             <td class="">{{ rsv.product }}</td>
-                            <td class="ml-auto "><kbd>{{ rsv.state }}</kbd></td>
+                            <td>  <span class="badge badge-default"> Pendiente </span></td>
                         </tr>
                     {% endfor %}
                 {% else %}
